@@ -8,7 +8,7 @@
         {% csrf_token %}
         <div class="col-md-6">
             <label for="id_username" class="form-label">Username</label>
-            {{ form.username|attr:"class:form-control" }}
+            {{ form.username|attr:"class:form-control"|attr:"oninput:allowOnlyLetters(this)" }}
         </div>
         <div class="col-md-6">
             <label for="inputPassword4" class="form-label">Email</label>
