@@ -1,0 +1,17 @@
+* {
+  font-family: "Roboto", sans-serif;
+}
+
+.bg-charcoal {
+  --bs-bg-opacity: 1;
+  background-color: #181918;
+}
+
+@media (min-width: 992px) {
+  .nav-link {
+    border-radius: 5px;
+    margin-left: 5px;
+    padding: 5px;
+    background-color: #222;
+  }
+}
