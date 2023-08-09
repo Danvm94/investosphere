@@ -11,3 +11,4 @@ cloudinary_python.txt
 .venv
 venv
 *.sqlite3
+.vscode
