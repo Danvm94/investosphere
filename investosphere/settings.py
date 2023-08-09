@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cloudinary',
     'user_management',
+    # widget_tweaks used for form CSS style 'attr:'
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

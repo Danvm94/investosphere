@@ -5,6 +5,7 @@ cloudinary==1.33.0
 dj-database-url==2.0.0
 Django==4.2.4
 django-cloudinary-storage==0.3.0
+django-widget-tweaks==1.4.12
 gunicorn==21.2.0
 idna==3.4
 packaging==23.1

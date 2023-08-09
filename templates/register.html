@@ -1,22 +1,26 @@
 {% extends 'base.html' %}
 
+{% load widget_tweaks %}
+
 {% block content %}
 <div class="container mt-4">
     <form class="row g-3">
+        {% csrf_token %}
         <div class="col-md-6">
-            {{ form.username }}
+            <label for="id_username" class="form-label">Username</label>
+            {{ form.username|attr:"class:form-control" }}
         </div>
         <div class="col-md-6">
             <label for="inputPassword4" class="form-label">Email</label>
-            <input type="password" class="form-control" id="inputPassword4">
+            {{ form.email|add_class:"form-control" }}
         </div>
         <div class="col-6">
             <label for="inputAddress" class="form-label">Password</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+            {{ form.password1|add_class:"form-control" }}
         </div>
         <div class="col-6">
             <label for="inputAddress2" class="form-label">Repeat Password</label>
-            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+            {{ form.password2|add_class:"form-control" }}
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-primary">Register</button>
