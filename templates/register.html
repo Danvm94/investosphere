@@ -3,28 +3,55 @@
 {% load widget_tweaks %}
 
 {% block content %}
-<div class="container mt-4">
-    <form class="row g-3">
-        {% csrf_token %}
-        <div class="col-md-6">
-            <label for="id_username" class="form-label">Username</label>
-            {{ form.username|attr:"class:form-control"|attr:"oninput:allowOnlyLetters(this)" }}
+<div class="container registration-container">
+    <div class="row">
+        <div class="col-md-8">
+            <form class="registration-form" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label for="id_username" class="form-label">Username</label>
+                            {{ form.username|add_class:"form-control"|attr:"oninput:allowOnlyLetters(this)" }}
+                        </div>
+                        <div class="col-md-5">
+                            <label for="id_email" class="form-label">Email</label>
+                            {{ form.email|add_class:"form-control" }}
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label for="id_password1" class="form-label">Password</label>
+                            {{ form.password1|add_class:"form-control" }}
+                        </div>
+                        <div class="col-md-5">
+                            <label for="id_password2" class="form-label">Repeat Password</label>
+                            {{ form.password2|add_class:"form-control" }}
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-md-5 text-center justify-content-start">
+                            <button type="submit" class="btn btn-primary btn-lg" name="register"
+                                value="register">Register</button>
+                        </div>
+                        <form class="registration-form" method="POST">
+                            <div class="col-md-5 text-center justify-content-start">
+                                <button type="submit" class="btn btn-primary btn-lg" name="login"
+                                    value="login">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">Email</label>
-            {{ form.email|add_class:"form-control" }}
+        <div class="col-md-4">
+            <img src="https://res.cloudinary.com/dtja957k3/image/upload/v1691609273/investosphere/register-image.svg"
+                alt="Image" class="img-fluid registration-image">
         </div>
-        <div class="col-6">
-            <label for="inputAddress" class="form-label">Password</label>
-            {{ form.password1|add_class:"form-control" }}
-        </div>
-        <div class="col-6">
-            <label for="inputAddress2" class="form-label">Repeat Password</label>
-            {{ form.password2|add_class:"form-control" }}
-        </div>
-        <div class="col-12">
-            <button type="submit" class="btn btn-primary">Register</button>
-        </div>
-    </form>
+    </div>
 </div>
 {% endblock %}

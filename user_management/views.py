@@ -15,3 +15,7 @@ def registration_view(request):
     else:
         form = RegistrationForm()
     return render(request, 'register.html', {'form': form})
+
+
+def home_view(request):
+    return render(request, 'home.html')

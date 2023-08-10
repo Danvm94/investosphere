@@ -15,3 +15,36 @@
     background-color: #222;
   }
 }
+
+.registration-container {
+  background-color: #f0f0f0;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  padding: 40px;
+  border-radius: 15px;
+  margin-top: 50px;
+}
+
+.registration-form label {
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.registration-form input,
+.registration-form button {
+  margin-bottom: 15px;
+}
+
+.registration-image {
+  border-radius: 15px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+.registration-form button {
+  background-color: #181918; /* Blue button color */
+  border-color: #000000; /* Border color to match */
+  width: 150px;
+}
+.registration-form button:hover {
+  background-color: #50c878;
+  border-color: #000000;
+}
