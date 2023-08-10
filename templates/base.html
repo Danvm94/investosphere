@@ -38,7 +38,7 @@
             id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">
                 <li class="nav-item">
-                    <a class="nav-link " aria-current="page" href="#">Home</a>
+                    <a class="nav-link " aria-current="page" href="/">Home</a>
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
@@ -46,7 +46,7 @@
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Get Started</a>
+                    <a class="nav-link active" href="register/">Get Started</a>
                 </li>
                 {% endif %}
             </ul>
@@ -56,6 +56,17 @@
 </nav>
 
 <body>
+    <div class="messages-container container mt-2">
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "warning" %}
+        <div class="alert alert-warning" role="alert">
+            {{message}}
+        </div>
+        {%endif%}
+        {% endfor %}
+        {% endif %}
+    </div>
     <main class="flex-shrink-0 main-bg">
 
         {% block content %}
