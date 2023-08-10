@@ -48,3 +48,7 @@
   background-color: #50c878;
   border-color: #000000;
 }
+
+.alert-warning {
+  transition: opacity 2s ease-in-out; /* Add transition property */
+}
