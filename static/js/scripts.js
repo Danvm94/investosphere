@@ -30,3 +30,8 @@ function opacityChange(type, element) {
     }, 50);
   }
 }
+
+var myCarousel = new bootstrap.Carousel(document.getElementById("myCarousel"), {
+  interval: 3000, // Change slide every 3 seconds (adjust as needed)
+  wrap: true, // Set to false if you don't want to loop
+});

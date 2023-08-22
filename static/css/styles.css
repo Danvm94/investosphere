@@ -52,3 +52,28 @@
 .alert-warning {
   transition: opacity 2s ease-in-out; /* Add transition property */
 }
+
+.news-container {
+  background-color: rgba(240, 240, 240, 0.7);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  padding: 40px;
+  border-radius: 15px;
+  margin-top: 50px;
+}
+
+.news-container img {
+  height: 150px;
+  object-fit: cover;
+}
+
+.news-container h5 {
+  font-size: 1rem;
+  height: 7rem;
+  overflow: hidden;
+}
+
+.news-container p {
+  font-size: 0.875rem; 
+  height: 5rem; 
+  overflow: hidden;
+}

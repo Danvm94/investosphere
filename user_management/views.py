@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+import requests
+import os
 # Create your views here.
 
 
@@ -38,6 +40,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             # Redirect to the dashboard or desired page
+            messages.success(request, "You are now logged in")
             return redirect('home')
         else:
             # Invalid login, show an error message
@@ -52,4 +55,18 @@ def logout_view(request):
 
 
 def home_view(request):
-    return render(request, 'home.html')
+    print("ok")
+    NEWSAPI_KEY = os.environ.get('NEWSAPI_KEY')
+    NEWSAPI_URL = os.environ.get('NEWSAPI_URL')
+    params = {
+        'apiKey': NEWSAPI_KEY,
+        'language': 'en',
+        'q': 'crypto OR stock',
+        'sortBy': 'relevancy'
+    }
+    response = requests.get(NEWSAPI_URL, params=params)
+    news_data = response.json()
+    articles = news_data['articles'][:4]
+    print(news_data)
+
+    return render(request, 'home.html', {'articles': articles})
