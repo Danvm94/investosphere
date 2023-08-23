@@ -31,7 +31,7 @@ function opacityChange(type, element) {
   }
 }
 
-var myCarousel = new bootstrap.Carousel(document.getElementById("myCarousel"), {
+var newsCarousel = new bootstrap.Carousel(document.getElementById("newsCarousel"), {
   interval: 3000, // Change slide every 3 seconds (adjust as needed)
   wrap: true, // Set to false if you don't want to loop
 });

@@ -50,12 +50,11 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    # Redirect to the home page or any other desired page
+    # Redirect to the home page
     return redirect('home')
 
 
 def home_view(request):
-    print("ok")
     NEWSAPI_KEY = os.environ.get('NEWSAPI_KEY')
     NEWSAPI_URL = os.environ.get('NEWSAPI_URL')
     params = {
@@ -67,6 +66,5 @@ def home_view(request):
     response = requests.get(NEWSAPI_URL, params=params)
     news_data = response.json()
     articles = news_data['articles'][:4]
-    print(news_data)
 
     return render(request, 'home.html', {'articles': articles})

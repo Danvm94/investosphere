@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cloudinary',
     'user_management',
+    'investo_hub',
     # widget_tweaks used for form CSS style 'attr:'
     'widget_tweaks',
 ]

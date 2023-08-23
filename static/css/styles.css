@@ -7,14 +7,6 @@
   background-color: #181918;
 }
 
-@media (min-width: 992px) {
-  .nav-link {
-    border-radius: 5px;
-    margin-left: 5px;
-    padding: 5px;
-    background-color: #222;
-  }
-}
 
 .registration-container {
   background-color: #f0f0f0;
@@ -73,7 +65,23 @@
 }
 
 .news-container p {
-  font-size: 0.875rem; 
-  height: 5rem; 
+  font-size: 0.875rem;
+  height: 5rem;
   overflow: hidden;
+}
+
+.brief-container {
+  background-color: rgba(240, 240, 240, 0.7);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  padding: 40px;
+  border-radius: 0 0 15px 15px;
+}
+
+@media (min-width: 992px) {
+  .nav-link {
+    border-radius: 5px;
+    margin-left: 5px;
+    padding: 5px;
+    background-color: #222;
+  }
 }
