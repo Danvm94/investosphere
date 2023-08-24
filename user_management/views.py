@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from investo_hub.models import Wallet
 import requests
 import os
 # Create your views here.
@@ -14,6 +15,7 @@ def registration_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            wallet = Wallet.objects.create(user=user, dollars=1000)
             messages.success(request, 'Registration successful!')
             # Redirect to the home page or another appropriate URL
             return redirect('home')

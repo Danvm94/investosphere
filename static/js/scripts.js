@@ -31,7 +31,14 @@ function opacityChange(type, element) {
   }
 }
 
-var newsCarousel = new bootstrap.Carousel(document.getElementById("newsCarousel"), {
-  interval: 3000, // Change slide every 3 seconds (adjust as needed)
-  wrap: true, // Set to false if you don't want to loop
+document.addEventListener('DOMContentLoaded', function () {
+  var newsCarouselElement = document.getElementById("newsCarousel");
+  
+  // Check if the newsCarousel element exists
+  if (newsCarouselElement !== null) {
+      var newsCarousel = new bootstrap.Carousel(newsCarouselElement, {
+          interval: 3000, // Change slide every 3 seconds (adjust as needed)
+          wrap: true, // Set to false if you don't want to loop
+      });
+  }
 });
