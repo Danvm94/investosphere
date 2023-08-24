@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container portfolio-container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1><i class="fa-solid fa-wallet"></i> Balance</h1>
+            <p><i class="fa-solid fa-dollar-sign"></i> <span class="text-success">{{balance}}</span></p>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#depositModal">
+                Deposit
+            </button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Withdaw
+            </button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

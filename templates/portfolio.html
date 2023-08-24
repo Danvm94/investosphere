@@ -1,49 +1,77 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container brief-container">
+<div class="container portfolio-container">
     <div class="row">
         <div class="col-md-12 text-center">
-            <h1><i class="fa-solid fa-money-check-dollar"></i> Balance</h1>
+            <h1><i class="fa-solid fa-wallet"></i> Balance</h1>
             <p><i class="fa-solid fa-dollar-sign"></i> <span class="text-success">{{balance}}</span></p>
-
-        </div>
-    </div>
-</div>
-
-<div class="container brief-container">
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <h1><i class="fa-solid fa-money-check-dollar"></i> Portfolios</h1>
-            {%for portfolio in portfolios%}
-            <p><i class="fa-solid fa-dollar-sign"></i> <span class="text-success">{{portfolio}}</span></p>
-            {%endfor%}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <h2><i class="fa-solid fa-money-check-dollar"></i> Create a new portfolio</h2>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#depositModal">
+                Deposit
+            </button>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Launch demo modal
+                Withdaw
             </button>
         </div>
     </div>
 </div>
+
+<div class="container portfolio-container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1><i class="fa-solid fa-money-check-dollar"></i> Portfolios</h1>
+            {%for portfolio in portfolios%}
+            <p><i class="fa-solid fa-folder"></i> {{portfolio.name}}</p>
+            {%endfor%}
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Create a new Portfolio
+            </button>
+        </div>
+    </div>
+</div>
+<!--Deposit Modal-->
+<div class="modal fade" id="depositModal" tabindex="-1" aria-labelledby="depositModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="new-portfolio-form" method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="depositModalLabel">Deposit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <label for="{{ form.name.id_for_label }}" class="form-label">Ammount</label>
+                    <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}"
+                        class="form-control"><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <form class="new-portfolio-form" method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">New Portfolio</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <label for="{{ form.name.id_for_label }}" class="form-label">Portfolio Name</label>
+                    <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}"
+                        class="form-control"><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
             </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 
