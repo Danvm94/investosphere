@@ -41,36 +41,40 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  var amountInput = document.getElementById("id_dollars");
-  if (amountInput !== null) {
-    let inputBuffer = "0.00";
+  var amountInputFields = document.getElementsByClassName("balance-modal");
+  if (amountInputFields !== null) {
+    for (amountInputField of amountInputFields) {
+      let inputBuffer = "0.00";
 
-    amountInput.addEventListener("input", function (event) {
-      const value = event.target.value;
+      amountInputField.addEventListener("input", function (event) {
+        const value = event.target.value;
 
-      // Remove non-digit characters from the input
-      const digits = value.replace(/\D/g, "");
+        // Remove non-digit characters from the input
+        const digits = value.replace(/\D/g, "");
 
-      // Convert the digits into a floating-point number
-      const amount = parseFloat(digits) / 100;
+        // Convert the digits into a floating-point number
+        const amount = parseFloat(digits) / 100;
 
-      // If amount is NaN, set it to 0
-      const sanitizedAmount = isNaN(amount) ? 0 : amount;
+        // If amount is NaN, set it to 0
+        const sanitizedAmount = isNaN(amount) ? 0 : amount;
 
-      // Format the number as currency with two decimal places
-      const formattedAmount = amount.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
+        // Format the number as currency with two decimal places
+        const formattedAmount = amount.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+
+        // Update the input value
+        event.target.value = formattedAmount;
       });
-
-      // Update the input value
-      event.target.value = formattedAmount;
-    });
-    // Handle form submission to convert the formatted value back to decimal before sending
-    amountInput.closest("form").addEventListener("submit", function () {
-      const formattedValue = amountInput.value;
-      const decimalValue = parseFloat(formattedValue.replace(/[^0-9.-]/g, ""));
-      amountInput.value = decimalValue.toFixed(2); // Set the value back to decimal format
-    });
+      // Handle form submission to convert the formatted value back to decimal before sending
+      amountInputField.closest("form").addEventListener("submit", function () {
+        const formattedValue = amountInputField.value;
+        const decimalValue = parseFloat(
+          formattedValue.replace(/[^0-9.-]/g, "")
+        );
+        amountInputField.value = decimalValue.toFixed(2); // Set the value back to decimal format
+      });
+    }
   }
 });

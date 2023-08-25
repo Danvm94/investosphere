@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Wallet, Portfolio, Transactions
-from .forms import PortfolioForm, AddMoneyForm
+from .forms import PortfolioForm, ManageMoneyForm
 import requests
 import os
 
@@ -30,30 +30,55 @@ def portfolio_view(request):
 def wallet_view(request):
     user = request.user
     if request.method == 'POST':
-        form = AddMoneyForm(request.POST)
+        form = ManageMoneyForm(request.POST)
         if form.is_valid():
+            action = request.POST.get('action')
             amount = form.cleaned_data['dollars']
-            addMoney(user=user, amount=amount)
-            return redirect('wallet')
+            if action == 'deposit':
+                manageMoney(user, amount, 'deposit')
+            elif action == 'withdraw':
+                try:
+                    manageMoney(user, amount, 'withdraw')
+                except ValueError as error:
+                    messages.warning(request, error)
+        return redirect('wallet')
     elif request.method == 'GET':
         wallet = Wallet.objects.get(user=user)
         balance = wallet.dollars
-        transactions = Transactions.objects.filter(user=user, type="money")
-        form = AddMoneyForm(request.POST)
+        transactions = Transactions.objects.filter(user=user, symbol="dollar")
+        form = ManageMoneyForm(request.POST)
         return render(request, 'wallet.html', {'balance': balance, 'transactions': transactions, 'form': form})
 
 
-def addMoney(user, amount):
+def manageMoney(user, amount, transaction):
+    wallet = get_or_create_wallet(user)
+    if transaction == "deposit":
+        deposit_into_wallet(user, wallet, amount)
+    elif transaction == "withdraw":
+        withdraw_from_wallet(user, wallet, amount)
+    wallet.save()
+
+
+def deposit_into_wallet(user, wallet, amount):
+    wallet.dollars += amount
+    transaction = Transactions.objects.create(
+        user=user,  type="deposit", symbol="dollar", amount=amount)
+
+
+def withdraw_from_wallet(user, wallet, amount):
+    if wallet.dollars >= amount:
+        wallet.dollars -= amount
+        transaction = Transactions.objects.create(
+            user=user,  type="withdraw", symbol="dollar", amount=-amount)
+    else:
+        raise ValueError(
+            "Insufficient funds in your wallet. "
+            "The withdrawal amount exceeds your available balance.")
+
+
+def get_or_create_wallet(user):
     try:
         wallet = Wallet.objects.get(user=user)
-        wallet.dollars += amount
-        wallet.save()
-        transaction_success = True
     except Wallet.DoesNotExist:
-        wallet = Wallet.objects.create(user=user, dollars=amount)
-        transaction_success = False
-
-    transaction = Transactions.objects.create(
-        user=user,  type="money", symbol="dollar", amount=amount)
-
-    return transaction_success
+        wallet = Wallet.objects.create(user=user)
+    return wallet
