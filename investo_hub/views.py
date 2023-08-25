@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Wallet, Portfolio, Transactions
-from .forms import PortfolioForm
+from .forms import PortfolioForm, AddMoneyForm
 import requests
 import os
 
@@ -29,10 +29,18 @@ def portfolio_view(request):
 
 def wallet_view(request):
     user = request.user
-    wallet = Wallet.objects.get(user=user)
-    balance = wallet.dollars
-    transactions = Transactions.objects.filter(user=user, type="money")
-    return render(request, 'wallet.html', {'balance': balance, 'transactions': transactions})
+    if request.method == 'POST':
+        form = AddMoneyForm(request.POST)
+        if form.is_valid():
+            amount = form.cleaned_data['dollars']
+            addMoney(user=user, amount=amount)
+            return redirect('wallet')
+    elif request.method == 'GET':
+        wallet = Wallet.objects.get(user=user)
+        balance = wallet.dollars
+        transactions = Transactions.objects.filter(user=user, type="money")
+        form = AddMoneyForm(request.POST)
+        return render(request, 'wallet.html', {'balance': balance, 'transactions': transactions, 'form': form})
 
 
 def addMoney(user, amount):

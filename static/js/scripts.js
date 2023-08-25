@@ -33,7 +33,6 @@ function opacityChange(type, element) {
 
 document.addEventListener('DOMContentLoaded', function () {
   var newsCarouselElement = document.getElementById("newsCarousel");
-  
   // Check if the newsCarousel element exists
   if (newsCarouselElement !== null) {
       var newsCarousel = new bootstrap.Carousel(newsCarouselElement, {
@@ -41,4 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
           wrap: true, // Set to false if you don't want to loop
       });
   }
+
+  var amountInput = document.getElementById('amountInput');
+  
 });
