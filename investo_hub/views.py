@@ -2,7 +2,7 @@ from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Wallet, Portfolio
+from .models import Wallet, Portfolio, Transactions
 from .forms import PortfolioForm
 import requests
 import os
@@ -31,4 +31,21 @@ def wallet_view(request):
     user = request.user
     wallet = Wallet.objects.get(user=user)
     balance = wallet.dollars
-    return render(request, 'wallet.html', {'balance': balance})
+    transactions = Transactions.objects.filter(user=user, type="money")
+    return render(request, 'wallet.html', {'balance': balance, 'transactions': transactions})
+
+
+def addMoney(user, amount):
+    try:
+        wallet = Wallet.objects.get(user=user)
+        wallet.dollars += amount
+        wallet.save()
+        transaction_success = True
+    except Wallet.DoesNotExist:
+        wallet = Wallet.objects.create(user=user, dollars=amount)
+        transaction_success = False
+
+    transaction = Transactions.objects.create(
+        user=user,  type="money", symbol="dollar", amount=amount)
+
+    return transaction_success

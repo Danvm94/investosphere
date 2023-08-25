@@ -1,19 +1,70 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!--Container for the ballance-->
 <div class="container portfolio-container">
     <div class="row">
         <div class="col-md-12 text-center">
             <h1><i class="fa-solid fa-wallet"></i> Balance</h1>
             <p><i class="fa-solid fa-dollar-sign"></i> <span class="text-success">{{balance}}</span></p>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#depositModal">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#depositModal">
                 Deposit
             </button>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Withdaw
             </button>
         </div>
     </div>
 </div>
-
+<!--Container for the transactions history-->
+<div class="container portfolio-container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1><i class="fa-solid fa-clock-rotate-left"></i> Transactions</h1>
+            <table class="table table-striped">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Transaction Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for transaction in transactions%}
+                        <th scope="row"
+                            class="{% if transaction.amount > 0 %}text-success{% else %}text-danger{% endif %}">
+                            {% if transaction.amount > 0 %} +{% else %}-{% endif %}
+                            {{ transaction.amount }}
+                        </th>
+                        <td>{{transaction.created_at}}</td>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </table>
+        </div>
+    </div>
+</div>
+<!--Deposit Modal-->
+<div class="modal fade" id="depositModal" tabindex="-1" aria-labelledby="depositModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="new-portfolio-form" method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="depositModalLabel"><i class="fa-solid fa-money-bill-transfer"></i> Deposit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <label for="{{ form.name.id_for_label }}" class="form-label">Amount</label>
+                    <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}"
+                        class="form-control"><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Confirm</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
