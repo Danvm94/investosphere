@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const sanitizedAmount = isNaN(amount) ? 0 : amount;
 
         // Format the number as currency with two decimal places
-        const formattedAmount = amount.toLocaleString(undefined, {
+        const formattedAmount = sanitizedAmount.toLocaleString(undefined, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         });

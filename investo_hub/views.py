@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Wallet, Portfolio, Transactions
 from .forms import PortfolioForm, ManageMoneyForm
+from .transactions import perform_money_transaction, deposit_into_wallet, withdraw_from_wallet, get_or_create_wallet
 import requests
 import os
 
@@ -35,10 +36,10 @@ def wallet_view(request):
             action = request.POST.get('action')
             amount = form.cleaned_data['dollars']
             if action == 'deposit':
-                manageMoney(user, amount, 'deposit')
+                perform_money_transaction(user, amount, 'deposit')
             elif action == 'withdraw':
                 try:
-                    manageMoney(user, amount, 'withdraw')
+                    perform_money_transaction(user, amount, 'withdraw')
                 except ValueError as error:
                     messages.warning(request, error)
         return redirect('wallet')
@@ -48,37 +49,3 @@ def wallet_view(request):
         transactions = Transactions.objects.filter(user=user, symbol="dollar")
         form = ManageMoneyForm(request.POST)
         return render(request, 'wallet.html', {'balance': balance, 'transactions': transactions, 'form': form})
-
-
-def manageMoney(user, amount, transaction):
-    wallet = get_or_create_wallet(user)
-    if transaction == "deposit":
-        deposit_into_wallet(user, wallet, amount)
-    elif transaction == "withdraw":
-        withdraw_from_wallet(user, wallet, amount)
-    wallet.save()
-
-
-def deposit_into_wallet(user, wallet, amount):
-    wallet.dollars += amount
-    transaction = Transactions.objects.create(
-        user=user,  type="deposit", symbol="dollar", amount=amount)
-
-
-def withdraw_from_wallet(user, wallet, amount):
-    if wallet.dollars >= amount:
-        wallet.dollars -= amount
-        transaction = Transactions.objects.create(
-            user=user,  type="withdraw", symbol="dollar", amount=-amount)
-    else:
-        raise ValueError(
-            "Insufficient funds in your wallet. "
-            "The withdrawal amount exceeds your available balance.")
-
-
-def get_or_create_wallet(user):
-    try:
-        wallet = Wallet.objects.get(user=user)
-    except Wallet.DoesNotExist:
-        wallet = Wallet.objects.create(user=user)
-    return wallet
