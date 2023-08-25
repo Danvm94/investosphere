@@ -12,3 +12,4 @@ cloudinary_python.txt
 venv
 *.sqlite3
 .vscode
+.idea

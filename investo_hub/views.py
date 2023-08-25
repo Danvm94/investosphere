@@ -1,14 +1,12 @@
-from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Wallet, Portfolio, Transactions
 from .forms import PortfolioForm, ManageMoneyForm
-from .transactions import perform_money_transaction, deposit_into_wallet, withdraw_from_wallet, get_or_create_wallet
-import requests
-import os
+from .transactions import perform_money_transaction
 
 
+@login_required
 def portfolio_view(request):
     user = request.user
 
@@ -16,7 +14,7 @@ def portfolio_view(request):
         form = PortfolioForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
-            new_portfolio = Portfolio.objects.create(user=user, name=name)
+            Portfolio.objects.create(user=user, name=name)
             return redirect('portfolio')
     else:
         form = PortfolioForm()
@@ -28,20 +26,18 @@ def portfolio_view(request):
     return render(request, 'portfolio.html', {'balance': balance, 'portfolios': portfolios, 'form': form})
 
 
+@login_required
 def wallet_view(request):
     user = request.user
     if request.method == 'POST':
         form = ManageMoneyForm(request.POST)
         if form.is_valid():
-            action = request.POST.get('action')
+            transaction = request.POST.get('action')
             amount = form.cleaned_data['dollars']
-            if action == 'deposit':
-                perform_money_transaction(user, amount, 'deposit')
-            elif action == 'withdraw':
-                try:
-                    perform_money_transaction(user, amount, 'withdraw')
-                except ValueError as error:
-                    messages.warning(request, error)
+            try:
+                perform_money_transaction(user, amount, transaction)
+            except ValueError as error:
+                messages.warning(request, error)
         return redirect('wallet')
     elif request.method == 'GET':
         wallet = Wallet.objects.get(user=user)
