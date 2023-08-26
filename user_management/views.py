@@ -1,9 +1,8 @@
-from django.contrib.auth import login
+from django.core.cache import cache
 from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from investo_hub.models import Wallet
 from investo_hub.transactions import get_or_create_wallet
 import requests
 import os
@@ -58,16 +57,22 @@ def logout_view(request):
 
 
 def home_view(request):
-    NEWSAPI_KEY = os.environ.get('NEWSAPI_KEY')
-    NEWSAPI_URL = os.environ.get('NEWSAPI_URL')
-    params = {
-        'apiKey': NEWSAPI_KEY,
-        'language': 'en',
-        'q': 'crypto OR stock',
-        'sortBy': 'relevancy'
-    }
-    response = requests.get(NEWSAPI_URL, params=params)
-    news_data = response.json()
-    articles = news_data['articles'][:4]
+    newsapi_key = os.environ.get('NEWSAPI_KEY')
+    newsapi_url = os.environ.get('NEWSAPI_URL')
+    # Get article from cache
+    articles = cache.get('cached_articles')
+    # If cache doesn't exist, request the API and save it on cache.
+    if not articles:
+        params = {
+            'apiKey': newsapi_key,
+            'language': 'en',
+            'q': 'crypto OR stock',
+            'sortBy': 'relevancy'
+        }
+        response = requests.get(newsapi_url, params=params)
+        news_data = response.json()
+        articles = news_data['articles'][:4]
+
+        cache.set('cached_articles', articles, 24 * 60 * 60)
 
     return render(request, 'home.html', {'articles': articles})
