@@ -29,8 +29,8 @@ def portfolio_view(request):
 @login_required
 def wallet_view(request):
     user = request.user
+    form = ManageMoneyForm(request.POST or None)
     if request.method == 'POST':
-        form = ManageMoneyForm(request.POST)
         if form.is_valid():
             transaction = request.POST.get('action')
             amount = form.cleaned_data['dollars']
@@ -43,5 +43,4 @@ def wallet_view(request):
         wallet = Wallet.objects.get(user=user)
         balance = wallet.dollars
         transactions = Transactions.objects.filter(user=user, symbol="dollar")
-        form = ManageMoneyForm(request.POST)
         return render(request, 'wallet.html', {'balance': balance, 'transactions': transactions, 'form': form})

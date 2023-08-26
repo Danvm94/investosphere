@@ -1,40 +1,43 @@
 {% extends 'base.html' %}
 
+{% block register_active %}active{% endblock %}
+
 {% block content %}
-<div class="container registration-container">
-    <div class="row">
-        <div class="col-md-8">
-            <form class="registration-form" method="POST">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="username" name="username" class="form-control"><br>
-                        </div>
-                        <div class="col-md-5">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control"><br>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <div class="row">
-                        <div class="col-md-5 text-center justify-content-start">
-                            <button type="submit" class="btn btn-primary btn-lg" name="login"
-                                value="login">Login</button>
-                        </div>
-                        <div class="col-md-5 text-center justify-content-start">
-                            <a href="{% url 'register' %}">Don't have an account? Register here.</a>
+    <div class="container registration-container">
+        <div class="row">
+            <div class="col-md-8">
+                <form class="registration-form" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="username" name="username" class="form-control"><br>
+                            </div>
+                            <div class="col-md-5">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" name="password" class="form-control"><br>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-4">
-            <img src="https://res.cloudinary.com/dtja957k3/image/upload/v1691609273/investosphere/register-image.svg"
-                alt="Image" class="img-fluid registration-image">
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-md-5 text-center justify-content-start">
+                                <button type="submit" class="btn btn-primary btn-lg" name="login"
+                                        value="login">Login
+                                </button>
+                            </div>
+                            <div class="col-md-5 text-center justify-content-start">
+                                <a href="{% url 'register' %}">Don't have an account? Register here.</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <img src="https://res.cloudinary.com/dtja957k3/image/upload/v1691609273/investosphere/register-image.svg"
+                     alt="Image" class="img-fluid registration-image">
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

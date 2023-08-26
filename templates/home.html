@@ -1,85 +1,95 @@
 {% extends 'base.html' %}
 
+{% block home_active %}active{% endblock %}
+
 {% block content %}
 
-<div class="container brief-container mt-5 mb-5">
-    <div class="row">
-        <div class="col-md-8">
-            <h1>Your Intelligent Investing Hub for Stocks and Cryptocurrencies</h1>
-            <div class="d-none d-md-block">
-                <p>InvestoSphere empowers you to confidently explore the world of stock and cryptocurrency investments. Our platform offers real-time data, expert analysis, and insightful tools, enabling informed decision-making.</p>
+    <div class="container brief-container mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Your Intelligent Investing Hub for Stocks and Cryptocurrencies</h1>
+                <div class="d-none d-md-block">
+                    <p>InvestoSphere empowers you to confidently explore the world of stock and cryptocurrency
+                        investments. Our platform offers real-time data, expert analysis, and insightful tools, enabling
+                        informed decision-making.</p>
 
-                <p>Our mission is to simplify financial markets for all investors. With reliable information at your fingertips, you can analyze trends and create a well-informed investment strategy aligned with your goals.</p>
+                    <p>Our mission is to simplify financial markets for all investors. With reliable information at your
+                        fingertips, you can analyze trends and create a well-informed investment strategy aligned with
+                        your goals.</p>
 
-                <p>Whether in stocks or cryptocurrencies, InvestoSphere equips you with knowledge to make strategic choices. Successful investing involves understanding data, market psychology, and leveraging technology.</p>
+                    <p>Whether in stocks or cryptocurrencies, InvestoSphere equips you with knowledge to make strategic
+                        choices. Successful investing involves understanding data, market psychology, and leveraging
+                        technology.</p>
 
-                <p>Join InvestoSphere to unlock investment potential. Let's navigate the financial landscape together and seize opportunities that match your aspirations.</p>
+                    <p>Join InvestoSphere to unlock investment potential. Let's navigate the financial landscape
+                        together and seize opportunities that match your aspirations.</p>
 
-                <p>Start your journey today for a thriving investment future!</p>    
-            </div>
-            
-        </div>
-        <div class="col-sm-8 col-md-4 col-lg-4 order-first order-md-last text-center">
-            <img src="https://res.cloudinary.com/dtja957k3/image/upload/v1691609273/investosphere/brief-image.svg"
-                alt="Image" class="img-fluid">
-        </div>
-    </div>
-</div>
-
-<div class="container news-container d-none d-lg-block mb-5">
-    <div class="row">
-        <h1 class="text-center">News</h1>
-        {%for article in articles%}
-        <div class="col-md-3 d-sm-none d-md-block">
-            <div class="card">
-                <img src="{{ article.urlToImage }}" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        {{article.title}}</h5>
-                    <a href="{{ article.url }}" class="btn btn-primary" target="_blank">Read More</a>
+                    <p>Start your journey today for a thriving investment future!</p>
                 </div>
+
+            </div>
+            <div class="col-sm-8 col-md-4 col-lg-4 order-first order-md-last text-center">
+                <img src="https://res.cloudinary.com/dtja957k3/image/upload/v1691609273/investosphere/brief-image.svg"
+                     alt="Image" class="img-fluid">
             </div>
         </div>
-        {%endfor%}
     </div>
-</div>
 
-<div class="container news-container d-sm-block d-lg-none">
-    <div id="newsCarousel" class="carousel carousel-dark slide" data-bs-ride="carousel">
-        <h1 class="text-center">News</h1>
-        <div class="carousel-indicators">
+    <div class="container news-container d-none d-lg-block mb-5">
+        <div class="row">
+            <h1 class="text-center">News</h1>
             {% for article in articles %}
-            <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="{{ forloop.counter0 }}"
-                {% if forloop.first %}class="active"{% endif %}
-                aria-current="{% if forloop.first %}true{% endif %}" aria-label="Slide {{ forloop.counter0|add:1 }}"></button>
-            {% endfor %}
-        </div>
-        <div class="carousel-inner">
-            {% for article in articles %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="10000">
-                <div class="card">
-                    <img src="{{ article.urlToImage }}" class="card-img-top">
-                    <div class="card-body text-center"> <!-- Add text-center class here -->
-                        <h5 class="card-title">
-                            {{article.title}}</h5>
-                        <p class="card-text">
-                            {{article.description}}</p>
-                        <a href="{{ article.url }}" class="btn btn-primary mb-5" target="_blank">Read More</a>
+                <div class="col-md-3 d-sm-none d-md-block">
+                    <div class="card">
+                        <img src="{{ article.urlToImage }}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ article.title }}</h5>
+                            <a href="{{ article.url }}" class="btn btn-primary" target="_blank">Read More</a>
+                        </div>
                     </div>
                 </div>
-            </div>
             {% endfor %}
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </div>
-</div>
+
+    <div class="container news-container d-sm-block d-lg-none">
+        <div id="newsCarousel" class="carousel carousel-dark slide" data-bs-ride="carousel">
+            <h1 class="text-center">News</h1>
+            <div class="carousel-indicators">
+                {% for article in articles %}
+                    <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="{{ forloop.counter0 }}"
+                            {% if forloop.first %}class="active"{% endif %}
+                            aria-current="{% if forloop.first %}true{% endif %}"
+                            aria-label="Slide {{ forloop.counter0|add:1 }}"></button>
+                {% endfor %}
+            </div>
+            <div class="carousel-inner">
+                {% for article in articles %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="10000">
+                        <div class="card">
+                            <img src="{{ article.urlToImage }}" class="card-img-top">
+                            <div class="card-body text-center"> <!-- Add text-center class here -->
+                                <h5 class="card-title">
+                                    {{ article.title }}</h5>
+                                <p class="card-text">
+                                    {{ article.description }}</p>
+                                <a href="{{ article.url }}" class="btn btn-primary mb-5" target="_blank">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
 
 
 

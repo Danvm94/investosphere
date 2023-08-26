@@ -41,9 +41,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  var amountInputFields = document.getElementsByClassName("balance-modal");
+  const amountInputFields = document.getElementsByClassName("balance-modal");
   if (amountInputFields !== null) {
-    for (amountInputField of amountInputFields) {
+    for (const amountInputField of amountInputFields) {
       let inputBuffer = "0.00";
 
       amountInputField.addEventListener("input", function (event) {

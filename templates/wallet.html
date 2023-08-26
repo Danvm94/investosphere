@@ -1,106 +1,114 @@
 {% extends 'base.html' %}
 
+{% block wallet_active %}active{% endblock %}
+
 {% block content %}
-<!--Container for the ballance-->
-<div class="container portfolio-container">
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <h1><i class="fa-solid fa-wallet"></i> Balance</h1>
-            <p><i class="fa-solid fa-dollar-sign"></i> <span class="text-success">{{balance}}</span></p>
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#depositModal">
-                Deposit
-            </button>
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#withdrawModal">
-                Withdraw
-            </button>
+    <!--Container for the balance-->
+    <div class="container portfolio-container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1><i class="fa-solid fa-wallet"></i> Balance</h1>
+                <p><i class="fa-solid fa-dollar-sign"></i> <span class="text-success">{{ balance }}</span></p>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#depositModal">
+                    Deposit
+                </button>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#withdrawModal">
+                    Withdraw
+                </button>
+            </div>
         </div>
     </div>
-</div>
-<!--Container for the transactions history-->
-<div class="container portfolio-container">
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <h1><i class="fa-solid fa-clock-rotate-left"></i> Transactions</h1>
-            <table class="table table-striped">
+    <!--Container for the transactions history-->
+    <div class="container portfolio-container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1><i class="fa-solid fa-clock-rotate-left"></i> Transactions</h1>
                 <table class="table table-striped">
                     <thead>
-                        <tr>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Transaction Date</th>
-                        </tr>
+                    <tr>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Currency</th>
+                        <th scope="col">Transaction Date</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {%for transaction in transactions%}
+                    {% for transaction in transactions %}
                         <tr>
                             <th scope="row"
                                 class="{% if transaction.amount > 0 %}text-success{% else %}text-danger{% endif %}">
                                 {% if transaction.amount > 0 %}+{% endif %}{{ transaction.amount }}
                             </th>
-                            <td>{{transaction.created_at}}</td>
+                            <td class="text-capitalize">{{ transaction.type }}</td>
+                            <td class="text-capitalize">{{ transaction.symbol }}</td>
+                            <td>{{ transaction.created_at }}</td>
                         </tr>
-                        {%endfor%}
+                    {% endfor %}
                     </tbody>
                 </table>
-            </table>
+            </div>
         </div>
     </div>
-</div>
-<!--Deposit Modal-->
-<div class="modal fade" id="depositModal" tabindex="-1" aria-labelledby="depositModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form class="add-money-form" method="POST">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="depositModalLabel"><i class="fa-solid fa-money-bill-transfer"></i>
-                        Deposit</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!--Deposit Modal-->
+    <div class="modal fade" id="depositModal" tabindex="-1" aria-labelledby="depositModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="add-money-form" method="POST">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="depositModalLabel"><i
+                                class="fa-solid fa-money-bill-transfer"></i>
+                            Deposit</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <label for="{{ form.dollars.id_for_label }}" class="form-label"><i
+                                class="fa-solid fa-dollar-sign"></i>
+                            Amount</label>
+                        <input type="text" name="{{ form.dollars.name }}" id="{{ form.dollars.id_for_label }}"
+                               class="form-control balance-modal" placeholder="1.00" min="1.00" max="99999.99"
+                               value="1.00">
+                        <input type="hidden" name="action" value="deposit"><br>
+                        <footer class="blockquote-footer">Values from 1.00 to 99999.99
+                        </footer>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Confirm</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    {% csrf_token %}
-                    <label for="{{ form.dollars.id_for_label }}" class="form-label"><i
-                            class="fa-solid fa-dollar-sign"></i>
-                        Amount</label>
-                    <input type="text" name="{{ form.dollars.name }}" id="{{ form.dollars.id_for_label }}"
-                        class="form-control balance-modal" placeholder="1.00" min="1.00" max="99999.99" value="1.00">
-                    <input type="hidden" name="action" value="deposit"><br>
-                    <footer class="blockquote-footer">Values from 1.00 to 99999.99
-                    </footer>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Confirm</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
-<!--Withdaw Modal-->
-<div class="modal fade" id="withdrawModal" tabindex="-1" aria-labelledby="withdrawModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form class="add-money-form" method="POST">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="withdrawModalLabel"><i class="fa-solid fa-money-bill-transfer"></i>
-                        Withdraw</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!--Withdraw Modal-->
+    <div class="modal fade" id="withdrawModal" tabindex="-1" aria-labelledby="withdrawModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="add-money-form" method="POST">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="withdrawModalLabel"><i
+                                class="fa-solid fa-money-bill-transfer"></i>
+                            Withdraw</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <label for="{{ form.dollars.id_for_label }}" class="form-label"><i
+                                class="fa-solid fa-dollar-sign"></i>
+                            Amount</label>
+                        <input type="text" name="{{ form.dollars.name }}" id="{{ form.dollars.id_for_label }}"
+                               class="form-control balance-modal" placeholder="1.00" min="1.00" max="{{ balance }}"
+                               value="1.00">
+                        <input type="hidden" name="action" value="withdraw"><br>
+                        <footer class="blockquote-footer">Values from 1.00 to {{ balance }}
+                        </footer>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Confirm</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    {% csrf_token %}
-                    <label for="{{ form.dollars.id_for_label }}" class="form-label"><i
-                            class="fa-solid fa-dollar-sign"></i>
-                        Amount</label>
-                    <input type="text" name="{{ form.dollars.name }}" id="{{ form.dollars.id_for_label }}"
-                        class="form-control balance-modal" placeholder="1.00" min="1.00" max="{{balance}}" value="1.00">
-                    <input type="hidden" name="action" value="withdraw"><br>
-                    <footer class="blockquote-footer">Values from 1.00 to {{balance}}
-                    </footer>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Confirm</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}
