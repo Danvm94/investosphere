@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block crypto_active %}active{% endblock %}
+
+{% block content %}
+    <div class="container top-cryptos-container mb-5 text-center">
+        <h1 class="text-center">Top 5 Market Cap</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Symbol</th>
+                <th>Market Cap</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for crypto_trending in cryptos_trending %}
+                <tr>
+                    <td><img src="{{ crypto_trending.image }}" alt="{{ crypto_trending.item.name }} Thumbnail"
+                             class=" max-width-100 max-height-100">
+                    </td>
+                    <td>{{ crypto_trending.symbol }}</td>
+                    <td>$ {{ crypto_trending.market_cap }}</td>
+                    <td>USD {{ crypto_trending.current_price }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

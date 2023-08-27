@@ -85,6 +85,20 @@
   padding: 10px;
 }
 
+.top-cryptos-container {
+  background-color: rgba(240, 240, 240, 0.7);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  padding: 4px 0 1px 0;
+  border-radius: 15px;
+  margin-top: 50px;
+}
+
+.top-cryptos-container img {
+  height: 25px;
+  width: 25px;
+  object-fit: cover;
+}
+
 @media (min-width: 992px) {
   .nav-link {
     border-radius: 5px;

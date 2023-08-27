@@ -1,12 +1,10 @@
-from django.core.cache import cache
 from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from investo_hub.transactions import get_or_create_wallet
-import requests
-import os
-# Create your views here.
+from investo_hub.cryptos import get_top_gainers
+from .newsapi import get_news_api
 
 
 def registration_view(request):
@@ -57,22 +55,6 @@ def logout_view(request):
 
 
 def home_view(request):
-    newsapi_key = os.environ.get('NEWSAPI_KEY')
-    newsapi_url = os.environ.get('NEWSAPI_URL')
-    # Get article from cache
-    articles = cache.get('cached_articles')
-    # If cache doesn't exist, request the API and save it on cache.
-    if not articles:
-        params = {
-            'apiKey': newsapi_key,
-            'language': 'en',
-            'q': 'crypto OR stock',
-            'sortBy': 'relevancy'
-        }
-        response = requests.get(newsapi_url, params=params)
-        news_data = response.json()
-        articles = news_data['articles'][:4]
-
-        cache.set('cached_articles', articles, 24 * 60 * 60)
-
-    return render(request, 'home.html', {'articles': articles})
+    articles = get_news_api()
+    cryptos_trending = get_top_gainers(5)
+    return render(request, 'home.html', {'articles': articles, 'cryptos_trending': cryptos_trending})

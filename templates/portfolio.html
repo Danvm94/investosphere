@@ -3,63 +3,31 @@
 {% block portfolio_active %}active{% endblock %}
 
 {% block content %}
-    <div class="container portfolio-container">
+    <div class="container news-container text-center">
         <div class="row">
-            <div class="col-md-12 text-center">
-                <h1><i class="fa-solid fa-wallet"></i> Balance</h1>
-                <p><i class="fa-solid fa-dollar-sign"></i> <span class="text-success">{{ balance }}</span></p>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#depositModal">
-                    Deposit
-                </button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Withdaw
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="container portfolio-container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h1><i class="fa-solid fa-money-check-dollar"></i> Portfolios</h1>
-                {% for portfolio in portfolios %}
-                    <p><i class="fa-solid fa-folder"></i> {{ portfolio.name }}</p>
-                {% endfor %}
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Create a new Portfolio
-                </button>
-            </div>
+            <h1><i class="fa-solid fa-money-check-dollar"></i> Portfolios</h1>
+            {% for portfolio in portfolios %}
+                <div class="card border-secondary mb-3 mx-auto" style="max-width: 18rem;">
+                    <div class="card-header">{{ portfolio.name }}</div>
+                    <div class="card-body text-secondary">
+                        <p class="card-text">.</p>
+                        <div class="crypto-buttons">
+                            <button class="btn btn-primary">Rename</button>
+                            <button class="btn btn-secondary">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
     <!--Deposit Modal-->
-    <div class="modal fade" id="depositModal" tabindex="-1" aria-labelledby="depositModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newPortfolioModal" tabindex="-1" aria-labelledby="depositModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <form class="new-portfolio-form" method="POST">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="depositModalLabel">Deposit</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        {% csrf_token %}
-                        <label for="{{ form.name.id_for_label }}" class="form-label">Ammount</label>
-                        <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}"
-                               class="form-control"><br>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <form class="new-portfolio-form" method="POST">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">New Portfolio</h1>
+                        <h1 class="modal-title fs-5" id="depositModalLabel">New Portfolio</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
