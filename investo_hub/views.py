@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Wallet, Portfolio, Transactions
 from .forms import PortfolioForm, ManageMoneyForm
 from .transactions import perform_money_transaction
-from .cryptos import get_top_gainers
+from .cryptos import get_top_gainers, get_all_coins, get_price
 import os
 
 
@@ -39,10 +39,16 @@ def wallet_view(request):
         wallet = Wallet.objects.get(user=user)
         balance = wallet.dollars
         transactions = Transactions.objects.filter(user=user, symbol="dollar")
-        return render(request, 'wallet.html', {'balance': balance, 'transactions': transactions, 'form': form})
+        cryptos_list = get_all_coins
+        return render(request, 'wallet.html',
+                      {'balance': balance, 'transactions': transactions, 'form': form, 'cryptos_list': cryptos_list})
 
 
 @login_required
 def crypto_view(request):
     cryptos_trending = get_top_gainers(5)
     return render(request, 'crypto.html', {'cryptos_trending': cryptos_trending})
+
+
+def get_price_view(request):
+    return get_price(request)

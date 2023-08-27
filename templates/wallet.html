@@ -6,8 +6,8 @@
     <!--Container for the balance-->
     <div class="container portfolio-container">
         <div class="row">
-            <div class="col-md-12 text-center">
-                <h1><i class="fa-solid fa-wallet"></i> Balance</h1>
+            <div class="col-md-6 text-center">
+                <h1><i class="fa-solid fa-wallet"></i> Money Balance</h1>
                 <p><i class="fa-solid fa-dollar-sign"></i> <span class="text-success">{{ balance }}</span></p>
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#depositModal">
                     Deposit
@@ -16,6 +16,38 @@
                     Withdraw
                 </button>
             </div>
+            <div class="col-md-6 text-center">
+                <h1><i class="fa-solid fa-wallet"></i> Crypto Balance</h1>
+                <p><i class="fa-solid fa-dollar-sign"></i> <span class="text-success">{{ balance }}</span></p>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#buyModal">
+                    Buy
+                </button>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#withdrawModal">
+                    Sell
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="container portfolio-container">
+        <div class="row">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Currency</th>
+                    <th scope="col">Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><img class="cryptos-image" src="https://img.icons8.com/?size=512&id=44232&format=png"></td>
+                    <td>Dollar</td>
+                    <td>USD</td>
+                    <td>$ {{ balance }}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <!--Container for the transactions history-->
@@ -93,6 +125,44 @@
                     </div>
                     <div class="modal-body">
                         {% csrf_token %}
+                        <label for="{{ form.dollars.id_for_label }}" class="form-label"><i
+                                class="fa-solid fa-dollar-sign"></i>
+                            Amount</label>
+                        <input type="text" name="{{ form.dollars.name }}" id="{{ form.dollars.id_for_label }}"
+                               class="form-control balance-modal" placeholder="1.00" min="1.00" max="{{ balance }}"
+                               value="1.00">
+                        <input type="hidden" name="action" value="withdraw"><br>
+                        <footer class="blockquote-footer">Values from 1.00 to {{ balance }}
+                        </footer>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Confirm</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Buy Modal -->
+    <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="add-money-form" method="POST">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="buyModalLabel"><i
+                                class="fa-solid fa-money-bill-transfer"></i>
+                            Buy</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <label for="crypto">Crypto</label>
+                        <select id="crypto" name="crypto">
+                            {% for crypto in cryptos_list %}
+                                <option value="{{ crypto.id }}">{{ crypto.name }}</option>
+                            {% endfor %}
+                        </select>
+                    <p id="price">test</p>
                         <label for="{{ form.dollars.id_for_label }}" class="form-label"><i
                                 class="fa-solid fa-dollar-sign"></i>
                             Amount</label>

@@ -3,6 +3,21 @@
 {% block crypto_active %}active{% endblock %}
 
 {% block content %}
+    <div class="container portfolio-container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1><i class="fa-solid fa-wallet"></i> Crypto Balance</h1>
+                <p><i class="fa-solid fa-dollar-sign"></i> <span class="text-success">{{ balance }}</span></p>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#depositModal">
+                    Deposit
+                </button>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#withdrawModal">
+                    Withdraw
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Top 5 Market Cap Container -->
     <div class="container top-cryptos-container mb-5 text-center">
         <h1 class="text-center">Top 5 Market Cap</h1>
         <table class="table table-striped">

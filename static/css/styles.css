@@ -1,109 +1,117 @@
 * {
-  font-family: "Roboto", sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 
 
 .bg-charcoal {
-  --bs-bg-opacity: 1;
-  background-color: #181918;
+    --bs-bg-opacity: 1;
+    background-color: #181918;
 }
 
 .registration-container {
-  background-color: #f0f0f0;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  padding: 40px;
-  border-radius: 15px;
-  margin-top: 50px;
+    background-color: #f0f0f0;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    border-radius: 15px;
+    margin-top: 50px;
 }
 
 .registration-form label {
-  color: #333;
-  font-size: 18px;
-  margin-bottom: 5px;
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 5px;
 }
 
 .registration-form input,
 .registration-form button {
-  margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 .registration-image {
-  border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
+
 .registration-form button {
-  background-color: #181918; /* Blue button color */
-  border-color: #000000; /* Border color to match */
-  width: 150px;
+    background-color: #181918; /* Blue button color */
+    border-color: #000000; /* Border color to match */
+    width: 150px;
 }
+
 .registration-form button:hover {
-  background-color: #50c878;
-  border-color: #000000;
+    background-color: #50c878;
+    border-color: #000000;
 }
 
 .alert-warning {
-  transition: opacity 2s ease-in-out; /* Add transition property */
+    transition: opacity 2s ease-in-out; /* Add transition property */
 }
 
 .news-container {
-  background-color: rgba(240, 240, 240, 0.7);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  padding: 40px;
-  border-radius: 15px;
-  margin-top: 50px;
+    background-color: rgba(240, 240, 240, 0.7);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    border-radius: 15px;
+    margin-top: 50px;
 }
 
 .news-container img {
-  height: 150px;
-  object-fit: cover;
+    height: 150px;
+    object-fit: cover;
 }
 
 .news-container h5 {
-  font-size: 1rem;
-  height: 7rem;
-  overflow: hidden;
+    font-size: 1rem;
+    height: 7rem;
+    overflow: hidden;
 }
 
 .news-container p {
-  font-size: 0.875rem;
-  height: 5rem;
-  overflow: hidden;
+    font-size: 0.875rem;
+    height: 5rem;
+    overflow: hidden;
 }
 
 .brief-container {
-  background-color: rgba(240, 240, 240, 0.7);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  padding: 40px;
-  border-radius: 0 0 15px 15px;
+    background-color: rgba(240, 240, 240, 0.7);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    border-radius: 0 0 15px 15px;
 }
 
 .portfolio-container {
-  margin-top: 50px;
-  background-color: rgba(240, 240, 240, 0.7);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 15px;
-  padding: 10px;
+    margin-top: 50px;
+    background-color: rgba(240, 240, 240, 0.7);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    padding: 10px;
 }
 
 .top-cryptos-container {
-  background-color: rgba(240, 240, 240, 0.7);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  padding: 4px 0 1px 0;
-  border-radius: 15px;
-  margin-top: 50px;
+    background-color: rgba(240, 240, 240, 0.7);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    padding: 4px 0 1px 0;
+    border-radius: 15px;
+    margin-top: 50px;
 }
 
 .top-cryptos-container img {
-  height: 25px;
-  width: 25px;
-  object-fit: cover;
+    height: 25px;
+    width: 25px;
+    object-fit: cover;
+}
+
+.cryptos-image {
+    height: 25px;
+    width: 25px;
+    object-fit: cover;
 }
 
 @media (min-width: 992px) {
-  .nav-link {
-    border-radius: 5px;
-    margin-left: 5px;
-    padding: 5px;
-    background-color: #222;
-  }
+    .nav-link {
+        border-radius: 5px;
+        margin-left: 5px;
+        padding: 5px;
+        background-color: #222;
+    }
 }
