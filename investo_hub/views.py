@@ -46,7 +46,7 @@ def wallet_view(request):
 
 @login_required
 def crypto_view(request):
-    cryptos_trending = get_top_gainers(5)
+    cryptos_trending = get_top_gainers(10)
     return render(request, 'crypto.html', {'cryptos_trending': cryptos_trending})
 
 

@@ -1,5 +1,6 @@
 from django.core.cache import cache
 from django.http import JsonResponse
+from investosphere import settings
 import requests
 import os
 
@@ -9,26 +10,22 @@ coin_api_url = os.environ.get('coin_api_url')
 def get_top_gainers(per_page):
     cryptos_trending = cache.get('cached_cryptos_trending')
     if not cryptos_trending:
+        formatted_ids = ", ".join(settings.CRYPTOCURRENCIES)
         params = {
             "vs_currency": "usd",
+            "ids": formatted_ids,
             "order": "market_cap_desc",
-            "per_page": 10,
             "page": 1
         }
         response = requests.get(coin_api_url + '/coins/markets', params=params)
         if response.status_code == 200:
             cryptos_trending = response.json()
-            cache.set('cached_cryptos_trending', cryptos_trending, 24 * 60 * 60)
+            cache.set('cached_cryptos_trending', cryptos_trending, 45)
     return cryptos_trending[:per_page]
 
 
 def get_all_coins():
-    cryptos_list = cache.get('cached_cryptos_list')
-    if not cryptos_list:
-        response = requests.get(coin_api_url + '/coins/list')
-        if response.status_code == 200:
-            cryptos_list = response.json()
-            cache.set('cached_cryptos_trending', cryptos_list, 24 * 60 * 60)
+    cryptos_list = settings.CRYPTOCURRENCIES
     return cryptos_list
 
 

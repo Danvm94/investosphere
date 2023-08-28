@@ -150,15 +150,14 @@ CACHES = {
 
 # Set the accepted Crypto
 CRYPTOCURRENCIES = [
-    "Bitcoin",
-    "Ethereum",
-    "Tether",
-    "BNB",
-    "XRP",
-    "Cardano",
-    "Dogecoin",
-    "Solana",
-    "TRON",
-    "Polkadot"
-
+    "bitcoin",
+    "ethereum",
+    "tether",
+    "binancecoin",
+    "ripple",
+    "cardano",
+    "dogecoin",
+    "solana",
+    "tron",
+    "polkadot"
 ]

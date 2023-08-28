@@ -161,7 +161,7 @@
                             <select id="crypto" name="crypto">
                                 <option value="" selected disabled>Please Select a Crypto</option>
                                 {% for crypto in cryptos_list %}
-                                    <option value="{{ crypto.id }}">{{ crypto.name }}</option>
+                                    <option class="text-capitalize" value="{{ crypto }}">{{ crypto }}</option>
                                 {% endfor %}
                             </select>
                         </div>
