@@ -1,22 +1,24 @@
+// Function for only letters in the input
 function allowOnlyLetters(inputElement) {
     inputElement.value = inputElement.value.replace(/[^a-zA-Z]/g, "");
 }
 
-var successMessages = document.getElementsByClassName("alert-success");
+// Function to hide elements
+function fadeOutAndHideElementsAutomatically(elements, fadeDelay, hideDelay) {
+    setTimeout(function () {
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.opacity = "0"; // Fade out animation
+        }
 
-// Set the timeout to remove the div after 5 seconds (5000 milliseconds)
-setTimeout(function () {
-    for (var i = 0; i < successMessages.length; i++) {
-        successMessages[i].style.opacity = "0"; // Fade out animation
-    }
-}, 8000); // Start fading after 800ms
+        setTimeout(function () {
+            for (let i = 0; i < elements.length; i++) {
+                elements[i].style.display = "none"; // Hide completely after animation
+            }
+        }, hideDelay); // Hide completely after specified delay
+    }, fadeDelay); // Start fading after specified delay
+}
 
-setTimeout(function () {
-    for (var i = 0; i < successMessages.length; i++) {
-        successMessages[i].style.display = "none"; // Hide completely after animation
-    }
-}, 10000); // Hide completely after 10 seconds
-
+// Function for opacity change
 function opacityChange(type, element) {
     if (type === "hide") {
         element.style.opacity = "0";
@@ -31,60 +33,67 @@ function opacityChange(type, element) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    var newsCarouselElement = document.getElementById("newsCarousel");
-    // Check if the newsCarousel element exists
-    if (newsCarouselElement !== null) {
-        var newsCarousel = new bootstrap.Carousel(newsCarouselElement, {
+function initializeNewsCarousel() {
+    const newsCarouselElement = document.getElementById("newsCarousel");
+    if (newsCarouselElement) {
+        new bootstrap.Carousel(newsCarouselElement, {
             interval: 3000, // Change slide every 3 seconds (adjust as needed)
             wrap: true, // Set to false if you don't want to loop
         });
     }
+}
 
+function initializeAmountInputFields() {
     const amountInputFields = document.getElementsByClassName("balance-modal");
-    if (amountInputFields !== null) {
-        for (const amountInputField of amountInputFields) {
-            let inputBuffer = "0.00";
-
-            amountInputField.addEventListener("input", function (event) {
-                const value = event.target.value;
-
-                // Remove non-digit characters from the input
-                const digits = value.replace(/\D/g, "");
-
-                // Convert the digits into a floating-point number
-                const amount = parseFloat(digits) / 100;
-
-                // If amount is NaN, set it to 0
-                const sanitizedAmount = isNaN(amount) ? 0 : amount;
-
-                // Format the number as currency with two decimal places
-                const formattedAmount = sanitizedAmount.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                });
-
-                // Update the input value
-                event.target.value = formattedAmount;
-            });
-            // Handle form submission to convert the formatted value back to decimal before sending
-            amountInputField.closest("form").addEventListener("submit", function () {
-                const formattedValue = amountInputField.value;
-                const decimalValue = parseFloat(
-                    formattedValue.replace(/[^0-9.-]/g, "")
-                );
-                amountInputField.value = decimalValue.toFixed(2); // Set the value back to decimal format
-            });
-        }
+    for (const amountInputField of amountInputFields) {
+        amountInputField.addEventListener("input", handleAmountInput);
+        amountInputField.closest("form").addEventListener("submit", handleAmountSubmit);
     }
-});
+}
 
-document.getElementById('crypto').addEventListener('change', async function () {
+function handleAmountInput(event) {
+    const value = event.target.value;
+    const digits = value.replace(/\D/g, "");
+    const amount = parseFloat(digits) / 100;
+    const sanitizedAmount = isNaN(amount) ? 0 : amount;
+    const formattedAmount = sanitizedAmount.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+    event.target.value = formattedAmount;
+}
+
+function handleAmountSubmit(event) {
+    const amountInputField = event.target.querySelector(".balance-modal");
+    const formattedValue = amountInputField.value;
+    const decimalValue = parseFloat(formattedValue.replace(/[^0-9.-]/g, ""));
+    amountInputField.value = decimalValue.toFixed(2); // Set the value back to decimal format
+}
+
+function initializeCryptoChangeHandler() {
+    const cryptoSelect = document.getElementById('crypto');
+    if (cryptoSelect) {
+        cryptoSelect.addEventListener('change', handleCryptoChange);
+    }
+}
+
+async function handleCryptoChange() {
     const selectedCrypto = this.value;
-    const response = await fetch(`/get_price/?crypto=${selectedCrypto}`);
-    const data = await response.json();
+    try {
+        const response = await fetch(`/get_price/?crypto=${selectedCrypto}`);
+        const data = await response.json();
+        const priceInput = document.getElementById('price');
+        priceInput.textContent = data.id; // Update the UI with the fetched price
+    } catch (error) {
+        console.error("Error fetching crypto price:", error);
+    }
+}
 
-    // Update the UI with the fetched price
-    const priceInput = document.getElementById('price');
-    priceInput.textContent = data.id;
+document.addEventListener("DOMContentLoaded", function () {
+    initializeNewsCarousel();
+    initializeAmountInputFields();
+    initializeCryptoChangeHandler();
 });
+
+const successMessages = document.getElementsByClassName("alert-success");
+fadeOutAndHideElementsAutomatically(successMessages, 8000, 2000);

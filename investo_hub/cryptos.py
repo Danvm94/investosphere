@@ -7,7 +7,7 @@ coin_api_url = os.environ.get('coin_api_url')
 
 
 def get_top_gainers(per_page):
-    cryptos_trending = cache.get('cached_cryptos_trending')
+    cryptos_trending = cache.get('cached_cryptos_trending')[:per_page]
     if not cryptos_trending:
         params = {
             "vs_currency": "usd",
