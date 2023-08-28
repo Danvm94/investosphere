@@ -36,9 +36,8 @@ def wallet_view(request):
             except ValueError as error:
                 messages.warning(request, error)
         if manage_crypto_form.is_valid():
-            print("here")
-        else:
-            print(manage_crypto_form.errors)
+            transaction = request.POST.get('action')
+            print(transaction)
         return redirect('wallet')
     elif request.method == 'GET':
         wallet = Wallet.objects.get(user=user)

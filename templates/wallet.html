@@ -146,7 +146,7 @@
     <!-- Buy Modal -->
     <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form class="add-money-form" method="POST">
+            <form class="buy-crypto-form" method="POST">
                 {% csrf_token %}
                 <div class="modal-content">
                     <div class="modal-header">
@@ -166,23 +166,24 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <div>
+                        <div id="usd-div" class="d-none">
                             <label for="{{ manage_crypto_form.usd_amount.id_for_label }}" class="form-label">
                                 <i class="fa-solid fa-dollar-sign"></i> USD Amount
                             </label>
-                            <input type="text" name="{{ manage_crypto_form.usd_amount.name }}"
-                                   id="{{ manage_crypto_form.usd_amount.id_for_label }}">
+                            <input type="number" name="{{ manage_crypto_form.usd_amount.name }}"
+                                   id="{{ manage_crypto_form.usd_amount.id_for_label }}" min="1">
                             <footer class="blockquote-footer">Values from 1.00 to 99999.99
                             </footer>
                         </div>
-                        <div>
+                        <div id="crypto-div" class="d-none">
                             <label for="{{ manage_crypto_form.crypto_amount.id_for_label }}" class="form-label">
                                 <i class="fa-solid fa-dollar-sign"></i> Crypto Amount
                             </label>
-                            <input type="text" name="{{ manage_crypto_form.crypto_amount.name }}"
-                                   id="{{ manage_crypto_form.crypto_amount.id_for_label }}">
+                            <input type="number" name="crypto_amount"
+                                   id="id_crypto_amount" disabled>
+                            <p id="price"></p>
+                            <input type="hidden" name="action" value="buy">
                         </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

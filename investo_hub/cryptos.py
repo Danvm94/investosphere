@@ -31,9 +31,6 @@ def get_all_coins():
 
 def get_price(request):
     selected_crypto = request.GET.get('crypto')
-
     response = requests.get(coin_api_url + f'/coins/{selected_crypto}')
-
     data = response.json()
-
     return JsonResponse(data)

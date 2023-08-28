@@ -24,6 +24,8 @@ def perform_money_transaction(user, amount, transaction):
         deposit_into_wallet(user, wallet, amount)
     elif transaction == "withdraw":
         withdraw_from_wallet(user, wallet, amount)
+    elif transaction == "buy":
+        withdraw_from_wallet(user, wallet, amount)
     else:
         raise ValueError("Invalid transaction type. The transaction type must be 'deposit' or 'withdraw'.")
     wallet.save()
@@ -104,3 +106,6 @@ def get_or_create_wallet(user):
     except Wallet.DoesNotExist:
         wallet = Wallet.objects.create(user=user)
     return wallet
+
+def buy_crypto(user):
+    pass
