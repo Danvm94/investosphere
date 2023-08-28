@@ -147,43 +147,40 @@
     <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form class="add-money-form" method="POST">
+                {% csrf_token %}
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="buyModalLabel"><i
-                                class="fa-solid fa-money-bill-transfer"></i>
+                        <h1 class="modal-title fs-5" id="buyModalLabel"><i class="fa-solid fa-money-bill-transfer"></i>
                             Buy</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        {% csrf_token %}
                         <div>
-                            <label for="crypto">Crypto</label>
-                            <select id="crypto" name="crypto">
-                                <option value="" selected disabled>Please Select a Crypto</option>
-                                {% for crypto in cryptos_list %}
-                                    <option class="text-capitalize" value="{{ crypto }}">{{ crypto }}</option>
+                            <label for="{{ manage_crypto_form.crypto.id_for_label }}" class="form-label">Select
+                                Crypto</label>
+                            <select name="{{ manage_crypto_form.crypto.name }}"
+                                    id="{{ manage_crypto_form.crypto.id_for_label }}">
+                                <option value="" disabled selected>Select a Crypto</option>
+                                {% for value, label in manage_crypto_form.crypto.field.choices %}
+                                    <option value="{{ value }}">{{ label }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="d-none" id="USDAmount-Container">
-                            <label for="USDAmount" class="form-label"><i
-                                    class="fa-solid fa-dollar-sign"></i>
-                                USD Amount</label>
-                            <input type="text" name="USDAmount" id="USDAmount"
-                                   class="form-control balance-modal" placeholder="1.00" min="1.00" max="{{ balance }}"
-                                   value="1.00">
-                        </div>
-                        <div class="d-none" id="CryptoAmount-Container">
-                            <label for="CryptoAmount" class="form-label"><i
-                                    class="fa-solid fa-dollar-sign"></i>
-                                Crypto Amount</label>
-
-                            <input type="text" name="CryptoAmount" id="CryptoAmount"
-                                   class="form-control balance-modal" placeholder="1.00" min="1.00" max="{{ balance }}"
-                                   value="1.00" disabled>
-                            <input type="hidden" name="action" value="withdraw"><br>
-                            <footer class="blockquote-footer">Values from 1.00 to {{ balance }} <span id="price"></span>
+                        <div>
+                            <label for="{{ manage_crypto_form.usd_amount.id_for_label }}" class="form-label">
+                                <i class="fa-solid fa-dollar-sign"></i> USD Amount
+                            </label>
+                            <input type="text" name="{{ manage_crypto_form.usd_amount.name }}"
+                                   id="{{ manage_crypto_form.usd_amount.id_for_label }}">
+                            <footer class="blockquote-footer">Values from 1.00 to 99999.99
                             </footer>
+                        </div>
+                        <div>
+                            <label for="{{ manage_crypto_form.crypto_amount.id_for_label }}" class="form-label">
+                                <i class="fa-solid fa-dollar-sign"></i> Crypto Amount
+                            </label>
+                            <input type="text" name="{{ manage_crypto_form.crypto_amount.name }}"
+                                   id="{{ manage_crypto_form.crypto_amount.id_for_label }}">
                         </div>
 
                     </div>

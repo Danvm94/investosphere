@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Wallet, Portfolio, Transactions
-from .forms import PortfolioForm, ManageMoneyForm
+from .forms import PortfolioForm, ManageMoneyForm, ManageCryptoForm
 from .transactions import perform_money_transaction
 from .cryptos import get_top_gainers, get_all_coins, get_price
 import os
@@ -25,15 +25,20 @@ def portfolio_view(request):
 @login_required
 def wallet_view(request):
     user = request.user
-    form = ManageMoneyForm(request.POST or None)
+    manage_money_form = ManageMoneyForm(request.POST or None)
+    manage_crypto_form = ManageCryptoForm(request.POST or None)
     if request.method == 'POST':
-        if form.is_valid():
+        if manage_money_form.is_valid():
             transaction = request.POST.get('action')
-            amount = form.cleaned_data['dollars']
+            amount = manage_money_form.cleaned_data['dollars']
             try:
                 perform_money_transaction(user, amount, transaction)
             except ValueError as error:
                 messages.warning(request, error)
+        if manage_crypto_form.is_valid():
+            print("here")
+        else:
+            print(manage_crypto_form.errors)
         return redirect('wallet')
     elif request.method == 'GET':
         wallet = Wallet.objects.get(user=user)
@@ -41,7 +46,9 @@ def wallet_view(request):
         transactions = Transactions.objects.filter(user=user, symbol="dollar")
         cryptos_list = get_all_coins
         return render(request, 'wallet.html',
-                      {'balance': balance, 'transactions': transactions, 'form': form, 'cryptos_list': cryptos_list})
+                      {'balance': balance, 'transactions': transactions, 'manage_money_form': manage_money_form,
+                       'manage_crypto_form': manage_crypto_form,
+                       'cryptos_list': cryptos_list})
 
 
 @login_required
