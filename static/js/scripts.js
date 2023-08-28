@@ -21,14 +21,14 @@ function fadeOutAndHideElementsAutomatically(elements, fadeDelay, hideDelay) {
 // Function for opacity change
 function opacityChange(type, element) {
     if (type === "hide") {
-        element.style.opacity = "0";
+
         setTimeout(() => {
-            element.style.display = "none";
+            element.classList.add('d-none');
         }, 1800);
     } else {
-        element.style.display = "flex";
+
         setTimeout(() => {
-            element.style.opacity = "1";
+            element.classList.remove('d-none');
         }, 50);
     }
 }
@@ -40,6 +40,25 @@ function initializeNewsCarousel() {
             interval: 3000, // Change slide every 3 seconds (adjust as needed)
             wrap: true, // Set to false if you don't want to loop
         });
+    }
+}
+
+function calculateCryptoAmount(event) {
+    const value = event.target.value.replace(/,/g, ''); // User's input in USD
+    const CryptoPrice = parseFloat(document.getElementById("price").getAttribute('data-price')); // Conversion rate (e.g., 0.00023)
+    const CryptoAmount = document.getElementById("CryptoAmount");
+    const Calculation = (value / CryptoPrice).toFixed(8); // Convert USD to cryptocurrency
+    console.log(`${value}/${CryptoPrice} = ${Calculation}`)
+    const result = Calculation.replace(/,/g, '');
+    CryptoAmount.value = result
+    console.log(result);
+}
+
+function initializeCryptoAmount() {
+    const CryptoAmountInput = document.getElementById("USDAmount")
+    if (CryptoAmountInput) {
+        CryptoAmountInput.addEventListener("input", calculateCryptoAmount);
+        console.log("here")
     }
 }
 
@@ -79,11 +98,18 @@ function initializeCryptoChangeHandler() {
 
 async function handleCryptoChange() {
     const selectedCrypto = this.value;
+    const USDAmountInput = document.getElementById("USDAmount-Container")
+    const CryptoAmountInput = document.getElementById("CryptoAmount-Container")
     try {
         const response = await fetch(`/get_price/?crypto=${selectedCrypto}`);
         const data = await response.json();
+        const symbol = data.symbol.toUpperCase();
+        const price = data.market_data.current_price.usd
         const priceInput = document.getElementById('price');
-        priceInput.textContent = data.id; // Update the UI with the fetched price
+        priceInput.setAttribute('data-price', price)
+        priceInput.textContent = `where 1 ${symbol} = USD $ ${price}`; // Update the UI with the fetched price
+        opacityChange("show", USDAmountInput)
+        opacityChange("show", CryptoAmountInput)
     } catch (error) {
         console.error("Error fetching crypto price:", error);
     }
@@ -93,6 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeNewsCarousel();
     initializeAmountInputFields();
     initializeCryptoChangeHandler();
+    initializeCryptoAmount();
 });
 
 const successMessages = document.getElementsByClassName("alert-success");

@@ -156,22 +156,36 @@
                     </div>
                     <div class="modal-body">
                         {% csrf_token %}
-                        <label for="crypto">Crypto</label>
-                        <select id="crypto" name="crypto">
-                            {% for crypto in cryptos_list %}
-                                <option value="{{ crypto.id }}">{{ crypto.name }}</option>
-                            {% endfor %}
-                        </select>
-                    <p id="price">test</p>
-                        <label for="{{ form.dollars.id_for_label }}" class="form-label"><i
-                                class="fa-solid fa-dollar-sign"></i>
-                            Amount</label>
-                        <input type="text" name="{{ form.dollars.name }}" id="{{ form.dollars.id_for_label }}"
-                               class="form-control balance-modal" placeholder="1.00" min="1.00" max="{{ balance }}"
-                               value="1.00">
-                        <input type="hidden" name="action" value="withdraw"><br>
-                        <footer class="blockquote-footer">Values from 1.00 to {{ balance }}
-                        </footer>
+                        <div>
+                            <label for="crypto">Crypto</label>
+                            <select id="crypto" name="crypto">
+                                <option value="" selected disabled>Please Select a Crypto</option>
+                                {% for crypto in cryptos_list %}
+                                    <option value="{{ crypto.id }}">{{ crypto.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="d-none" id="USDAmount-Container">
+                            <label for="USDAmount" class="form-label"><i
+                                    class="fa-solid fa-dollar-sign"></i>
+                                USD Amount</label>
+                            <input type="text" name="USDAmount" id="USDAmount"
+                                   class="form-control balance-modal" placeholder="1.00" min="1.00" max="{{ balance }}"
+                                   value="1.00">
+                        </div>
+                        <div class="d-none" id="CryptoAmount-Container">
+                            <label for="CryptoAmount" class="form-label"><i
+                                    class="fa-solid fa-dollar-sign"></i>
+                                Crypto Amount</label>
+
+                            <input type="text" name="CryptoAmount" id="CryptoAmount"
+                                   class="form-control balance-modal" placeholder="1.00" min="1.00" max="{{ balance }}"
+                                   value="1.00" disabled>
+                            <input type="hidden" name="action" value="withdraw"><br>
+                            <footer class="blockquote-footer">Values from 1.00 to {{ balance }} <span id="price"></span>
+                            </footer>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
