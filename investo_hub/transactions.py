@@ -107,5 +107,17 @@ def get_or_create_wallet(user):
         wallet = Wallet.objects.create(user=user)
     return wallet
 
-def buy_crypto(user):
-    pass
+
+def buy_crypto(user, wallet, amount):
+    if amount <= 1:
+        raise ValueError(
+            "Unable to withdraw. "
+            "The withdrawal amount must be greater than or equal to 1.")
+    elif wallet.dollars < amount:
+        raise ValueError(
+            "Insufficient funds in your wallet. "
+            "The withdrawal amount exceeds your available balance.")
+    else:
+        wallet.dollars -= amount
+        Transactions.objects.create(user=user, type="Crypto Purchase", symbol="dollar", amount=-amount)
+

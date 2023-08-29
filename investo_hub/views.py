@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Wallet, Portfolio, Transactions
 from .forms import PortfolioForm, ManageMoneyForm, ManageCryptoForm
 from .transactions import perform_money_transaction
-from .cryptos import get_top_gainers, get_all_coins, get_price
+from .cryptos import get_top_gainers, get_all_coins, get_coin_info, get_coin_price, add_user_crypto
 import os
 
 
@@ -37,7 +37,17 @@ def wallet_view(request):
                 messages.warning(request, error)
         if manage_crypto_form.is_valid():
             transaction = request.POST.get('action')
-            print(transaction)
+            if transaction == 'buy':
+                usd_amount = manage_crypto_form.cleaned_data['usd_amount']
+                crypto = manage_crypto_form.cleaned_data['crypto']
+                crypto_price = get_coin_price(crypto)
+                crypto_amount = usd_amount / crypto_price
+                perform_money_transaction(user, usd_amount, transaction)
+                print(crypto_amount)
+                print(type(crypto_amount))
+                add_user_crypto(user, crypto, crypto_amount)
+
+
         return redirect('wallet')
     elif request.method == 'GET':
         wallet = Wallet.objects.get(user=user)
@@ -57,4 +67,4 @@ def crypto_view(request):
 
 
 def get_price_view(request):
-    return get_price(request)
+    return get_coin_info(request)
