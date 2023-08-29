@@ -6,7 +6,7 @@
     <!--Container for the balance-->
     <div class="container portfolio-container">
         <div class="row">
-            <div class="col-md-6 text-center">
+            <div class="col-md-12 text-center">
                 <h1><i class="fa-solid fa-wallet"></i> Money Balance</h1>
                 <p><i class="fa-solid fa-dollar-sign"></i> <span class="text-success">{{ balance }}</span></p>
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#depositModal">
@@ -16,18 +16,9 @@
                     Withdraw
                 </button>
             </div>
-            <div class="col-md-6 text-center">
-                <h1><i class="fa-solid fa-wallet"></i> Crypto Balance</h1>
-                <p><i class="fa-solid fa-dollar-sign"></i> <span class="text-success">{{ balance }}</span></p>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#buyModal">
-                    Buy
-                </button>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#withdrawModal">
-                    Sell
-                </button>
-            </div>
         </div>
     </div>
+    <!-- Container for the balance details -->
     <div class="container portfolio-container">
         <div class="row">
             <table class="table">
@@ -134,56 +125,6 @@
                         <input type="hidden" name="action" value="withdraw"><br>
                         <footer class="blockquote-footer">Values from 1.00 to {{ balance }}
                         </footer>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Confirm</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <!-- Buy Modal -->
-    <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <form class="buy-crypto-form" method="POST">
-                {% csrf_token %}
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="buyModalLabel"><i class="fa-solid fa-money-bill-transfer"></i>
-                            Buy</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                            <label for="{{ manage_crypto_form.crypto.id_for_label }}" class="form-label">Select
-                                Crypto</label>
-                            <select name="{{ manage_crypto_form.crypto.name }}"
-                                    id="{{ manage_crypto_form.crypto.id_for_label }}">
-                                <option value="" disabled selected>Select a Crypto</option>
-                                {% for value, label in manage_crypto_form.crypto.field.choices %}
-                                    <option value="{{ value }}">{{ label }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div id="usd-div" class="d-none">
-                            <label for="{{ manage_crypto_form.usd_amount.id_for_label }}" class="form-label">
-                                <i class="fa-solid fa-dollar-sign"></i> USD Amount
-                            </label>
-                            <input type="number" name="{{ manage_crypto_form.usd_amount.name }}"
-                                   id="{{ manage_crypto_form.usd_amount.id_for_label }}" min="1">
-                            <footer class="blockquote-footer">Values from 1.00 to 99999.99
-                            </footer>
-                        </div>
-                        <div id="crypto-div" class="d-none">
-                            <label for="{{ manage_crypto_form.crypto_amount.id_for_label }}" class="form-label">
-                                <i class="fa-solid fa-dollar-sign"></i> Crypto Amount
-                            </label>
-                            <input type="number" name="crypto_amount"
-                                   id="id_crypto_amount" disabled>
-                            <p id="price"></p>
-                            <input type="hidden" name="action" value="buy">
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

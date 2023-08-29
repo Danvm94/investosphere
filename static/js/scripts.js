@@ -59,31 +59,58 @@ function cryptoCalculator(event) {
     cryptoAmount.value = usdAmount / cryptoPrice
 }
 
+// Function for usd amount calculation
+function initializeUsdCalculator() {
+    const CryptoAmountInput = document.getElementById("id_usd_amount_sell")
+    if (CryptoAmountInput) {
+        CryptoAmountInput.addEventListener("input", usdCalculator);
+    }
+}
+
+function usdCalculator(event) {
+    const usdAmount = event.target.value
+    const cryptoAmount = document.getElementById("id_crypto_amount")
+    const cryptoPrice = document.getElementById("price").getAttribute('data-price')
+    cryptoAmount.value = usdAmount / cryptoPrice
+}
+
 // Function to get crypto price
 function initializeCryptoPriceRequest() {
-    const cryptoSelect = document.getElementById('id_crypto');
-    if (cryptoSelect) {
-        cryptoSelect.addEventListener('change', cryptoPriceRequest);
+    const buyCrypto = document.getElementById('id_buy_crypto');
+    const sellCrypto = document.getElementById('id_sell_crypto');
+    if (buyCrypto) {
+        buyCrypto.addEventListener('change', cryptoPriceRequest);
+    }
+    if (sellCrypto) {
+        sellCrypto.addEventListener('change', cryptoPriceRequest);
     }
 }
 
 async function cryptoPriceRequest() {
     const cryptoSelected = this.value
-    const usdDiv = document.getElementById('usd-div')
-    const cryptoDiv = document.getElementById('crypto-div')
+    let hiddenDivs;
+    let priceText;
+    if (this.id === 'id_buy_crypto') {
+        hiddenDivs = document.getElementsByClassName('buy-modal-price')
+        priceText = document.getElementById('buy-price');
+    } else if (this.id === 'id_sell_crypto') {
+        hiddenDivs = document.getElementsByClassName('sell-modal-price')
+        priceText = document.getElementById('sell-price');
+    }
     try {
         const response = await fetch(`/get_price/?crypto=${cryptoSelected}`)
         const data = await response.json()
         const symbol = data.symbol.toUpperCase()
         const price = data.market_data.current_price.usd;
-        const priceText = document.getElementById('price');
         priceText.setAttribute('data-price', price)
         priceText.textContent = `where 1 ${symbol} = USD$ ${price}`;
-        opacityChange("show", usdDiv)
-        opacityChange("show", cryptoDiv)
+        for (const hiddenDiv of hiddenDivs) {
+            opacityChange('show', hiddenDiv);
+        }
     } catch (error) {
         console.error("Error fetching crypto price:", error);
     }
+
 }
 
 // Function to convert numbers to float
@@ -92,6 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeNewsCarousel();
     initializeCryptoPriceRequest();
     initializeCryptoCalculator();
+    initializeUsdCalculator();
 
 });
 

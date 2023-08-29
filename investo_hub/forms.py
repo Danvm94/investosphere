@@ -15,6 +15,11 @@ class ManageMoneyForm(forms.ModelForm):
         fields = ['dollars']
 
 
-class ManageCryptoForm(forms.Form):
-    crypto = forms.ChoiceField(choices=[(crypto, crypto) for crypto in CRYPTOCURRENCIES])
+class BuyCryptoForm(forms.Form):
+    buy_crypto = forms.ChoiceField(choices=[(crypto, crypto) for crypto in CRYPTOCURRENCIES])
     usd_amount = forms.DecimalField(min_value=1.00)
+
+
+class SellCryptoForm(forms.Form):
+    sell_crypto = forms.ChoiceField(choices=[(crypto, crypto) for crypto in CRYPTOCURRENCIES])
+    crypto_amount = forms.DecimalField(min_value=0.00000000000001)

@@ -3,44 +3,175 @@
 {% block crypto_active %}active{% endblock %}
 
 {% block content %}
+    <!--Container for the balance-->
     <div class="container portfolio-container">
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1><i class="fa-solid fa-wallet"></i> Crypto Balance</h1>
                 <p><i class="fa-solid fa-dollar-sign"></i> <span class="text-success">{{ balance }}</span></p>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#depositModal">
-                    Deposit
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#buyModal">
+                    Buy
                 </button>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#withdrawModal">
-                    Withdraw
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#sellModal">
+                    Sell
                 </button>
             </div>
         </div>
     </div>
-    <!-- Top 5 Market Cap Container -->
-    <div class="container top-cryptos-container mb-5 text-center">
-        <h1 class="text-center">Top 5 Market Cap</h1>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th></th>
-                <th>Symbol</th>
-                <th>Market Cap</th>
-                <th>Price</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for crypto_trending in cryptos_trending %}
+    <!-- Container for the balance details -->
+    <div class="container portfolio-container">
+        <div class="row">
+            <table class="table">
+                <thead>
                 <tr>
-                    <td><img src="{{ crypto_trending.image }}" alt="{{ crypto_trending.item.name }} Thumbnail"
-                             class=" max-width-100 max-height-100">
-                    </td>
-                    <td>{{ crypto_trending.symbol }}</td>
-                    <td>$ {{ crypto_trending.market_cap }}</td>
-                    <td>USD {{ crypto_trending.current_price }}</td>
+                    <th scope="col"></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Currency</th>
+                    <th scope="col">Amount</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for user_crypto in user_cryptos %}
+                    <tr>
+                        <td><img class="cryptos-image" src="https://img.icons8.com/?size=512&id=44232&format=png"></td>
+                        <td>{{ user_crypto.symbol }}</td>
+                        <td>{{ user_crypto.symbol }}</td>
+                        <td>{{ user_crypto.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
+    <!--Container for the transactions history-->
+    <div class="container portfolio-container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1><i class="fa-solid fa-clock-rotate-left"></i> Transactions</h1>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Currency</th>
+                        <th scope="col">Transaction Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for transaction in transactions %}
+                        <tr>
+                            <th scope="row"
+                                class="{% if transaction.amount > 0 %}text-success{% else %}text-danger{% endif %}">
+                                {% if transaction.amount > 0 %}+{% endif %}{{ transaction.amount }}
+                            </th>
+                            <td class="text-capitalize">{{ transaction.type }}</td>
+                            <td class="text-capitalize">{{ transaction.symbol }}</td>
+                            <td>{{ transaction.created_at }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Buy Modal -->
+    <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="buy-crypto-form" method="POST">
+                {% csrf_token %}
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="buyModalLabel"><i class="fa-solid fa-money-bill-transfer"></i>
+                            Buy</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label for="{{ buy_crypto_form.buy_crypto.id_for_label }}" class="form-label">Select
+                                Crypto</label>
+                            <select name="{{ buy_crypto_form.buy_crypto.name }}"
+                                    id="{{ buy_crypto_form.buy_crypto.id_for_label }}">
+                                <option value="" disabled selected>Select a Crypto</option>
+                                {% for value, label in buy_crypto_form.buy_crypto.field.choices %}
+                                    <option value="{{ value }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div id="usd-div" class="d-none buy-modal-price">
+                            <label for="{{ buy_crypto_form.usd_amount.id_for_label }}" class="form-label">
+                                <i class="fa-solid fa-dollar-sign"></i> USD Amount
+                            </label>
+                            <input type="number" name="{{ buy_crypto_form.usd_amount.name }}"
+                                   id="{{ buy_crypto_form.usd_amount.id_for_label }}" min="1">
+                            <footer class="blockquote-footer">Values from 1.00 to 99999.99
+                            </footer>
+                        </div>
+                        <div id="crypto-div" class="d-none buy-modal-price">
+                            <label for="{{ buy_crypto_form.crypto_amount.id_for_label }}" class="form-label">
+                                <i class="fa-solid fa-dollar-sign"></i> Crypto Amount
+                            </label>
+                            <input type="number" name="crypto_amount"
+                                   id="id_crypto_amount" disabled>
+                            <p id="buy-price"></p>
+                            <input type="hidden" name="action" value="buy">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Confirm</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal fade" id="sellModal" tabindex="-1" aria-labelledby="sellModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="sell-crypto-form" method="POST">
+                {% csrf_token %}
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="sellModalLabel"><i class="fa-solid fa-money-bill-transfer"></i>
+                            Sell</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label for="{{ sell_crypto_form.sell_crypto.id_for_label }}" class="form-label">Select
+                                Crypto</label>
+                            <select name="{{ sell_crypto_form.sell_crypto.name }}"
+                                    id="{{ sell_crypto_form.sell_crypto.id_for_label }}">
+                                <option value="" disabled selected>Select a Crypto</option>
+                                {% for value, label in sell_crypto_form.sell_crypto.field.choices %}
+                                    <option value="{{ value }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div id="usd-div" class="d-none sell-modal-price">
+                            <label for="{{ sell_crypto_form.crypto_amount.id_for_label }}" class="form-label">
+                                <i class="fa-solid fa-dollar-sign"></i> USD Amount
+                            </label>
+                            <input type="number" name="{{ sell_crypto_form.crypto_amount.name }}"
+                                   id="{{ sell_crypto_form.crypto_amount.id_for_label }}" min="1">
+                            <footer class="blockquote-footer">Values from 1.00 to 99999.99
+                            </footer>
+                        </div>
+                        <div id="crypto-div" class="d-none sell-modal-price">
+                            <label for="id_usd_amount_sell" class="form-label">
+                                <i class="fa-solid fa-dollar-sign"></i> Crypto Amount
+                            </label>
+                            <input type="number" name="usd_amount_sell"
+                                   id="id_usd_amount_sell" disabled>
+                            <p id="sell-price"></p>
+                            <input type="hidden" name="action" value="sell">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Confirm</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
 {% endblock %}

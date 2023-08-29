@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from decimal import Decimal
 from .models import Wallet, Portfolio, Transactions
-from .forms import PortfolioForm, ManageMoneyForm, ManageCryptoForm
+from .forms import PortfolioForm, ManageMoneyForm, BuyCryptoForm, SellCryptoForm
 from .transactions import perform_money_transaction
-from .cryptos import get_top_gainers, get_all_coins, get_coin_info, get_coin_price, add_user_crypto
-import os
+from .cryptos import get_top_gainers, get_all_coins, get_coin_info, get_coin_price, add_user_crypto, get_user_cryptos
 
 
 @login_required
@@ -26,7 +26,6 @@ def portfolio_view(request):
 def wallet_view(request):
     user = request.user
     manage_money_form = ManageMoneyForm(request.POST or None)
-    manage_crypto_form = ManageCryptoForm(request.POST or None)
     if request.method == 'POST':
         if manage_money_form.is_valid():
             transaction = request.POST.get('action')
@@ -35,35 +34,38 @@ def wallet_view(request):
                 perform_money_transaction(user, amount, transaction)
             except ValueError as error:
                 messages.warning(request, error)
-        if manage_crypto_form.is_valid():
-            transaction = request.POST.get('action')
-            if transaction == 'buy':
-                usd_amount = manage_crypto_form.cleaned_data['usd_amount']
-                crypto = manage_crypto_form.cleaned_data['crypto']
-                crypto_price = get_coin_price(crypto)
-                crypto_amount = usd_amount / crypto_price
-                perform_money_transaction(user, usd_amount, transaction)
-                print(crypto_amount)
-                print(type(crypto_amount))
-                add_user_crypto(user, crypto, crypto_amount)
-
-
         return redirect('wallet')
+
     elif request.method == 'GET':
         wallet = Wallet.objects.get(user=user)
         balance = wallet.dollars
         transactions = Transactions.objects.filter(user=user, symbol="dollar")
-        cryptos_list = get_all_coins
         return render(request, 'wallet.html',
-                      {'balance': balance, 'transactions': transactions, 'manage_money_form': manage_money_form,
-                       'manage_crypto_form': manage_crypto_form,
-                       'cryptos_list': cryptos_list})
+                      {'balance': balance, 'transactions': transactions, 'manage_money_form': manage_money_form})
 
 
 @login_required
 def crypto_view(request):
-    cryptos_trending = get_top_gainers(10)
-    return render(request, 'crypto.html', {'cryptos_trending': cryptos_trending})
+    user = request.user
+    buy_crypto_form = BuyCryptoForm(request.POST or None)
+    sell_crypto_form = SellCryptoForm(request.POST or None)
+    user_cryptos = get_user_cryptos(user)
+    if request.method == 'POST':
+        if buy_crypto_form.is_valid():
+            transaction = request.POST.get('action')
+            if transaction == 'buy':
+                usd_amount = Decimal(buy_crypto_form.cleaned_data['usd_amount'])
+                crypto = buy_crypto_form.cleaned_data['crypto']
+                crypto_price = Decimal(get_coin_price(crypto))
+                crypto_amount = usd_amount / crypto_price
+                perform_money_transaction(user, usd_amount, transaction)
+                add_user_crypto(user, crypto, crypto_amount)
+        return redirect('crypto')
+
+    elif request.method == 'GET':
+        return render(request, 'crypto.html',
+                      {'buy_crypto_form': buy_crypto_form, 'sell_crypto_form': sell_crypto_form,
+                       'user_cryptos': user_cryptos})
 
 
 def get_price_view(request):
