@@ -83,6 +83,7 @@ def remove_user_crypto(user, symbol, amount):
         crypto.amount -= amount
         crypto.save()
 
+
 def get_total_usd_cryptos(user_cryptos):
     total_usd = 0
     for user_crypto in user_cryptos:

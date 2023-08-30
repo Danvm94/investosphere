@@ -35,12 +35,6 @@ def wallet_view(request):
                 perform_money_transaction(user, amount, transaction)
             except ValueError as error:
                 messages.warning(request, error)
-        else:
-            print("Form is not valid. Errors:")
-            for field, errors in manage_money_form.errors.items():
-                print(f"Field: {field}")
-                for error in errors:
-                    print(f"- {error}")
         return redirect('wallet')
 
     elif request.method == 'GET':
@@ -76,9 +70,10 @@ def crypto_view(request):
         return redirect('crypto')
 
     elif request.method == 'GET':
+        transactions = Transactions.objects.filter(user=user).exclude(symbol="dollar")
         return render(request, 'crypto.html',
                       {'buy_crypto_form': buy_crypto_form, 'sell_crypto_form': sell_crypto_form,
-                       'user_cryptos': user_cryptos, 'total_usd': total_usd})
+                       'user_cryptos': user_cryptos, 'total_usd': total_usd, 'transactions': transactions})
 
 
 def get_price_view(request):

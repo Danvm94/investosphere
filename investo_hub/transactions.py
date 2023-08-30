@@ -107,6 +107,7 @@ def buy_crypto(user, crypto, amount):
     else:
         crypto.amount += amount
         crypto.save()
+        Transactions.objects.create(user=user, type="buy", symbol=crypto.symbol, amount=amount)
 
 
 def sell_crypto(user, crypto, amount):
@@ -123,6 +124,7 @@ def sell_crypto(user, crypto, amount):
     else:
         crypto.amount -= amount
         crypto.save()
+        Transactions.objects.create(user=user, type="sell", symbol=crypto.symbol, amount=-amount)
     pass
 
 

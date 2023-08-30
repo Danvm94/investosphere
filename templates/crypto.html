@@ -64,7 +64,7 @@
                         <tr>
                             <th scope="row"
                                 class="{% if transaction.amount > 0 %}text-success{% else %}text-danger{% endif %}">
-                                {% if transaction.amount > 0 %}+{% endif %}{{ transaction.amount }}
+                                {% if transaction.amount > 0 %}+{% endif %}{{ transaction.formatted_amount }}
                             </th>
                             <td class="text-capitalize">{{ transaction.type }}</td>
                             <td class="text-capitalize">{{ transaction.symbol }}</td>
