@@ -64,5 +64,17 @@ def get_user_cryptos(user):
     cryptos = Cryptos.objects.filter(user=user)
     return cryptos
 
+
 def remove_user_crypto(user, symbol, amount):
-    pass
+    crypto = get_user_crypto(user, symbol)
+    if amount <= 1:
+        raise ValueError(
+            "Unable to withdraw. "
+            "The withdrawal amount must be greater than or equal to 1.")
+    elif crypto.amount < amount:
+        raise ValueError(
+            "Insufficient funds in your crypto wallet. "
+            "The sell amount exceeds your available balance.")
+    else:
+        crypto.amount -= amount
+        crypto.save()

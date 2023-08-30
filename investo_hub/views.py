@@ -5,7 +5,8 @@ from decimal import Decimal
 from .models import Wallet, Portfolio, Transactions
 from .forms import PortfolioForm, ManageMoneyForm, BuyCryptoForm, SellCryptoForm
 from .transactions import perform_money_transaction
-from .cryptos import get_top_gainers, get_all_coins, get_coin_info, get_coin_price, add_user_crypto, get_user_cryptos
+from .cryptos import get_top_gainers, get_all_coins, get_coin_info, get_coin_price, add_user_crypto, get_user_cryptos, \
+    remove_user_crypto
 
 
 @login_required
@@ -53,13 +54,19 @@ def crypto_view(request):
     if request.method == 'POST':
         if buy_crypto_form.is_valid():
             transaction = request.POST.get('action')
-            if transaction == 'buy':
-                usd_amount = Decimal(buy_crypto_form.cleaned_data['usd_amount'])
-                crypto = buy_crypto_form.cleaned_data['crypto']
-                crypto_price = Decimal(get_coin_price(crypto))
-                crypto_amount = usd_amount / crypto_price
-                perform_money_transaction(user, usd_amount, transaction)
-                add_user_crypto(user, crypto, crypto_amount)
+            usd_amount = Decimal(buy_crypto_form.cleaned_data['usd_amount'])
+            crypto = buy_crypto_form.cleaned_data['buy_crypto']
+            crypto_price = Decimal(get_coin_price(crypto))
+            crypto_amount = usd_amount / crypto_price
+            perform_money_transaction(user, usd_amount, transaction)
+            add_user_crypto(user, crypto, crypto_amount)
+        if sell_crypto_form.is_valid():
+            crypto_amount = Decimal(sell_crypto_form.cleaned_data['crypto_amount'])
+            crypto = sell_crypto_form.cleaned_data['sell_crypto']
+            crypto_price = Decimal(get_coin_price(crypto))
+            usd_amount = crypto_amount * crypto_price
+            remove_user_crypto(user, crypto, crypto_amount)
+            perform_money_transaction(user, usd_amount, 'deposit')
         return redirect('crypto')
 
     elif request.method == 'GET':
