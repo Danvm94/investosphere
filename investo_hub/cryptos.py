@@ -1,6 +1,7 @@
 from django.core.cache import cache
 from django.http import JsonResponse
 from investosphere import settings
+from decimal import Decimal
 from .models import Cryptos
 import requests
 import os
@@ -62,6 +63,9 @@ def add_user_crypto(user, symbol, amount):
 
 def get_user_cryptos(user):
     cryptos = Cryptos.objects.filter(user=user)
+    for crypto in cryptos:
+        crypto.usd = Decimal(get_coin_price(crypto.symbol)) * Decimal(crypto.amount)
+
     return cryptos
 
 
@@ -78,3 +82,9 @@ def remove_user_crypto(user, symbol, amount):
     else:
         crypto.amount -= amount
         crypto.save()
+
+def get_total_usd_cryptos(user_cryptos):
+    total_usd = 0
+    for user_crypto in user_cryptos:
+        total_usd += user_crypto.usd
+    return total_usd

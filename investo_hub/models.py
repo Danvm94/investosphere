@@ -22,6 +22,7 @@ class Cryptos(models.Model):
     amount = models.DecimalField(max_digits=40, decimal_places=20, default=Decimal('0.0'))
 
 
+
 class Stocks(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)

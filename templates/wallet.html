@@ -85,10 +85,10 @@
                     </div>
                     <div class="modal-body">
                         {% csrf_token %}
-                        <label for="{{ form.dollars.id_for_label }}" class="form-label"><i
+                        <label for="{{ manage_money_form.dollars.id_for_label }}" class="form-label"><i
                                 class="fa-solid fa-dollar-sign"></i>
                             Amount</label>
-                        <input type="text" name="{{ form.dollars.name }}" id="{{ form.dollars.id_for_label }}"
+                        <input type="text" name="{{ manage_money_form.dollars.name }}" id="{{ manage_money_form.dollars.id_for_label }}"
                                class="form-control balance-modal" placeholder="1.00" min="1.00" max="99999.99"
                                value="1.00">
                         <input type="hidden" name="action" value="deposit"><br>
@@ -116,10 +116,10 @@
                     </div>
                     <div class="modal-body">
                         {% csrf_token %}
-                        <label for="{{ form.dollars.id_for_label }}" class="form-label"><i
+                        <label for="{{ manage_money_form.dollars.id_for_label }}" class="form-label"><i
                                 class="fa-solid fa-dollar-sign"></i>
                             Amount</label>
-                        <input type="text" name="{{ form.dollars.name }}" id="{{ form.dollars.id_for_label }}"
+                        <input type="text" name="{{ manage_money_form.dollars.name }}" id="{{ manage_money_form.dollars.id_for_label }}"
                                class="form-control balance-modal" placeholder="1.00" min="1.00" max="{{ balance }}"
                                value="1.00">
                         <input type="hidden" name="action" value="withdraw"><br>

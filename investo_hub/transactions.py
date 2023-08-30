@@ -1,30 +1,12 @@
-from .models import Wallet, Transactions
+from .models import Wallet, Transactions, Cryptos
+# from .cryptos import
 
 
 def perform_money_transaction(user, amount, transaction):
-    """
-    Perform a financial transaction for a user.
-    This function orchestrates money transactions, such as deposits and withdrawals,
-    for a specified user's wallet.
-
-    Args:
-        user (User): The user for whom the transaction is performed.
-        amount (Decimal): The amount to be transacted.
-        transaction (str): The type of transaction, either 'deposit' or 'withdraw'.
-
-    Raises:
-        ValueError: If the transaction type is invalid or if the transaction amount
-            doesn't meet the requirements.
-
-    Returns:
-        None
-    """
     wallet = get_or_create_wallet(user)
     if transaction == "deposit":
         deposit_into_wallet(user, wallet, amount)
     elif transaction == "withdraw":
-        withdraw_from_wallet(user, wallet, amount)
-    elif transaction == "buy":
         withdraw_from_wallet(user, wallet, amount)
     else:
         raise ValueError("Invalid transaction type. The transaction type must be 'deposit' or 'withdraw'.")
@@ -48,7 +30,7 @@ def deposit_into_wallet(user, wallet, amount):
     Returns:
         None
     """
-    if amount < 1:
+    if amount < 0:
         raise ValueError(
             "Unable to deposit. "
             "The deposit amount must be greater than or equal to 1.")
@@ -75,7 +57,7 @@ def withdraw_from_wallet(user, wallet, amount):
     Returns:
         None
     """
-    if amount <= 1:
+    if amount < 0:
         raise ValueError(
             "Unable to withdraw. "
             "The withdrawal amount must be greater than or equal to 1.")
@@ -108,16 +90,45 @@ def get_or_create_wallet(user):
     return wallet
 
 
-def buy_crypto(user, wallet, amount):
-    if amount <= 1:
-        raise ValueError(
-            "Unable to withdraw. "
-            "The withdrawal amount must be greater than or equal to 1.")
-    elif wallet.dollars < amount:
-        raise ValueError(
-            "Insufficient funds in your wallet. "
-            "The withdrawal amount exceeds your available balance.")
-    else:
-        wallet.dollars -= amount
-        Transactions.objects.create(user=user, type="Crypto Purchase", symbol="dollar", amount=-amount)
+def perform_crypto_transaction(user, crypto, amount, transaction):
+    cryptos = get_or_create_cryptos(user, crypto)
+    if transaction == 'buy':
+        buy_crypto(user, cryptos, amount)
+    elif transaction == 'sell':
+        sell_crypto(user, cryptos, amount)
 
+
+def buy_crypto(user, crypto, amount):
+    if amount < 0:
+        raise ValueError(
+            "Unable to buy. "
+            "The purchase amount must be a positive value."
+        )
+    else:
+        crypto.amount += amount
+        crypto.save()
+
+
+def sell_crypto(user, crypto, amount):
+    if amount < 0:
+        raise ValueError(
+            "Unable to sell. "
+            "The sell amount must be a positive value."
+        )
+    elif amount > crypto.amount:
+        raise ValueError(
+            "Unable to sell. "
+            "insufficient."
+        )
+    else:
+        crypto.amount -= amount
+        crypto.save()
+    pass
+
+
+def get_or_create_cryptos(user, symbol):
+    try:
+        cryptos = Cryptos.objects.get(user=user, symbol=symbol)
+    except Cryptos.DoesNotExist:
+        cryptos = Cryptos.objects.create(user=user, symbol=symbol)
+    return cryptos
