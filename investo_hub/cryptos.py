@@ -88,4 +88,5 @@ def get_total_usd_cryptos(user_cryptos):
     total_usd = 0
     for user_crypto in user_cryptos:
         total_usd += user_crypto.usd
-    return total_usd
+    formatted = '{:,.2f}'.format(total_usd)
+    return formatted

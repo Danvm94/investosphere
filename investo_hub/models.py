@@ -14,6 +14,10 @@ class Wallet(models.Model):
     dollars = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def formatted_amount(self):
+        formatted = '{:,.2f}'.format(self.dollars)
+        return formatted.rstrip('0').rstrip('.') if '.' in formatted else formatted
+
 
 class Cryptos(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -21,13 +25,9 @@ class Cryptos(models.Model):
     symbol = models.CharField(max_length=10)
     amount = models.DecimalField(max_digits=40, decimal_places=20, default=Decimal('0.0'))
 
-
-class Stocks(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
-    symbol = models.CharField(max_length=10)
-    shares = models.DecimalField(max_digits=10, decimal_places=2)
-    created_at = models.DateTimeField(auto_now_add=True)
+    def formatted_amount(self):
+        formatted = format(self.amount, f".20f")
+        return formatted.rstrip('0').rstrip('.') if '.' in formatted else formatted
 
 
 class Transactions(models.Model):
