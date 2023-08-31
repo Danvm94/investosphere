@@ -15,8 +15,8 @@ class Wallet(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def formatted_amount(self):
-        formatted = '{:,.2f}'.format(self.dollars)
-        return formatted.rstrip('0').rstrip('.') if '.' in formatted else formatted
+        formatted_value = '{:,.2f}'.format(self.dollars)
+        return formatted_value
 
 
 class Cryptos(models.Model):

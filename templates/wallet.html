@@ -8,7 +8,8 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1><i class="fa-solid fa-wallet"></i> Money Balance</h1>
-                <p><i class="fa-solid fa-dollar-sign"></i> <span class="text-success">{{ balance }}</span></p>
+                <p><i class="fa-solid fa-dollar-sign"></i> <span
+                        class="text-success">{{ wallet.formatted_amount }}</span></p>
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#depositModal">
                     Deposit
                 </button>
@@ -51,30 +52,27 @@
         </div>
     </div>
     <!--Deposit Modal-->
-    <div class="modal fade" id="depositModal" tabindex="-1" aria-labelledby="depositModalLabel" aria-hidden="true">
+    <div class="modal fade deposit-modal text-center" id="depositModal" tabindex="-1"
+         aria-labelledby="depositModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form class="add-money-form" method="POST">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="depositModalLabel"><i
-                                class="fa-solid fa-money-bill-transfer"></i>
-                            Deposit</h1>
+                        <h1 class="modal-title fs-4" id="depositModalLabel">Deposit</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         {% csrf_token %}
-                        <label for="{{ manage_money_form.dollars.id_for_label }}" class="form-label"><i
-                                class="fa-solid fa-dollar-sign"></i>
-                            Amount</label>
+                        <label for="{{ manage_money_form.dollars.id_for_label }}" class="form-label">USD Amount</label>
                         <input type="text" name="{{ manage_money_form.dollars.name }}"
                                id="{{ manage_money_form.dollars.id_for_label }}"
-                               class="form-control balance-modal" placeholder="1.00" min="1.00" max="99999.99"
-                               value="1.00">
-                        <input type="hidden" name="action" value="deposit"><br>
-                        <footer class="blockquote-footer">Values from 1.00 to 99999.99
-                        </footer>
+                               class="form-control balance-modal" placeholder="0.00" value="0.00">
+                        <input type="hidden" name="action" value="deposit">
+                        <p>Values from $1.00 to $50,000.00</p>
+                        <p>Please be aware that the maximum allowable USD amount on the website is $100,000.00</p>
+
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">Confirm</button>
                     </div>

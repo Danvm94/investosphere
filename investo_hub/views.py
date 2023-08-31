@@ -7,11 +7,17 @@ from .forms import PortfolioForm, ManageMoneyForm, BuyCryptoForm, SellCryptoForm
 from .transactions import perform_money_transaction, perform_crypto_transaction
 from .cryptos import get_top_gainers, get_all_coins, get_coin_info, get_coin_price, add_user_crypto, get_user_cryptos, \
     remove_user_crypto, get_total_usd_cryptos
+from .portfolios import get_all_portfolios
 
 
 @login_required
 def portfolio_view(request):
-    return render(request, 'portfolio.html')
+    user = request.user
+    if request.method == 'POST':
+        pass
+    elif request.method == 'GET':
+        portfolios = get_all_portfolios(user)
+        return render(request, 'portfolio.html', {'portfolios': portfolios})
 
 
 @login_required
@@ -30,10 +36,9 @@ def wallet_view(request):
 
     elif request.method == 'GET':
         wallet = Wallet.objects.get(user=user)
-        balance = wallet.dollars
         transactions = Transactions.objects.filter(user=user, symbol="dollar")
         return render(request, 'wallet.html',
-                      {'balance': balance, 'transactions': transactions, 'manage_money_form': manage_money_form})
+                      {'transactions': transactions, 'manage_money_form': manage_money_form, 'wallet': wallet})
 
 
 @login_required

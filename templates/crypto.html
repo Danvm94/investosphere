@@ -30,7 +30,8 @@
                     </tr>
                     {% for user_crypto in user_cryptos %}
                         <tr>
-                            <td><img class="cryptos-image" src="{{ user_crypto.image }}" alt="{{ user_crypto.symbol }}"></td>
+                            <td><img class="cryptos-image" src="{{ user_crypto.image }}" alt="{{ user_crypto.symbol }}">
+                            </td>
                             <td>{{ user_crypto.symbol }}</td>
                             <td>{{ user_crypto.symbol }}</td>
                             <td>{{ user_crypto.formatted_amount }}</td>
@@ -119,6 +120,10 @@
                                    id="id_crypto_amount" disabled>
                             <p id="buy-price"></p>
                             <input type="hidden" name="action" value="buy">
+                        </div>
+                        <div>
+                            {{ buy_crypto_form.portfolio_choice }}
+
                         </div>
                     </div>
                     <div class="modal-footer">

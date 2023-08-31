@@ -3,5 +3,17 @@
 {% block portfolio_active %}active{% endblock %}
 
 {% block content %}
-
+    <div class="container brief-container mt-5 mb-5">
+        <div class="row">
+            {% for portfolio in portfolios %}
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ portfolio.name }}</h5>
+                        <p class="card-text"></p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
