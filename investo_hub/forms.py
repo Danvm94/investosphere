@@ -1,7 +1,7 @@
 from django import forms
 from investosphere.settings import CRYPTOCURRENCIES
 from .models import Portfolio, Wallet
-from .portfolios import get_all_portfolios
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class PortfolioForm(forms.ModelForm):
@@ -10,10 +10,24 @@ class PortfolioForm(forms.ModelForm):
         fields = ['name']  # Include only the 'name' field in the form
 
 
-class ManageMoneyForm(forms.ModelForm):
+class DepositMoneyForm(forms.Form):
+    dollars = forms.FloatField(
+        label='USD Amount',
+        widget=forms.TextInput(attrs={'class': 'form-control balance-modal', 'placeholder': '0.00', 'value': '0.00',
+                                      'id': 'deposit_dollars_form'}),
+        validators=[
+            MinValueValidator(1.00, message='Value must be at least $1.00'),
+            MaxValueValidator(50000.00, message='Value cannot exceed $50,000.00')
+        ]
+    )
+
+
+class WithdrawMoneyForm(forms.ModelForm):
     class Meta:
         model = Wallet
         fields = ['dollars']
+
+    id_for_label = 'withdraw_dollars'
 
 
 class BuyCryptoForm(forms.Form):

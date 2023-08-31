@@ -113,6 +113,11 @@ async function cryptoPriceRequest() {
 
 }
 
+// Function to show formatted USD on buy and sell
+function initializeUsdFormatter(){
+    usdInput = document.getElementById('id_dollars');
+}
+
 // Function to convert numbers to float
 // Event Listener
 document.addEventListener("DOMContentLoaded", function () {
@@ -120,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeCryptoPriceRequest();
     initializeCryptoCalculator();
     initializeUsdCalculator();
+    initializeUsdFormatter();
 
 });
 
