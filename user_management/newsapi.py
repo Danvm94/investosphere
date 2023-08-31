@@ -14,11 +14,11 @@ def get_news_api():
         params = {
             'apiKey': newsapi_key,
             'language': 'en',
-            'q': 'crypto OR stock',
-            'sortBy': 'relevancy'
+            'q': 'cryptocurrency',
+            'sortBy': 'publishedAt'
         }
         response = requests.get(newsapi_url, params=params)
         news_data = response.json()
         articles = news_data['articles'][:4]
-        cache.set('cached_articles', articles, 24 * 60 * 60)
+        cache.set('cached_articles', articles, 3 * 60 * 60)
     return articles

@@ -8,7 +8,37 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1><i class="fa-solid fa-wallet"></i> Crypto Balance</h1>
-                <p><i class="fa-solid fa-dollar-sign"></i> <span class="text-success">{{ total_usd }}</span></p>
+
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Currency</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">USD</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><img class="cryptos-image" src="https://img.icons8.com/?size=512&id=44232&format=png"></td>
+                        <td>Dollar</td>
+                        <td>USD</td>
+                        <td>{{ balance }}</td>
+                        <td>$ {{ balance }}</td>
+                    </tr>
+                    {% for user_crypto in user_cryptos %}
+                        <tr>
+                            <td><img class="cryptos-image" src="{{ user_crypto.image }}" alt="{{ user_crypto.symbol }}"></td>
+                            <td>{{ user_crypto.symbol }}</td>
+                            <td>{{ user_crypto.symbol }}</td>
+                            <td>{{ user_crypto.formatted_amount }}</td>
+                            <td>{{ user_crypto.usd }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#buyModal">
                     Buy
                 </button>
@@ -16,33 +46,6 @@
                     Sell
                 </button>
             </div>
-        </div>
-    </div>
-    <!-- Container for the balance details -->
-    <div class="container portfolio-container">
-        <div class="row">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Currency</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">USD</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for user_crypto in user_cryptos %}
-                    <tr>
-                        <td><img class="cryptos-image" src="https://img.icons8.com/?size=512&id=44232&format=png"></td>
-                        <td>{{ user_crypto.symbol }}</td>
-                        <td>{{ user_crypto.symbol }}</td>
-                        <td>{{ user_crypto.formatted_amount }}</td>
-                        <td>{{ user_crypto.usd }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
         </div>
     </div>
     <!--Container for the transactions history-->
@@ -105,7 +108,7 @@
                             </label>
                             <input type="number" name="{{ buy_crypto_form.usd_amount.name }}"
                                    id="{{ buy_crypto_form.usd_amount.id_for_label }}" min="1">
-                            <footer class="blockquote-footer">Values from 1.00 to 99999.99
+                            <footer class="blockquote-footer">Values from 1.00 to {{ balance }}
                             </footer>
                         </div>
                         <div id="crypto-div" class="d-none buy-modal-price">

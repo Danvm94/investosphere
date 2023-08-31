@@ -10,20 +10,6 @@ from .cryptos import get_top_gainers, get_all_coins, get_coin_info, get_coin_pri
 
 
 @login_required
-def portfolio_view(request):
-    user = request.user
-    form = PortfolioForm(request.POST or None)
-    if request.method == 'POST':
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            Portfolio.objects.create(user=user, name=name)
-            return redirect('portfolio')
-    elif request.method == 'GET':
-        portfolios = Portfolio.objects.filter(user=user)
-        return render(request, 'portfolio.html', {'portfolios': portfolios, 'form': form})
-
-
-@login_required
 def wallet_view(request):
     user = request.user
     manage_money_form = ManageMoneyForm(request.POST or None)
@@ -70,10 +56,13 @@ def crypto_view(request):
         return redirect('crypto')
 
     elif request.method == 'GET':
+        wallet = Wallet.objects.get(user=user)
+        balance = wallet.dollars
         transactions = Transactions.objects.filter(user=user).exclude(symbol="dollar")
         return render(request, 'crypto.html',
                       {'buy_crypto_form': buy_crypto_form, 'sell_crypto_form': sell_crypto_form,
-                       'user_cryptos': user_cryptos, 'total_usd': total_usd, 'transactions': transactions})
+                       'user_cryptos': user_cryptos, 'total_usd': total_usd, 'transactions': transactions,
+                       'balance': balance})
 
 
 def get_price_view(request):

@@ -42,7 +42,8 @@ def get_coin_price(coin):
     response = requests.get(coin_api_url + f'/coins/{coin}')
     data = response.json()
     price = data["market_data"]["current_price"]["usd"]
-    return price
+    image = data["image"]["large"]
+    return price, image
 
 
 def get_user_crypto(user, symbol):
@@ -64,7 +65,9 @@ def add_user_crypto(user, symbol, amount):
 def get_user_cryptos(user):
     cryptos = Cryptos.objects.filter(user=user)
     for crypto in cryptos:
-        crypto.usd = Decimal(get_coin_price(crypto.symbol)) * Decimal(crypto.amount)
+        crypto.usd = Decimal(get_coin_price(crypto.symbol)[0]) * Decimal(crypto.amount)
+        crypto.usd = round(crypto.usd, 2)
+        crypto.image = get_coin_price(crypto.symbol)[1]
 
     return cryptos
 

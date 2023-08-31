@@ -18,29 +18,7 @@
             </div>
         </div>
     </div>
-    <!-- Container for the balance details -->
-    <div class="container portfolio-container">
-        <div class="row">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Currency</th>
-                    <th scope="col">Amount</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><img class="cryptos-image" src="https://img.icons8.com/?size=512&id=44232&format=png"></td>
-                    <td>Dollar</td>
-                    <td>USD</td>
-                    <td>$ {{ balance }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+
     <!--Container for the transactions history-->
     <div class="container portfolio-container">
         <div class="row">
@@ -88,7 +66,8 @@
                         <label for="{{ manage_money_form.dollars.id_for_label }}" class="form-label"><i
                                 class="fa-solid fa-dollar-sign"></i>
                             Amount</label>
-                        <input type="text" name="{{ manage_money_form.dollars.name }}" id="{{ manage_money_form.dollars.id_for_label }}"
+                        <input type="text" name="{{ manage_money_form.dollars.name }}"
+                               id="{{ manage_money_form.dollars.id_for_label }}"
                                class="form-control balance-modal" placeholder="1.00" min="1.00" max="99999.99"
                                value="1.00">
                         <input type="hidden" name="action" value="deposit"><br>
@@ -119,7 +98,8 @@
                         <label for="{{ manage_money_form.dollars.id_for_label }}" class="form-label"><i
                                 class="fa-solid fa-dollar-sign"></i>
                             Amount</label>
-                        <input type="text" name="{{ manage_money_form.dollars.name }}" id="{{ manage_money_form.dollars.id_for_label }}"
+                        <input type="text" name="{{ manage_money_form.dollars.name }}"
+                               id="{{ manage_money_form.dollars.id_for_label }}"
                                class="form-control balance-modal" placeholder="1.00" min="1.00" max="{{ balance }}"
                                value="1.00">
                         <input type="hidden" name="action" value="withdraw"><br>
