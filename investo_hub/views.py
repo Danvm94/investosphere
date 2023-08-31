@@ -10,6 +10,11 @@ from .cryptos import get_top_gainers, get_all_coins, get_coin_info, get_coin_pri
 
 
 @login_required
+def portfolio_view(request):
+    return render(request, 'portfolio.html')
+
+
+@login_required
 def wallet_view(request):
     user = request.user
     manage_money_form = ManageMoneyForm(request.POST or None)

@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from investo_hub.transactions import get_or_create_wallet
+from .registration import register_user
+
 from investo_hub.cryptos import get_top_gainers
 from .newsapi import get_news_api
 
@@ -12,24 +13,22 @@ def registration_view(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            get_or_create_wallet(user)
-            messages.success(request, 'Registration successful!')
+            register_user(request, user)
             # Redirect to the home page or another appropriate URL
             return redirect('home')
-    else:
+        else:
+            # If form is not valid, collect field-specific error messages
+            field_errors = []
+            for field_name, errors in form.errors.items():
+                for error in errors:
+                    field_errors.append(f'{form.fields[field_name].label}: {error}')
+            if field_errors:
+                for field_error in field_errors:
+                    messages.warning(request, field_error)
+
+    elif request.method == 'GET':
         form = RegistrationForm()
-
-    # If form is not valid, collect field-specific error messages
-    field_errors = []
-    for field_name, errors in form.errors.items():
-        for error in errors:
-            field_errors.append(f'{form.fields[field_name].label}: {error}')
-    if field_errors:
-        for field_error in field_errors:
-            messages.warning(request, field_error)
-
-    return render(request, 'register.html', {'form': form})
+        return render(request, 'register.html', {'form': form})
 
 
 def login_view(request):
