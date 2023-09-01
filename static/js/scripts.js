@@ -114,8 +114,37 @@ async function cryptoPriceRequest() {
 }
 
 // Function to show formatted USD on buy and sell
-function initializeUsdFormatter(){
-    usdInput = document.getElementById('id_dollars');
+function initializeUsdFormatter() {
+    const depositDollarForm = document.getElementById('deposit_dollars_form_text');
+    if (depositDollarForm) {
+        depositDollarForm.addEventListener('input', usdFormatter);
+    }
+}
+
+function usdFormatter(event) {
+    const inputElement = event.target;
+    const inputValue = inputElement.value;
+
+    // Remove non-numeric characters and leading zeros
+    const numericValue = inputValue.replace(/[^0-9]/g, '').replace(/^0+/, '');
+
+    // If the value is empty, set it to 0
+    const formattedValue = numericValue.length === 0 ? '0' : numericValue;
+
+    // Split the numeric value into integer and decimal parts
+    const decimalPart = (formattedValue.length > 2) ? formattedValue.slice(-2) : formattedValue;
+    const integerPart = formattedValue.slice(0, -2);
+    // Format the integer part with commas
+    const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Combine the formatted integer and decimal parts with a decimal point
+    const formattedInput = '$' + formattedIntegerPart + '.' + decimalPart;
+    const unformattedInput = integerPart + '.' + decimalPart
+    const decimalDollars = document.getElementById('deposit_dollars_form_decimal');
+    decimalDollars.value = unformattedInput
+
+    // Update the input field with the formatted value
+    inputElement.value = formattedInput;
 }
 
 // Function to convert numbers to float

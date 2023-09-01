@@ -63,7 +63,8 @@
                     </div>
                     <div class="modal-body">
                         {% csrf_token %}
-                        {{ deposit_money_form.dollars.label_tag }}
+                        {{ deposit_money_form.text_dollars.label_tag }}
+                        {{ deposit_money_form.text_dollars }}
                         {{ deposit_money_form.dollars }}
                         <input type="hidden" name="action" value="deposit">
                         <p>Values from $1.00 to $50,000.00</p>

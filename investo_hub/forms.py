@@ -11,10 +11,16 @@ class PortfolioForm(forms.ModelForm):
 
 
 class DepositMoneyForm(forms.Form):
-    dollars = forms.FloatField(
+    text_dollars = forms.CharField(
         label='USD Amount',
-        widget=forms.TextInput(attrs={'class': 'form-control balance-modal', 'placeholder': '0.00', 'value': '0.00',
-                                      'id': 'deposit_dollars_form'}),
+        widget=forms.TextInput(attrs={'class': 'form-control balance-modal', 'placeholder': '1.0', 'value': '$.0',
+                                      'id': 'deposit_dollars_form_text'}),
+    )
+
+    dollars = forms.DecimalField(
+        label='USD Amount',
+        widget=forms.TextInput(attrs={'class': 'd-none', 'placeholder': '1.0', 'value': '$.0',
+                                      'id': 'deposit_dollars_form_decimal'}),
         validators=[
             MinValueValidator(1.00, message='Value must be at least $1.00'),
             MaxValueValidator(50000.00, message='Value cannot exceed $50,000.00')
