@@ -151,6 +151,21 @@ function usdFormatter(event) {
     inputElement.value = formattedInput;
 }
 
+// Function to toggleRow on a table
+function toggleRow(button) {
+    const hiddenRows = document.querySelectorAll('.d-none.hidden-row');
+    if (hiddenRows) {
+        for (let i = 0; i < Math.min(hiddenRows.length, 5); i++) {
+            hiddenRows[i].classList.remove('d-none');
+            hiddenRows[i].classList.remove('hidden-row');
+        }
+        const leftHiddenRows = document.querySelectorAll('.d-none.hidden-row');
+        if (leftHiddenRows.length <= 0) {
+            button.remove()
+        }
+    }
+}
+
 // Function to convert numbers to float
 // Event Listener
 document.addEventListener("DOMContentLoaded", function () {

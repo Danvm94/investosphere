@@ -35,10 +35,10 @@
                     </thead>
                     <tbody>
                     {% for transaction in transactions %}
-                        <tr>
+                        <tr {% if forloop.counter > 5 %}class="d-none hidden-row"{% endif %}>
                             <th scope="row"
                                 class="{% if transaction.amount > 0 %}text-success{% else %}text-danger{% endif %}">
-                                {% if transaction.amount > 0 %}+{% endif %}{{ transaction.formatted_amount }}
+                                {{ transaction.formatted_amount }}
                             </th>
                             <td class="text-capitalize">{{ transaction.type }}</td>
                             <td class="text-capitalize">{{ transaction.symbol }}</td>
@@ -47,6 +47,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                <button id="view-more-btn" class="btn btn-primary mt-3" onclick="toggleRow(this)">View More</button>
             </div>
         </div>
     </div>
@@ -57,7 +58,8 @@
             <form class="add-money-form" method="POST">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-4" id="depositModalLabel">Deposit</h1>
+                        <h1 class="modal-title fs-4" id="depositModalLabel"><i
+                                class="fa-solid fa-money-bill-transfer"></i> Deposit</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -76,12 +78,13 @@
         </div>
     </div>
     <!--Withdraw Modal-->
-    <div class="modal fade wallet-modal text-center" id="withdrawModal" tabindex="-1" aria-labelledby="withdrawModalLabel" aria-hidden="true">
+    <div class="modal fade wallet-modal text-center" id="withdrawModal" tabindex="-1"
+         aria-labelledby="withdrawModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form class="add-money-form" method="POST">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="withdrawModalLabel"><i
+                        <h1 class="modal-title fs-4" id="withdrawModalLabel"><i
                                 class="fa-solid fa-money-bill-transfer"></i>
                             Withdraw</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

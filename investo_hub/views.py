@@ -45,7 +45,7 @@ def wallet_view(request):
 
     elif request.method == 'GET':
 
-        transactions = Transactions.objects.filter(user=user, symbol="dollar")
+        transactions = Transactions.objects.filter(user=user, symbol="dollar").order_by('-created_at')
         return render(request, 'wallet.html',
                       {'transactions': transactions, 'deposit_money_form': deposit_money_form,
                        'withdraw_money_form': withdraw_money_form, 'wallet': wallet})

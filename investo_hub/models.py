@@ -39,7 +39,11 @@ class Transactions(models.Model):
 
     def formatted_amount(self):
         if self.symbol == 'dollar':
-            formatted_value = '{:,.2f}'.format(self.amount)
+            if self.amount > 0:
+                formatted_value = '+ ${:,.2f}'.format(self.amount)
+            else:
+
+                formatted_value = '- ${:,.2f}'.format(self.amount * -1)
             return formatted_value
         else:
             formatted = format(self.amount, f".20f")

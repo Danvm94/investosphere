@@ -47,12 +47,6 @@ class WithdrawMoneyForm(forms.Form):
 
 
 class BuyCryptoForm(forms.Form):
-    # def __init__(self, *args, user=None, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     portfolios = get_all_portfolios(user)
-    #     portfolio_choices = [(portfolio.id, portfolio.name) for portfolio in portfolios]
-    #     self.fields['portfolio_choice'] = forms.ChoiceField(choices=portfolio_choices)
-
     buy_crypto = forms.ChoiceField(choices=[(crypto, crypto) for crypto in CRYPTOCURRENCIES])
     usd_amount = forms.DecimalField(min_value=1.00)
 
