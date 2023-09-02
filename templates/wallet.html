@@ -24,6 +24,11 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1><i class="fa-solid fa-clock-rotate-left"></i> Transactions</h1>
+                <form class="transaction-filter" method="GET">
+                    {% csrf_token %}
+                    {{ transactions_view_form }}
+                    <button id="view-more-btn" class="btn btn-primary mt-3">Filter</button>
+                </form>
                 <table class="table table-striped">
                     <thead>
                     <tr>

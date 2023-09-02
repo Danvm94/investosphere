@@ -2,12 +2,39 @@ from django import forms
 from investosphere.settings import CRYPTOCURRENCIES
 from .models import Portfolio, Wallet
 from django.core.validators import MinValueValidator, MaxValueValidator
+from datetime import date, timedelta
 
 
 class PortfolioForm(forms.ModelForm):
     class Meta:
         model = Portfolio
         fields = ['name']  # Include only the 'name' field in the form
+
+
+class TransactionsViewForm(forms.Form):
+    TRANSACTIONS_TYPE_CHOICES = (
+        ('all', 'All Transactions'),
+        ('deposit', 'Deposit'),
+        ('withdraw', 'Withdraw'),
+    )
+
+    transaction_type = forms.ChoiceField(
+        choices=TRANSACTIONS_TYPE_CHOICES,
+        label='Transaction Type',
+        initial='all',
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        required=False
+    )
+    start_date = forms.DateField(
+        label='Start Date',
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        initial=date.today() - timedelta(days=30)
+    )
+    end_date = forms.DateField(
+        label='End Date',
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        initial=date.today()
+    )
 
 
 class DepositMoneyForm(forms.Form):

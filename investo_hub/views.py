@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from decimal import Decimal
 from .models import Wallet, Portfolio, Transactions
-from .forms import PortfolioForm, DepositMoneyForm, WithdrawMoneyForm, BuyCryptoForm, SellCryptoForm
+from .forms import TransactionsViewForm, DepositMoneyForm, WithdrawMoneyForm, BuyCryptoForm, SellCryptoForm
 from .transactions import perform_money_transaction, perform_crypto_transaction
 from .cryptos import get_top_gainers, get_all_coins, get_coin_info, get_coin_price, add_user_crypto, get_user_cryptos, \
     remove_user_crypto, get_total_usd_cryptos
@@ -26,6 +26,7 @@ def wallet_view(request):
     wallet = Wallet.objects.get(user=user)
     deposit_money_form = DepositMoneyForm(request.POST or None)
     withdraw_money_form = WithdrawMoneyForm(request.POST or None, max_value=wallet.dollars)
+    transactions_view_form = TransactionsViewForm(request.GET or None)
     if request.method == 'POST':
         if deposit_money_form.is_valid():
             amount = deposit_money_form.cleaned_data['deposit_dollars']
@@ -44,11 +45,25 @@ def wallet_view(request):
         return redirect('wallet')
 
     elif request.method == 'GET':
-
-        transactions = Transactions.objects.filter(user=user, symbol="dollar").order_by('-created_at')
+        if transactions_view_form.is_valid():
+            start_date = transactions_view_form.cleaned_data['start_date']
+            end_date = transactions_view_form.cleaned_data['end_date']
+            transaction_type = transactions_view_form.cleaned_data['transaction_type']
+            filter_args = {
+                'user': user,
+                'symbol': 'dollar',
+                'created_at__range': (start_date, end_date),
+            }
+            if transaction_type != 'all':
+                print(transaction_type)
+                filter_args['type'] = transaction_type
+            transactions = Transactions.objects.filter(**filter_args).order_by('-created_at')
+        else:
+            transactions = Transactions.objects.filter(user=user, symbol="dollar").order_by('-created_at')
         return render(request, 'wallet.html',
                       {'transactions': transactions, 'deposit_money_form': deposit_money_form,
-                       'withdraw_money_form': withdraw_money_form, 'wallet': wallet})
+                       'withdraw_money_form': withdraw_money_form, 'wallet': wallet,
+                       'transactions_view_form': transactions_view_form})
 
 
 @login_required
