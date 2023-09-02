@@ -23,21 +23,32 @@ def portfolio_view(request):
 @login_required
 def wallet_view(request):
     user = request.user
+    wallet = Wallet.objects.get(user=user)
     deposit_money_form = DepositMoneyForm(request.POST or None)
+    withdraw_money_form = WithdrawMoneyForm(request.POST or None, max_value=wallet.dollars)
     if request.method == 'POST':
         if deposit_money_form.is_valid():
-            amount = deposit_money_form.cleaned_data['dollars']
+            amount = deposit_money_form.cleaned_data['deposit_dollars']
+            print(amount)
             try:
                 perform_money_transaction(user, amount, 'deposit')
+            except ValueError as error:
+                messages.warning(request, error)
+        if withdraw_money_form.is_valid():
+            amount = withdraw_money_form.cleaned_data['withdraw_dollars']
+            print(amount)
+            try:
+                perform_money_transaction(user, amount, 'withdraw')
             except ValueError as error:
                 messages.warning(request, error)
         return redirect('wallet')
 
     elif request.method == 'GET':
-        wallet = Wallet.objects.get(user=user)
+
         transactions = Transactions.objects.filter(user=user, symbol="dollar")
         return render(request, 'wallet.html',
-                      {'transactions': transactions, 'deposit_money_form': deposit_money_form, 'wallet': wallet})
+                      {'transactions': transactions, 'deposit_money_form': deposit_money_form,
+                       'withdraw_money_form': withdraw_money_form, 'wallet': wallet})
 
 
 @login_required

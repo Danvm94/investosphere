@@ -115,9 +115,13 @@ async function cryptoPriceRequest() {
 
 // Function to show formatted USD on buy and sell
 function initializeUsdFormatter() {
-    const depositDollarForm = document.getElementById('deposit_dollars_form_text');
+    const depositDollarForm = document.getElementById('deposit_dollars_form');
+    const withdrawDollarForm = document.getElementById('withdraw_dollars_form');
     if (depositDollarForm) {
         depositDollarForm.addEventListener('input', usdFormatter);
+    }
+    if (withdrawDollarForm) {
+        withdrawDollarForm.addEventListener('input', usdFormatter);
     }
 }
 
@@ -140,7 +144,7 @@ function usdFormatter(event) {
     // Combine the formatted integer and decimal parts with a decimal point
     const formattedInput = '$' + formattedIntegerPart + '.' + decimalPart;
     const unformattedInput = integerPart + '.' + decimalPart
-    const decimalDollars = document.getElementById('deposit_dollars_form_decimal');
+    const decimalDollars = document.getElementById(inputElement.id + '_decimal');
     decimalDollars.value = unformattedInput
 
     // Update the input field with the formatted value

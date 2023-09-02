@@ -19,7 +19,6 @@
             </div>
         </div>
     </div>
-
     <!--Container for the transactions history-->
     <div class="container portfolio-container">
         <div class="row">
@@ -52,7 +51,7 @@
         </div>
     </div>
     <!--Deposit Modal-->
-    <div class="modal fade deposit-modal text-center" id="depositModal" tabindex="-1"
+    <div class="modal fade wallet-modal text-center" id="depositModal" tabindex="-1"
          aria-labelledby="depositModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form class="add-money-form" method="POST">
@@ -63,10 +62,7 @@
                     </div>
                     <div class="modal-body">
                         {% csrf_token %}
-                        {{ deposit_money_form.text_dollars.label_tag }}
-                        {{ deposit_money_form.text_dollars }}
-                        {{ deposit_money_form.dollars }}
-                        <input type="hidden" name="action" value="deposit">
+                        {{ deposit_money_form }}
                         <p>Values from $1.00 to $50,000.00</p>
                         <p>Please be aware that the maximum allowable USD amount on the website is $100,000.00</p>
 
@@ -80,7 +76,7 @@
         </div>
     </div>
     <!--Withdraw Modal-->
-    <div class="modal fade" id="withdrawModal" tabindex="-1" aria-labelledby="withdrawModalLabel" aria-hidden="true">
+    <div class="modal fade wallet-modal text-center" id="withdrawModal" tabindex="-1" aria-labelledby="withdrawModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form class="add-money-form" method="POST">
                 <div class="modal-content">
@@ -92,18 +88,10 @@
                     </div>
                     <div class="modal-body">
                         {% csrf_token %}
-                        <label for="{{ manage_money_form.dollars.id_for_label }}" class="form-label"><i
-                                class="fa-solid fa-dollar-sign"></i>
-                            Amount</label>
-                        <input type="text" name="{{ manage_money_form.dollars.name }}"
-                               id="{{ manage_money_form.dollars.id_for_label }}"
-                               class="form-control balance-modal" placeholder="1.00" min="1.00" max="{{ balance }}"
-                               value="1.00">
-                        <input type="hidden" name="action" value="withdraw"><br>
-                        <footer class="blockquote-footer">Values from 1.00 to {{ balance }}
-                        </footer>
+                        {{ withdraw_money_form }}
+                        <p>Values from $1.00 to ${{ wallet.dollars }}</p>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">Confirm</button>
                     </div>

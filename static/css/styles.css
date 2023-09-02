@@ -111,7 +111,7 @@ body {
     object-fit: cover;
 }
 
-.deposit-modal input {
+.wallet-modal input {
     border: none;
     outline: none;
     box-shadow: none;
@@ -121,7 +121,7 @@ body {
     color: #50c878;
 }
 
-.deposit-modal input:focus {
+.wallet-modal input:focus {
     outline: none;
     border: none;
     box-shadow: none;
