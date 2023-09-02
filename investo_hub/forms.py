@@ -22,18 +22,18 @@ class TransactionsViewForm(forms.Form):
         choices=TRANSACTIONS_TYPE_CHOICES,
         label='Transaction Type',
         initial='all',
-        widget=forms.Select(attrs={'class': 'form-control'}),
+        widget=forms.Select(attrs={'class': 'form-control w-auto d-inline-flex'}),
         required=False
     )
     start_date = forms.DateField(
         label='Start Date',
-        widget=forms.DateInput(attrs={'type': 'date'}),
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control w-auto d-inline-flex'}),
         initial=date.today() - timedelta(days=30)
     )
     end_date = forms.DateField(
         label='End Date',
-        widget=forms.DateInput(attrs={'type': 'date'}),
-        initial=date.today()
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control w-auto d-inline-flex'}),
+        initial=date.today() + timedelta(days=1)
     )
 
 

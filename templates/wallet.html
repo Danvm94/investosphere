@@ -24,10 +24,23 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1><i class="fa-solid fa-clock-rotate-left"></i> Transactions</h1>
-                <form class="transaction-filter" method="GET">
+                <form class="transaction-filter row g-3" method="GET">
                     {% csrf_token %}
-                    {{ transactions_view_form }}
-                    <button id="view-more-btn" class="btn btn-primary mt-3">Filter</button>
+                    <div class="col-md-4">
+                        {{ transactions_view_form.transaction_type.label_tag }}
+                        {{ transactions_view_form.transaction_type }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ transactions_view_form.start_date.label_tag }}
+                        {{ transactions_view_form.start_date }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ transactions_view_form.end_date.label_tag }}
+                        {{ transactions_view_form.end_date }}
+                    </div>
+                    <div class="col-md-12">
+                        <button id="view-more-btn" class="btn btn-success mt-3 mb-3 col-md-12">Filter</button>
+                    </div>
                 </form>
                 <table class="table table-striped">
                     <thead>
@@ -52,7 +65,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                <button id="view-more-btn" class="btn btn-primary mt-3" onclick="toggleRow(this)">View More</button>
+                <button id="view-more-btn" class="btn btn-success mt-3" onclick="toggleRow(this)">View More</button>
             </div>
         </div>
     </div>
