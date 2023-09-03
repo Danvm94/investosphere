@@ -27,13 +27,15 @@ class TransactionsViewForm(forms.Form):
     )
     start_date = forms.DateField(
         label='Start Date',
-        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control w-auto d-inline-flex'}),
-        initial=date.today() - timedelta(days=30)
+        widget=forms.DateInput(
+            attrs={'type': 'date', 'class': 'form-control w-auto d-inline-flex', 'max': date.today()}),
+        initial=date.today() - timedelta(days=30),
     )
     end_date = forms.DateField(
         label='End Date',
-        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control w-auto d-inline-flex'}),
-        initial=date.today() + timedelta(days=1)
+        widget=forms.DateInput(
+            attrs={'type': 'date', 'class': 'form-control w-auto d-inline-flex', 'max': date.today()}),
+        initial=date.today() + timedelta(days=1),
     )
 
 

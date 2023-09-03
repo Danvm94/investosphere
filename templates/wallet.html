@@ -8,8 +8,8 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1><i class="fa-solid fa-wallet"></i> Money Balance</h1>
-                <p><i class="fa-solid fa-dollar-sign"></i> <span
-                        class="text-success">{{ wallet.formatted_amount }}</span></p>
+                <h3><i class="fa-solid fa-dollar-sign"></i> <span
+                        class="text-success">{{ wallet.formatted_amount }}</span></h3>
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#depositModal">
                     Deposit
                 </button>
@@ -20,7 +20,7 @@
         </div>
     </div>
     <!--Container for the transactions history-->
-    <div class="container portfolio-container">
+    <div class="container portfolio-container mb-5">
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1><i class="fa-solid fa-clock-rotate-left"></i> Transactions</h1>
@@ -39,9 +39,10 @@
                         {{ transactions_view_form.end_date }}
                     </div>
                     <div class="col-md-12">
-                        <button id="view-more-btn" class="btn btn-success mt-3 mb-3 col-md-12">Filter</button>
+                        <button id="view-more-btn" class="btn btn-success mt-3 mb-3 col-md-12 table-btn">Filter</button>
                     </div>
                 </form>
+                {% if transactions|length > 1 %}
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -52,20 +53,28 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for transaction in transactions %}
-                        <tr {% if forloop.counter > 5 %}class="d-none hidden-row"{% endif %}>
-                            <th scope="row"
-                                class="{% if transaction.amount > 0 %}text-success{% else %}text-danger{% endif %}">
-                                {{ transaction.formatted_amount }}
-                            </th>
-                            <td class="text-capitalize">{{ transaction.type }}</td>
-                            <td class="text-capitalize">{{ transaction.symbol }}</td>
-                            <td>{{ transaction.created_at }}</td>
-                        </tr>
-                    {% endfor %}
+
+                        {% for transaction in transactions %}
+                            <tr {% if forloop.counter > 5 %}class="d-none hidden-row"{% endif %}>
+                                <th scope="row"
+                                    class="{% if transaction.amount > 0 %}text-success{% else %}text-danger{% endif %}">
+                                    {{ transaction.formatted_amount }}
+                                </th>
+                                <td class="text-capitalize">{{ transaction.type }}</td>
+                                <td class="text-capitalize">{{ transaction.symbol }}</td>
+                                <td>{{ transaction.created_at }}</td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
-                <button id="view-more-btn" class="btn btn-success mt-3" onclick="toggleRow(this)">View More</button>
+                {% else %}
+                    <p>There is no transactions to show</p>
+                {% endif %}
+                {% if transactions|length > 5 %}
+                    <button id="view-more-btn" class="btn btn-success mt-3 table-btn" onclick="toggleRow(this)">View
+                        More
+                    </button>
+                {% endif %}
             </div>
         </div>
     </div>
