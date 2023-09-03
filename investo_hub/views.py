@@ -3,7 +3,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from decimal import Decimal
 from .models import Wallet, Portfolio, Transactions
-from .forms import TransactionsViewForm, DepositMoneyForm, WithdrawMoneyForm, BuyCryptoForm, SellCryptoForm
+from .forms import TransactionsViewForm, DepositMoneyForm, WithdrawMoneyForm, BuyCryptoForm, SellCryptoForm, \
+    CryptoTransactionsViewForm
 from .transactions import perform_money_transaction, perform_crypto_transaction
 from .cryptos import get_top_gainers, get_all_coins, get_coin_info, get_coin_price, add_user_crypto, get_user_cryptos, \
     remove_user_crypto, get_total_usd_cryptos
@@ -71,13 +72,14 @@ def crypto_view(request):
     user = request.user
     buy_crypto_form = BuyCryptoForm(request.POST or None)
     sell_crypto_form = SellCryptoForm(request.POST or None)
+    transactions_view_form = CryptoTransactionsViewForm(request.GET or None)
     user_cryptos = get_user_cryptos(user)
     total_usd = get_total_usd_cryptos(user_cryptos)
     if request.method == 'POST':
         if buy_crypto_form.is_valid():
-            usd_amount = Decimal(buy_crypto_form.cleaned_data['usd_amount'])
-            crypto = buy_crypto_form.cleaned_data['buy_crypto']
-            crypto_price = Decimal(get_coin_price(crypto))
+            usd_amount = buy_crypto_form.cleaned_data['buy_dollars_decimal']
+            crypto = buy_crypto_form.cleaned_data['crypto_select']
+            crypto_price = Decimal(get_coin_price(crypto)[0])
             crypto_amount = usd_amount / crypto_price
             perform_money_transaction(user, usd_amount, 'withdraw')
             perform_crypto_transaction(user, crypto, crypto_amount, 'buy')
@@ -97,7 +99,7 @@ def crypto_view(request):
         return render(request, 'crypto.html',
                       {'buy_crypto_form': buy_crypto_form, 'sell_crypto_form': sell_crypto_form,
                        'user_cryptos': user_cryptos, 'total_usd': total_usd, 'transactions': transactions,
-                       'balance': balance})
+                       'balance': balance, 'transactions_view_form': transactions_view_form})
 
 
 def get_price_view(request):

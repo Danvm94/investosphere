@@ -20,22 +20,46 @@ class TransactionsViewForm(forms.Form):
 
     transaction_type = forms.ChoiceField(
         choices=TRANSACTIONS_TYPE_CHOICES,
-        label='Transaction Type',
+        label='Type',
         initial='all',
         widget=forms.Select(attrs={'class': 'form-control w-auto d-inline-flex'}),
         required=False
     )
     start_date = forms.DateField(
-        label='Start Date',
+        label='Start',
         widget=forms.DateInput(
             attrs={'type': 'date', 'class': 'form-control w-auto d-inline-flex', 'max': date.today()}),
         initial=date.today() - timedelta(days=30),
     )
     end_date = forms.DateField(
-        label='End Date',
+        label='End',
         widget=forms.DateInput(
             attrs={'type': 'date', 'class': 'form-control w-auto d-inline-flex', 'max': date.today()}),
         initial=date.today() + timedelta(days=1),
+    )
+
+
+class CryptoTransactionsViewForm(TransactionsViewForm):
+    TRANSACTIONS_TYPE_CHOICES = (
+        ('all', 'All Transactions'),
+        ('buy', 'Buy'),
+        ('sell', 'Sell'),
+    )
+    transaction_type = forms.ChoiceField(
+        choices=TRANSACTIONS_TYPE_CHOICES,
+        label='Type',
+        initial='all',
+        widget=forms.Select(attrs={'class': 'form-control w-auto d-inline-flex'}),
+        required=False
+    )
+    CRYPTOS_CHOICES = [(crypto, crypto.capitalize()) for crypto in CRYPTOCURRENCIES]
+    CRYPTOS_CHOICES.insert(0, ('all', 'All Cryptos'))
+    crypto_choice = forms.ChoiceField(
+        choices=CRYPTOS_CHOICES,
+        label='Crypto',
+        initial='all',
+        widget=forms.Select(attrs={'class': 'form-control w-auto d-inline-flex'}),
+        required=False
     )
 
 
@@ -76,8 +100,46 @@ class WithdrawMoneyForm(forms.Form):
 
 
 class BuyCryptoForm(forms.Form):
-    buy_crypto = forms.ChoiceField(choices=[(crypto, crypto) for crypto in CRYPTOCURRENCIES])
-    usd_amount = forms.DecimalField(min_value=1.00)
+    CRYPTOS_CHOICES = [(crypto, crypto.capitalize()) for crypto in CRYPTOCURRENCIES]
+
+    crypto_select = forms.ChoiceField(
+        choices=CRYPTOS_CHOICES,
+        label='Type',
+        initial='bitcoin',
+        widget=forms.Select(attrs={'class': 'form-control w-auto text-center'}),
+        required=True
+    )
+    crypto_price = forms.DecimalField(
+        label='',
+        widget=forms.NumberInput(attrs={'class': '', 'id': 'crypto_price'}),
+    )
+    buy_dollars = forms.CharField(
+        label='USD Amount',
+        widget=forms.TextInput(attrs={'class': 'form-control balance-modal', 'placeholder': '1.0', 'value': '$.0',
+                                      'id': 'buy_dollars'}),
+    )
+    buy_dollars_decimal = forms.DecimalField(
+        label='',
+        widget=forms.NumberInput(attrs={'class': '', 'id': 'buy_dollars_decimal'}),
+        validators=[
+            MinValueValidator(1.00, message='Value must be at least $1.00'),
+            MaxValueValidator(50000.00, message='Value cannot exceed $50,000.00')
+        ]
+    )
+    buy_cryptos = forms.CharField(
+        label='Crypto Amount',
+        widget=forms.TextInput(attrs={'class': 'form-control balance-modal', 'placeholder': '1.0', 'value': '0.0',
+                                      'id': 'buy_cryptos'}),
+        disabled=True,
+        required=False
+    )
+    buy_cryptos_decimal = forms.DecimalField(
+        label='',
+        max_digits=40,
+        decimal_places=20,
+        widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'buy_cryptos_decimal'}),
+    )
+
 
 
 class SellCryptoForm(forms.Form):

@@ -46,17 +46,19 @@ function initializeNewsCarousel() {
 
 // Function for crypto amount calculation
 function initializeCryptoCalculator() {
-    const CryptoAmountInput = document.getElementById("id_usd_amount")
+    const CryptoAmountInput = document.getElementById("buy_dollars")
     if (CryptoAmountInput) {
         CryptoAmountInput.addEventListener("input", cryptoCalculator);
     }
 }
 
 function cryptoCalculator(event) {
-    const usdAmount = event.target.value
-    const cryptoAmount = document.getElementById("id_crypto_amount")
-    const cryptoPrice = document.getElementById("price").getAttribute('data-price')
-    cryptoAmount.value = usdAmount / cryptoPrice
+    const usdAmount = document.getElementById(event.target.id + '_decimal').value
+    const cryptoAmount = document.getElementById("buy_cryptos")
+    const cryptoAmountDecimal = document.getElementById("buy_cryptos_decimal")
+    const cryptoPrice = document.getElementById("crypto_price").value
+    cryptoAmount.value = parseFloat(usdAmount) / parseFloat(cryptoPrice)
+    cryptoAmountDecimal.value = parseFloat(usdAmount) / parseFloat(cryptoPrice)
 }
 
 // Function for usd amount calculation
@@ -76,52 +78,56 @@ function usdCalculator(event) {
 
 // Function to get crypto price
 function initializeCryptoPriceRequest() {
-    const buyCrypto = document.getElementById('id_buy_crypto');
+    const buyCrypto = document.getElementById('id_crypto_select');
     const sellCrypto = document.getElementById('id_sell_crypto');
     if (buyCrypto) {
         buyCrypto.addEventListener('change', cryptoPriceRequest);
+        cryptoPriceRequest({target: buyCrypto});
     }
     if (sellCrypto) {
         sellCrypto.addEventListener('change', cryptoPriceRequest);
     }
 }
 
-async function cryptoPriceRequest() {
-    const cryptoSelected = this.value
-    let hiddenDivs;
+async function cryptoPriceRequest(event) {
+    const cryptoSelected = event.target.value;
     let priceText;
-    if (this.id === 'id_buy_crypto') {
-        hiddenDivs = document.getElementsByClassName('buy-modal-price')
-        priceText = document.getElementById('buy-price');
-    } else if (this.id === 'id_sell_crypto') {
-        hiddenDivs = document.getElementsByClassName('sell-modal-price')
+
+    if (event.target.id === 'id_crypto_select') {
+        priceText = document.getElementById('crypto_price');
+        document.getElementById('buy_dollars').value = '$.0'
+        document.getElementById('buy_dollars_decimal').value = '0.00'
+        document.getElementById('buy_cryptos').value = '0.00'
+        document.getElementById('buy_cryptos_decimal').value = '0.00'
+
+    } else if (event.target.id === 'id_sell_crypto') {
         priceText = document.getElementById('sell-price');
     }
+
     try {
-        const response = await fetch(`/get_price/?crypto=${cryptoSelected}`)
-        const data = await response.json()
-        const symbol = data.symbol.toUpperCase()
+        const response = await fetch(`/get_price/?crypto=${cryptoSelected}`);
+        const data = await response.json();
+        const symbol = data.symbol.toUpperCase();
         const price = data.market_data.current_price.usd;
-        priceText.setAttribute('data-price', price)
-        priceText.textContent = `where 1 ${symbol} = USD$ ${price}`;
-        for (const hiddenDiv of hiddenDivs) {
-            opacityChange('show', hiddenDiv);
-        }
+        priceText.value = price;
     } catch (error) {
         console.error("Error fetching crypto price:", error);
     }
-
 }
 
 // Function to show formatted USD on buy and sell
 function initializeUsdFormatter() {
     const depositDollarForm = document.getElementById('deposit_dollars_form');
     const withdrawDollarForm = document.getElementById('withdraw_dollars_form');
+    const buyCryptoForm = document.getElementById('buy_dollars')
     if (depositDollarForm) {
         depositDollarForm.addEventListener('input', usdFormatter);
     }
     if (withdrawDollarForm) {
         withdrawDollarForm.addEventListener('input', usdFormatter);
+    }
+    if (buyCryptoForm) {
+        buyCryptoForm.addEventListener('input', usdFormatter)
     }
 }
 
@@ -171,9 +177,9 @@ function toggleRow(button) {
 document.addEventListener("DOMContentLoaded", function () {
     initializeNewsCarousel();
     initializeCryptoPriceRequest();
+    initializeUsdFormatter();
     initializeCryptoCalculator();
     initializeUsdCalculator();
-    initializeUsdFormatter();
 
 });
 
