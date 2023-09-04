@@ -47,7 +47,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for crypto_trending in cryptos_trending %}
+            {% for crypto_trending in cryptos_trending|slice:":5" %}
                 <tr>
                     <td><img src="{{ crypto_trending.image }}" alt="{{ crypto_trending.item.name }} Thumbnail"
                              class=" max-width-100 max-height-100">

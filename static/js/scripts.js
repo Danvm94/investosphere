@@ -63,53 +63,69 @@ function cryptoCalculator(event) {
 
 // Function for usd amount calculation
 function initializeUsdCalculator() {
-    const CryptoAmountInput = document.getElementById("id_usd_amount_sell")
+    const CryptoAmountInput = document.getElementById("sell_cryptos")
     if (CryptoAmountInput) {
         CryptoAmountInput.addEventListener("input", usdCalculator);
     }
 }
 
 function usdCalculator(event) {
-    const usdAmount = event.target.value
-    const cryptoAmount = document.getElementById("id_crypto_amount")
-    const cryptoPrice = document.getElementById("price").getAttribute('data-price')
-    cryptoAmount.value = usdAmount / cryptoPrice
+    const usdAmount = document.getElementById('sell_dollars')
+    const usdAmountDecimal = document.getElementById('sell_dollars_decimal')
+    const cryptoAmount = document.getElementById('sell_cryptos').value
+    const cryptoAmountDecimal = document.getElementById('sell_cryptos_decimal').value
+    const cryptoPrice = document.getElementById('sell-price').value
+    usdAmount.value = (parseFloat(cryptoPrice) * parseFloat(cryptoAmount)).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2
+    });
+    usdAmountDecimal.value = parseFloat(cryptoPrice) * parseFloat(cryptoAmount)
 }
 
 // Function to get crypto price
 function initializeCryptoPriceRequest() {
-    const buyCrypto = document.getElementById('id_crypto_select');
-    const sellCrypto = document.getElementById('id_sell_crypto');
+    const buyCrypto = document.getElementById('id_crypto_select_buy');
+    const sellCrypto = document.getElementById('id_crypto_select_sell');
     if (buyCrypto) {
         buyCrypto.addEventListener('change', cryptoPriceRequest);
         cryptoPriceRequest({target: buyCrypto});
     }
     if (sellCrypto) {
         sellCrypto.addEventListener('change', cryptoPriceRequest);
+        cryptoPriceRequest({target: sellCrypto});
     }
 }
 
 async function cryptoPriceRequest(event) {
     const cryptoSelected = event.target.value;
-    let priceText;
+    let cryptoPriceElement;
+    let cryptoPriceTextElement;
 
-    if (event.target.id === 'id_crypto_select') {
-        priceText = document.getElementById('crypto_price');
+    if (event.target.id === 'id_crypto_select_buy') {
+        cryptoPriceElement = document.getElementById('crypto_price');
+        cryptoPriceTextElement = document.getElementById('crypto-price-info-buy')
         document.getElementById('buy_dollars').value = '$.0'
         document.getElementById('buy_dollars_decimal').value = '0.00'
         document.getElementById('buy_cryptos').value = '0.00'
         document.getElementById('buy_cryptos_decimal').value = '0.00'
 
-    } else if (event.target.id === 'id_sell_crypto') {
-        priceText = document.getElementById('sell-price');
+    } else if (event.target.id === 'id_crypto_select_sell') {
+        cryptoPriceElement = document.getElementById('sell-price');
+        cryptoPriceTextElement = document.getElementById('crypto-price-info-sell')
+        document.getElementById('sell_dollars').value = '$.0'
+        document.getElementById('sell_dollars_decimal').value = '0.00'
+        document.getElementById('sell_cryptos').value = '0.00'
+        document.getElementById('sell_cryptos_decimal').value = '0.00'
     }
 
     try {
         const response = await fetch(`/get_price/?crypto=${cryptoSelected}`);
         const data = await response.json();
         const symbol = data.symbol.toUpperCase();
-        const price = data.market_data.current_price.usd;
-        priceText.value = price;
+        const price = data.current_price;
+        cryptoPriceElement.value = price;
+        cryptoPriceTextElement.textContent = `Where ${symbol} 1 = USD $${price}`
     } catch (error) {
         console.error("Error fetching crypto price:", error);
     }

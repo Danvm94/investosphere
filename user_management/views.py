@@ -4,7 +4,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .registration import register_user
 
-from investo_hub.cryptos import get_top_gainers
+
+from investo_hub.cryptos import request_coin_cache
 from .newsapi import get_news_api
 
 
@@ -55,5 +56,5 @@ def logout_view(request):
 
 def home_view(request):
     articles = get_news_api()
-    cryptos_trending = get_top_gainers(5)
+    cryptos_trending = request_coin_cache()
     return render(request, 'home.html', {'articles': articles, 'cryptos_trending': cryptos_trending})

@@ -27,7 +27,7 @@
                         <td>Dollar</td>
                         <td>USD</td>
                         <td>{{ balance }}</td>
-                        <td>$ {{ balance }}</td>
+                        <td>${{ balance }}</td>
                     </tr>
                     {% for user_crypto in user_cryptos %}
                         <tr>
@@ -37,7 +37,7 @@
                             <td>{{ user_crypto.symbol }}</td>
                             <td>{{ user_crypto.symbol }}</td>
                             <td>{{ user_crypto.formatted_amount }}</td>
-                            <td>{{ user_crypto.usd }}</td>
+                            <td>${{ user_crypto.usd }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -129,7 +129,7 @@
                         {% csrf_token %}
                         {{ buy_crypto_form }}
                         <p>Values from $1.00 to $50,000.00</p>
-                        <p>Please be aware that the maximum allowable USD amount on the website is $100,000.00</p>
+                        <p id="crypto-price-info-buy"></p>
 
 
                     </div>
@@ -141,48 +141,25 @@
             </form>
         </div>
     </div>
-    <div class="modal fade" id="sellModal" tabindex="-1" aria-labelledby="sellModalLabel" aria-hidden="true">
+    <div class="modal fade wallet-modal text-center" id="sellModal" tabindex="-1"
+         aria-labelledby="depositModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form class="sell-crypto-form" method="POST">
-                {% csrf_token %}
+            <form class="add-money-form" method="POST">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="sellModalLabel"><i class="fa-solid fa-money-bill-transfer"></i>
-                            Sell</h1>
+                        <h1 class="modal-title fs-4" id="depositModalLabel"><i
+                                class="fa-solid fa-money-bill-transfer"></i> Buy Crypto</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <div>
-                            <label for="{{ sell_crypto_form.sell_crypto.id_for_label }}" class="form-label">Select
-                                Crypto</label>
-                            <select name="{{ sell_crypto_form.sell_crypto.name }}"
-                                    id="{{ sell_crypto_form.sell_crypto.id_for_label }}">
-                                <option value="" disabled selected>Select a Crypto</option>
-                                {% for value, label in sell_crypto_form.sell_crypto.field.choices %}
-                                    <option value="{{ value }}">{{ label }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div id="usd-div" class="d-none sell-modal-price">
-                            <label for="{{ sell_crypto_form.crypto_amount.id_for_label }}" class="form-label">
-                                <i class="fa-solid fa-dollar-sign"></i> USD Amount
-                            </label>
-                            <input type="number" name="{{ sell_crypto_form.crypto_amount.name }}"
-                                   id="{{ sell_crypto_form.crypto_amount.id_for_label }}" min="1">
-                            <footer class="blockquote-footer">Values from 1.00 to 99999.99
-                            </footer>
-                        </div>
-                        <div id="crypto-div" class="d-none sell-modal-price">
-                            <label for="id_usd_amount_sell" class="form-label">
-                                <i class="fa-solid fa-dollar-sign"></i> Crypto Amount
-                            </label>
-                            <input type="number" name="usd_amount_sell"
-                                   id="id_usd_amount_sell" disabled>
-                            <p id="sell-price"></p>
-                            <input type="hidden" name="action" value="sell">
-                        </div>
+                    <div class="modal-body text-center d-flex flex-column">
+                        {% csrf_token %}
+                        {{ sell_crypto_form }}
+                        <p id="owned-crypto-amount"></p>
+                        <p id="crypto-price-info-sell"></p>
+
+
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">Confirm</button>
                     </div>
@@ -191,4 +168,5 @@
         </div>
     </div>
 
+    {{ bitcoin }}
 {% endblock %}

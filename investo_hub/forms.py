@@ -12,6 +12,7 @@ class PortfolioForm(forms.ModelForm):
 
 
 class TransactionsViewForm(forms.Form):
+    tomorrow = date.today() + timedelta(days=1)
     TRANSACTIONS_TYPE_CHOICES = (
         ('all', 'All Transactions'),
         ('deposit', 'Deposit'),
@@ -28,14 +29,14 @@ class TransactionsViewForm(forms.Form):
     start_date = forms.DateField(
         label='Start',
         widget=forms.DateInput(
-            attrs={'type': 'date', 'class': 'form-control w-auto d-inline-flex', 'max': date.today()}),
+            attrs={'type': 'date', 'class': 'form-control w-auto d-inline-flex', 'max': tomorrow}),
         initial=date.today() - timedelta(days=30),
     )
     end_date = forms.DateField(
         label='End',
         widget=forms.DateInput(
-            attrs={'type': 'date', 'class': 'form-control w-auto d-inline-flex', 'max': date.today()}),
-        initial=date.today() + timedelta(days=1),
+            attrs={'type': 'date', 'class': 'form-control w-auto d-inline-flex', 'max': tomorrow}),
+        initial=tomorrow,
     )
 
 
@@ -106,12 +107,12 @@ class BuyCryptoForm(forms.Form):
         choices=CRYPTOS_CHOICES,
         label='Type',
         initial='bitcoin',
-        widget=forms.Select(attrs={'class': 'form-control w-auto text-center'}),
+        widget=forms.Select(attrs={'class': 'form-control w-auto text-center', 'id': 'id_crypto_select_buy'}),
         required=True
     )
     crypto_price = forms.DecimalField(
         label='',
-        widget=forms.NumberInput(attrs={'class': '', 'id': 'crypto_price'}),
+        widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'crypto_price'}),
     )
     buy_dollars = forms.CharField(
         label='USD Amount',
@@ -120,7 +121,7 @@ class BuyCryptoForm(forms.Form):
     )
     buy_dollars_decimal = forms.DecimalField(
         label='',
-        widget=forms.NumberInput(attrs={'class': '', 'id': 'buy_dollars_decimal'}),
+        widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'buy_dollars_decimal'}),
         validators=[
             MinValueValidator(1.00, message='Value must be at least $1.00'),
             MaxValueValidator(50000.00, message='Value cannot exceed $50,000.00')
@@ -141,11 +142,46 @@ class BuyCryptoForm(forms.Form):
     )
 
 
-
 class SellCryptoForm(forms.Form):
-    sell_crypto = forms.ChoiceField(choices=[(crypto, crypto) for crypto in CRYPTOCURRENCIES])
-    crypto_amount = forms.DecimalField(min_value=0.00000000000001)
+    crypto_select = forms.ChoiceField(
+        label='Type',
+        initial='bitcoin',
+        widget=forms.Select(attrs={'class': 'form-control w-auto text-center', 'id': 'id_crypto_select_sell'}),
+        required=True
+    )
+    crypto_price = forms.DecimalField(
+        label='',
+        widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'sell-price'}),
+    )
+    sell_cryptos = forms.CharField(
+        label='Crypto Amount',
+        widget=forms.TextInput(attrs={'class': 'form-control balance-modal', 'placeholder': '1.0', 'value': '0.0',
+                                      'id': 'sell_cryptos'}),
+        required=True
+    )
+    sell_cryptos_decimal = forms.DecimalField(
+        label='',
+        max_digits=40,
+        decimal_places=20,
+        widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'sell_cryptos_decimal'}),
+    )
 
+    sell_dollars = forms.CharField(
+        label='USD Amount',
+        widget=forms.TextInput(attrs={'class': 'form-control balance-modal', 'placeholder': '1.0', 'value': '$.0',
+                                      'id': 'sell_dollars'}),
+        disabled=True,
+        required=False
+    )
+    sell_dollars_decimal = forms.DecimalField(
+        label='',
+        widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'sell_dollars_decimal'}),
+    )
+
+    def __init__(self, *args, **kwargs):
+        cryptocurrencies = kwargs.pop('cryptocurrencies', CRYPTOCURRENCIES)
+        super().__init__(*args, **kwargs)
+        self.fields['crypto_select'].choices = [(crypto.symbol, crypto.symbol.capitalize()) for crypto in cryptocurrencies]
 
 class CreatePortfolioForm(forms.Form):
     class Meta:

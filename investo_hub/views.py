@@ -2,13 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from decimal import Decimal
-from .models import Wallet, Portfolio, Transactions
+from .models import Wallet, Transactions
 from .forms import TransactionsViewForm, DepositMoneyForm, WithdrawMoneyForm, BuyCryptoForm, SellCryptoForm, \
     CryptoTransactionsViewForm
 from .transactions import perform_money_transaction, perform_crypto_transaction
-from .cryptos import get_top_gainers, get_all_coins, get_coin_info, get_coin_price, add_user_crypto, get_user_cryptos, \
-    remove_user_crypto, get_total_usd_cryptos
+from .cryptos import get_coin_info, get_user_cryptos
 from .portfolios import get_all_portfolios
+from django.http import JsonResponse
 
 
 @login_required
@@ -71,36 +71,40 @@ def wallet_view(request):
 def crypto_view(request):
     user = request.user
     buy_crypto_form = BuyCryptoForm(request.POST or None)
-    sell_crypto_form = SellCryptoForm(request.POST or None)
+    sell_crypto_form = SellCryptoForm(request.POST or None, cryptocurrencies=get_user_cryptos(user))
     transactions_view_form = CryptoTransactionsViewForm(request.GET or None)
-    user_cryptos = get_user_cryptos(user)
-    total_usd = get_total_usd_cryptos(user_cryptos)
     if request.method == 'POST':
         if buy_crypto_form.is_valid():
             usd_amount = buy_crypto_form.cleaned_data['buy_dollars_decimal']
             crypto = buy_crypto_form.cleaned_data['crypto_select']
-            crypto_price = Decimal(get_coin_price(crypto)[0])
+            crypto_price = Decimal(get_coin_info(crypto)['current_price'])
             crypto_amount = usd_amount / crypto_price
             perform_money_transaction(user, usd_amount, 'withdraw')
             perform_crypto_transaction(user, crypto, crypto_amount, 'buy')
         if sell_crypto_form.is_valid():
-            crypto_amount = Decimal(sell_crypto_form.cleaned_data['crypto_amount'])
-            crypto = sell_crypto_form.cleaned_data['sell_crypto']
-            crypto_price = Decimal(get_coin_price(crypto))
-            usd_amount = crypto_amount * crypto_price
+            crypto_amount = Decimal(sell_crypto_form.cleaned_data['sell_cryptos_decimal'])
+            crypto = sell_crypto_form.cleaned_data['crypto_select']
+            crypto_price = Decimal(get_coin_info(crypto)['current_price'])
+            crypto_price_decimal = Decimal(crypto_price[0])
+            usd_amount = crypto_amount * crypto_price_decimal
             perform_crypto_transaction(user, crypto, crypto_amount, 'sell')
             perform_money_transaction(user, usd_amount, 'deposit')
         return redirect('crypto')
 
     elif request.method == 'GET':
+        user_cryptos = get_user_cryptos(user)
+
         wallet = Wallet.objects.get(user=user)
         balance = wallet.dollars
         transactions = Transactions.objects.filter(user=user).exclude(symbol="dollar")
         return render(request, 'crypto.html',
                       {'buy_crypto_form': buy_crypto_form, 'sell_crypto_form': sell_crypto_form,
-                       'user_cryptos': user_cryptos, 'total_usd': total_usd, 'transactions': transactions,
+                       'user_cryptos': user_cryptos, 'transactions': transactions,
                        'balance': balance, 'transactions_view_form': transactions_view_form})
 
 
 def get_price_view(request):
-    return get_coin_info(request)
+    crypto_selected = request.GET.get('crypto', None)
+    if crypto_selected:
+        crypto_info = get_coin_info(crypto_selected)
+        return JsonResponse(crypto_info)
