@@ -1,6 +1,6 @@
 from django import forms
 from investosphere.settings import CRYPTOCURRENCIES
-from .models import Portfolio, Wallet
+from .models import Portfolio
 from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import date, timedelta
 
@@ -181,7 +181,9 @@ class SellCryptoForm(forms.Form):
     def __init__(self, *args, **kwargs):
         cryptocurrencies = kwargs.pop('cryptocurrencies', CRYPTOCURRENCIES)
         super().__init__(*args, **kwargs)
-        self.fields['crypto_select'].choices = [(crypto.symbol, crypto.symbol.capitalize()) for crypto in cryptocurrencies]
+        self.fields['crypto_select'].choices = [(crypto.symbol, crypto.symbol.capitalize()) for crypto in
+                                                cryptocurrencies]
+
 
 class CreatePortfolioForm(forms.Form):
     class Meta:

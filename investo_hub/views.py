@@ -85,7 +85,7 @@ def crypto_view(request):
             crypto_amount = Decimal(sell_crypto_form.cleaned_data['sell_cryptos_decimal'])
             crypto = sell_crypto_form.cleaned_data['crypto_select']
             crypto_price = Decimal(get_coin_info(crypto)['current_price'])
-            crypto_price_decimal = Decimal(crypto_price[0])
+            crypto_price_decimal = Decimal(crypto_price)
             usd_amount = crypto_amount * crypto_price_decimal
             perform_crypto_transaction(user, crypto, crypto_amount, 'sell')
             perform_money_transaction(user, usd_amount, 'deposit')
