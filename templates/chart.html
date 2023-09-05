@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block chart_active %}active{% endblock %}
+
+{% block content %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div class='container portfolio-container mb-5'>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1>Chart Example</h1>
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // JavaScript code to create and render the chart
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ labels|safe }},
+                datasets: [{
+                    label: 'Data',
+                    data: {{ data|safe }},
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock %}

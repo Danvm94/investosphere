@@ -9,17 +9,14 @@ from .transactions import perform_money_transaction, perform_crypto_transaction
 from .cryptos import get_coin_info, get_user_cryptos
 from .portfolios import get_all_portfolios
 from django.http import JsonResponse
+import random
 
 
+def chart_view(request):
+    labels = ["January", "February", "March", "April", "May"]
+    data = [random.randint(1, 10) for _ in range(5)]
 
-@login_required
-def portfolio_view(request):
-    user = request.user
-    if request.method == 'POST':
-        pass
-    elif request.method == 'GET':
-        portfolios = get_all_portfolios(user)
-        return render(request, 'portfolio.html', {'portfolios': portfolios})
+    return render(request, 'chart.html', {'labels': labels, 'data': data})
 
 
 @login_required
