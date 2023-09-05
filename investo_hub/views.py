@@ -11,6 +11,7 @@ from .portfolios import get_all_portfolios
 from django.http import JsonResponse
 
 
+
 @login_required
 def portfolio_view(request):
     user = request.user
@@ -82,11 +83,16 @@ def crypto_view(request):
             perform_money_transaction(user, usd_amount, 'withdraw')
             perform_crypto_transaction(user, crypto, crypto_amount, 'buy')
         if sell_crypto_form.is_valid():
-            crypto_amount = Decimal(sell_crypto_form.cleaned_data['sell_cryptos_decimal'])
+            crypto_amount = Decimal(sell_crypto_form.cleaned_data['sell_cryptos'])
+            print(f'crypto_amount: {crypto_amount}')
             crypto = sell_crypto_form.cleaned_data['crypto_select']
+            print(f'crypto: {crypto}')
             crypto_price = Decimal(get_coin_info(crypto)['current_price'])
+            print(f'crypto_price: {crypto_price}')
             crypto_price_decimal = Decimal(crypto_price)
+            print(f'crypto_price_decimal: {crypto_price_decimal}')
             usd_amount = crypto_amount * crypto_price_decimal
+            print(f'usd_amount: {usd_amount}')
             perform_crypto_transaction(user, crypto, crypto_amount, 'sell')
             perform_money_transaction(user, usd_amount, 'deposit')
         return redirect('crypto')
@@ -96,7 +102,24 @@ def crypto_view(request):
 
         wallet = Wallet.objects.get(user=user)
         balance = wallet.dollars
-        transactions = Transactions.objects.filter(user=user).exclude(symbol="dollar")
+        if transactions_view_form.is_valid():
+            start_date = transactions_view_form.cleaned_data['start_date']
+            end_date = transactions_view_form.cleaned_data['end_date']
+            transaction_type = transactions_view_form.cleaned_data['transaction_type']
+            crypto = transactions_view_form.cleaned_data['crypto_choice']
+            filter_args = {
+                'user': user,
+                'created_at__range': (start_date, end_date),
+            }
+            if transaction_type != 'all':
+                print(transaction_type)
+                filter_args['type'] = transaction_type
+            if crypto != 'all':
+                filter_args['symbol'] = crypto
+
+            transactions = Transactions.objects.filter(**filter_args).exclude(symbol='dollar').order_by('-created_at')
+        else:
+            transactions = Transactions.objects.filter(user=user, symbol="dollar").exclude(symbol='dollar').order_by('-created_at')
         return render(request, 'crypto.html',
                       {'buy_crypto_form': buy_crypto_form, 'sell_crypto_form': sell_crypto_form,
                        'user_cryptos': user_cryptos, 'transactions': transactions,
