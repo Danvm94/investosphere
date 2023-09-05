@@ -159,6 +159,12 @@ class SellCryptoForm(forms.Form):
                                       'id': 'sell_cryptos'}),
         required=True
     )
+    sell_cryptos_decimal = forms.DecimalField(
+        label='',
+        max_digits=40,
+        decimal_places=20,
+        widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'sell_cryptos_decimal'}),
+    )
 
     sell_dollars = forms.CharField(
         label='USD Amount',

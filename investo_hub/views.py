@@ -119,7 +119,7 @@ def crypto_view(request):
 
             transactions = Transactions.objects.filter(**filter_args).exclude(symbol='dollar').order_by('-created_at')
         else:
-            transactions = Transactions.objects.filter(user=user, symbol="dollar").exclude(symbol='dollar').order_by('-created_at')
+            transactions = Transactions.objects.filter(user=user).exclude(symbol='dollar').order_by('-created_at')
         return render(request, 'crypto.html',
                       {'buy_crypto_form': buy_crypto_form, 'sell_crypto_form': sell_crypto_form,
                        'user_cryptos': user_cryptos, 'transactions': transactions,

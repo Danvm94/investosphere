@@ -124,8 +124,9 @@ def sell_crypto(user, crypto, amount):
     else:
         crypto.amount -= amount
         crypto.save()
+        if crypto.amount == 0:
+            crypto.delete()
         Transactions.objects.create(user=user, type="sell", symbol=crypto.symbol, amount=-amount)
-    pass
 
 
 def get_or_create_cryptos(user, symbol):
