@@ -6,17 +6,17 @@ from .models import Wallet, Transactions
 from .forms import TransactionsViewForm, DepositMoneyForm, WithdrawMoneyForm, BuyCryptoForm, SellCryptoForm, \
     CryptoTransactionsViewForm
 from .transactions import perform_money_transaction, perform_crypto_transaction
-from .cryptos import get_coin_info, get_user_cryptos
-from .portfolios import get_all_portfolios
+from .cryptos import get_coin_info, get_user_cryptos, request_coin_cache, request_coin_chart_cache
 from django.http import JsonResponse
-import random
+from datetime import datetime
 
 
 def chart_view(request):
-    labels = ["January", "February", "March", "April", "May"]
-    data = [random.randint(1, 10) for _ in range(5)]
-
-    return render(request, 'chart.html', {'labels': labels, 'data': data})
+    cryptos_market_chart = request_coin_chart_cache()
+    first_crypto = next(iter(cryptos_market_chart))
+    timestamps = cryptos_market_chart[first_crypto]['timestamps']
+    formatted_dates = [datetime.utcfromtimestamp(timestamp / 1000).strftime('%d/%m/%Y') for timestamp in timestamps]
+    return render(request, 'chart.html', {'cryptos_market_chart': cryptos_market_chart, 'formatted_dates': formatted_dates})
 
 
 @login_required

@@ -8,34 +8,58 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1>Chart Example</h1>
-                <canvas id="myChart"></canvas>
+                <canvas id="cryptoChart"></canvas>
             </div>
         </div>
     </div>
 
-
     <script>
-        // JavaScript code to create and render the chart
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: {{ labels|safe }},
-                datasets: [{
-                    label: 'Data',
-                    data: {{ data|safe }},
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the canvas element
+            var ctx = document.getElementById("cryptoChart").getContext("2d");
+
+            // Create a line chart with string labels for the x-axis
+            var myChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: [
+                            {% for formatted_date in formatted_dates %}
+                                '{{ formatted_date }}',
+                            {% endfor %}
+                    ], // String labels for x-axis
+                    datasets: [
+
+                        {% for crypto, crypto_data in cryptos_market_chart.items %}
+
+                            {
+                                label: '{{ crypto }}',
+                                data: [
+                                    {% for value in crypto_data.values %}
+                                        {{ value }} ,
+                                    {% endfor %}
+                                ], // Corresponding data for y-axis
+                                borderColor: "rgba(75, 192, 192, 1)",
+                                backgroundColor: "rgba(75, 192, 192, 1)",
+                                borderWidth: 2,
+                                fill: false,
+                            },
+                        {% endfor %}
+
+                    ],
+                },
+                options: {
+                    responsive: true, // Allow the chart to be responsive
+                    scales: {
+                        x: {
+                            type: "category", // Specify that x-axis contains category data
+                            position: "bottom",
+                        },
+                        y: {
+                            beginAtZero: true, // Start the y-axis at zero
+                        },
+                    },
+                },
+            });
         });
     </script>
 {% endblock %}

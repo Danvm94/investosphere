@@ -185,7 +185,13 @@ class SellCryptoForm(forms.Form):
                                                 cryptocurrencies]
 
 
-class CreatePortfolioForm(forms.Form):
-    class Meta:
-        model = Portfolio
-        fields = ['name']  # Include only the 'name' field in the form
+class ChartViewForm(forms.Form):
+    CRYPTOS_CHOICES = [(crypto, crypto.capitalize()) for crypto in CRYPTOCURRENCIES]
+    CRYPTOS_CHOICES.insert(0, ('all', 'All Cryptos'))
+    crypto_choice = forms.ChoiceField(
+        choices=CRYPTOS_CHOICES,
+        label='Crypto',
+        initial='all',
+        widget=forms.Select(attrs={'class': 'form-control w-auto d-inline-flex'}),
+        required=False
+    )
