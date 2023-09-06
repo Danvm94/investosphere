@@ -7,7 +7,7 @@ import time
 import datetime
 import os
 
-COIN_API = os.environ.get('coin_api_url')
+COIN_API = os.environ.get('COIN_API_URL')
 
 
 def request_coin_api():

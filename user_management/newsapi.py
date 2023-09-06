@@ -2,8 +2,8 @@ from django.core.cache import cache
 import requests
 import os
 
-newsapi_key = os.environ.get('newsapi_key')
-newsapi_url = os.environ.get('newsapi_url')
+newsapi_key = os.environ.get('NEWSAPI_KEY')
+newsapi_url = os.environ.get('NEWSAPI_URL')
 
 
 def get_news_api():
