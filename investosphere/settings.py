@@ -33,6 +33,7 @@ if os.environ.get('DEBUG') == 'True':
 else:
     DEBUG = False
 
+
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost',
                  'investosphere-d74500c2a8ca.herokuapp.com']
 
