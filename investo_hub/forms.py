@@ -1,14 +1,7 @@
 from django import forms
 from investosphere.settings import CRYPTOCURRENCIES
-from .models import Portfolio
 from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import date, timedelta
-
-
-class PortfolioForm(forms.ModelForm):
-    class Meta:
-        model = Portfolio
-        fields = ['name']  # Include only the 'name' field in the form
 
 
 class TransactionsViewForm(forms.Form):
