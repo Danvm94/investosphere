@@ -8,15 +8,22 @@ from .forms import TransactionsViewForm, DepositMoneyForm, WithdrawMoneyForm, Bu
 from .transactions import perform_money_transaction, perform_crypto_transaction
 from .cryptos import get_coin_info, get_user_cryptos, request_coin_cache, request_coin_chart_cache
 from django.http import JsonResponse
-from datetime import datetime
+from .chart import get_timestamps_date, get_clean_values
 
 
 def chart_view(request):
+    return render(request, 'chart.html')
+
+
+def chart_load(request):
     cryptos_market_chart = request_coin_chart_cache()
-    first_crypto = next(iter(cryptos_market_chart))
-    timestamps = cryptos_market_chart[first_crypto]['timestamps']
-    formatted_dates = [datetime.utcfromtimestamp(timestamp / 1000).strftime('%d/%m/%Y') for timestamp in timestamps]
-    return render(request, 'chart.html', {'cryptos_market_chart': cryptos_market_chart, 'formatted_dates': formatted_dates})
+    dates = get_timestamps_date(cryptos_market_chart)
+    prices = get_clean_values(cryptos_market_chart)
+    response_data = {
+        'dates': dates,
+        'prices': prices
+    }
+    return JsonResponse(response_data)
 
 
 @login_required

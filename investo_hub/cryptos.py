@@ -29,7 +29,7 @@ def request_coin_api():
 
 
 def request_coin_api_chart():
-    cryptos_cache = cache.get('cached_cryptos')
+    cryptos_cache = request_coin_cache()
     cryptos_market_chart = []
     current_time = datetime.datetime.now()
     target_time = current_time.replace(hour=1, minute=0, second=0, microsecond=0) + datetime.timedelta(days=1)
@@ -51,22 +51,15 @@ def request_coin_api_chart():
             else:
                 print('got here, waiting 5 seconds')
                 time.sleep(5)
-    organized_data = {}
-    for entry in cryptos_market_chart:
-        for crypto_name, crypto_data in entry.items():
-            organized_data[crypto_name] = {
-                'timestamps': [],
-                'values': []
-            }
-            for timestamp, value in crypto_data:
-                organized_data[crypto_name]['timestamps'].append(timestamp)
-                organized_data[crypto_name]['values'].append(value)
-    cache.set('cached_cryptos_char', organized_data, 1 * 60 * 60)
-    return organized_data
+
+    cryptos_market_chart = {entry[0]: entry[1] for entry in
+                            [(list(item.keys())[0], item[list(item.keys())[0]]) for item in cryptos_market_chart]}
+    cache.set('cached_cryptos_chart', cryptos_market_chart, time_difference_seconds)
+    return cryptos_market_chart
 
 
 def request_coin_chart_cache():
-    cached_cryptos_chart = cache.get('cached_cryptos_char')
+    cached_cryptos_chart = cache.get('cached_cryptos_chart')
     if not cached_cryptos_chart:
         cached_cryptos_chart = request_coin_api_chart()
     return cached_cryptos_chart
