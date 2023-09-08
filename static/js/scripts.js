@@ -118,7 +118,6 @@ async function cryptoPriceRequest(event) {
         document.getElementById('sell_cryptos').value = '0.00'
         document.getElementById('sell_cryptos_decimal').value = '0.00'
     }
-
     try {
         const response = await fetch(`/get_price/?crypto=${cryptoSelected}`);
         const data = await response.json();

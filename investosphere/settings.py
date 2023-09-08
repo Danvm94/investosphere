@@ -90,9 +90,11 @@ if os.environ.get("DEBUG") == "True":
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+    STATIC_URL = 'static/'
 else:
     DATABASES = {'default': dj_database_url.parse(
         os.environ.get("DATABASE_URL"))}
+    STATIC_URL = 'https://res.cloudinary.com/dtja957k3'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
