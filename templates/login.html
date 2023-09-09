@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block register_active %}active{% endblock %}
 
 {% block content %}
@@ -35,8 +37,8 @@
                 </form>
             </div>
             <div class="col-md-4">
-                <img src="https://res.cloudinary.com/dtja957k3/image/upload/v1691609273/investosphere/register-image.svg"
-                     alt="Image" class="img-fluid registration-image">
+                <img src="{% static 'images/register-image.svg' %}"
+                     alt="Investment Chart" class="img-fluid registration-image">
             </div>
         </div>
     </div>

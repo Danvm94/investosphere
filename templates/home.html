@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block home_active %}active{% endblock %}
 
 {% block content %}
@@ -29,7 +31,7 @@
 
             </div>
             <div class="col-sm-8 col-md-4 col-lg-4 order-first order-md-last text-center">
-                <img src="https://res.cloudinary.com/dtja957k3/image/upload/v1691609273/investosphere/brief-image.svg"
+                <img src="{% static 'images/brief-image.svg' %}"
                      alt="Image" class="img-fluid">
             </div>
         </div>
