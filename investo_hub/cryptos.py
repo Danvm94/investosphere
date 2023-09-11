@@ -49,7 +49,6 @@ def request_coin_api_chart():
                 cryptos_market_chart.append({crypto['id']: prices})
                 break
             else:
-                print('got here, waiting 5 seconds')
                 time.sleep(5)
 
     cryptos_market_chart = {entry[0]: entry[1] for entry in
@@ -83,7 +82,6 @@ def get_coin_info(coin):
 def get_user_cryptos(user):
     cryptos = Cryptos.objects.filter(user=user)
     for crypto in cryptos:
-        print(crypto.symbol)
         crypto.usd = Decimal(get_coin_info(crypto.symbol)['current_price']) * Decimal(crypto.amount)
         crypto.usd = round(crypto.usd, 2)
         crypto.image = get_coin_info(crypto.symbol)['image']

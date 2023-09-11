@@ -6,7 +6,7 @@ from .models import Wallet, Transactions
 from .forms import TransactionsViewForm, DepositMoneyForm, WithdrawMoneyForm, BuyCryptoForm, SellCryptoForm, \
     CryptoTransactionsViewForm
 from .transactions import perform_money_transaction, perform_crypto_transaction
-from .cryptos import get_coin_info, get_user_cryptos, request_coin_cache, request_coin_chart_cache
+from .cryptos import get_coin_info, get_user_cryptos, request_coin_chart_cache
 from django.http import JsonResponse
 from .chart import get_timestamps_date, get_clean_values
 
@@ -36,14 +36,12 @@ def wallet_view(request):
     if request.method == 'POST':
         if deposit_money_form.is_valid():
             amount = deposit_money_form.cleaned_data['deposit_dollars']
-            print(amount)
             try:
                 perform_money_transaction(user, amount, 'deposit')
             except ValueError as error:
                 messages.warning(request, error)
         if withdraw_money_form.is_valid():
             amount = withdraw_money_form.cleaned_data['withdraw_dollars']
-            print(amount)
             try:
                 perform_money_transaction(user, amount, 'withdraw')
             except ValueError as error:
@@ -61,7 +59,6 @@ def wallet_view(request):
                 'created_at__range': (start_date, end_date),
             }
             if transaction_type != 'all':
-                print(transaction_type)
                 filter_args['type'] = transaction_type
             transactions = Transactions.objects.filter(**filter_args).order_by('-created_at')
         else:
@@ -88,15 +85,10 @@ def crypto_view(request):
             perform_crypto_transaction(user, crypto, crypto_amount, 'buy')
         if sell_crypto_form.is_valid():
             crypto_amount = Decimal(sell_crypto_form.cleaned_data['sell_cryptos'])
-            print(f'crypto_amount: {crypto_amount}')
             crypto = sell_crypto_form.cleaned_data['crypto_select']
-            print(f'crypto: {crypto}')
             crypto_price = Decimal(get_coin_info(crypto)['current_price'])
-            print(f'crypto_price: {crypto_price}')
             crypto_price_decimal = Decimal(crypto_price)
-            print(f'crypto_price_decimal: {crypto_price_decimal}')
             usd_amount = crypto_amount * crypto_price_decimal
-            print(f'usd_amount: {usd_amount}')
             perform_crypto_transaction(user, crypto, crypto_amount, 'sell')
             perform_money_transaction(user, usd_amount, 'deposit')
         return redirect('crypto')
@@ -116,7 +108,6 @@ def crypto_view(request):
                 'created_at__range': (start_date, end_date),
             }
             if transaction_type != 'all':
-                print(transaction_type)
                 filter_args['type'] = transaction_type
             if crypto != 'all':
                 filter_args['symbol'] = crypto
