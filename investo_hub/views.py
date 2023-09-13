@@ -4,12 +4,11 @@ from django.contrib.auth.decorators import login_required
 from decimal import Decimal
 from .models import Wallet, Transactions
 from .forms import TransactionsViewForm, DepositMoneyForm, WithdrawMoneyForm, BuyCryptoForm, SellCryptoForm, \
-    CryptoTransactionsViewForm
+    CryptoTransactionsViewForm, display_form_errors
 from .transactions import perform_money_transaction, perform_crypto_transaction
 from .cryptos import get_coin_info, get_user_cryptos, request_coin_chart_cache
 from django.http import JsonResponse
 from .chart import get_timestamps_date, get_clean_values
-
 
 def chart_view(request):
     return render(request, 'chart.html')
@@ -34,18 +33,22 @@ def wallet_view(request):
     withdraw_money_form = WithdrawMoneyForm(request.POST or None, max_value=wallet.dollars)
     transactions_view_form = TransactionsViewForm(request.GET or None)
     if request.method == 'POST':
-        if deposit_money_form.is_valid():
-            amount = deposit_money_form.cleaned_data['deposit_dollars']
-            try:
-                perform_money_transaction(user, amount, 'deposit')
-            except ValueError as error:
-                messages.warning(request, error)
-        if withdraw_money_form.is_valid():
-            amount = withdraw_money_form.cleaned_data['withdraw_dollars']
-            try:
-                perform_money_transaction(user, amount, 'withdraw')
-            except ValueError as error:
-                messages.warning(request, error)
+        if 'deposit_form' in request.POST:
+            if deposit_money_form.is_valid():
+                amount = deposit_money_form.cleaned_data['deposit_dollars']
+                try:
+                    perform_money_transaction(user, amount, 'deposit')
+                except ValueError as error:
+                    messages.warning(request, error)
+            else:
+                display_form_errors(request, deposit_money_form)
+        elif 'withdraw_form' in request.POST:
+            if withdraw_money_form.is_valid():
+                amount = withdraw_money_form.cleaned_data['withdraw_dollars']
+                try:
+                    perform_money_transaction(user, amount, 'withdraw')
+                except ValueError as error:
+                    messages.warning(request, error)
         return redirect('wallet')
 
     elif request.method == 'GET':

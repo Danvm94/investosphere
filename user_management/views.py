@@ -3,6 +3,7 @@ from .forms import RegistrationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .registration import register_user
+from investo_hub.forms import display_form_errors
 
 
 from investo_hub.cryptos import request_coin_cache
@@ -18,14 +19,7 @@ def registration_view(request):
             # Redirect to the home page or another appropriate URL
             return redirect('home')
         else:
-            # If form is not valid, collect field-specific error messages
-            field_errors = []
-            for field_name, errors in form.errors.items():
-                for error in errors:
-                    field_errors.append(f'{form.fields[field_name].label}: {error}')
-            if field_errors:
-                for field_error in field_errors:
-                    messages.warning(request, field_error)
+            display_form_errors(request, form)
             return redirect('register')
 
     elif request.method == 'GET':
