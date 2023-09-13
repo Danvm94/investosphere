@@ -69,21 +69,18 @@
 <!-- Messages Part -->
 <div>
     {% if messages %}
-        <div class="m-5">
-
-        </div>
         <div class="container">
 
         {% for message in messages %}
             {% if 'warning' in message.tags %}
-                <div class="alert alert-warning m-1 position-relative">
+                <div class="alert alert-warning mt-2 position-relative">
                     {{ message }}
                     <button class="position-absolute top-0 end-0 btn-close"
                             onclick="opacityChange('hide', this.parentNode)"></button>
                 </div>
             {% endif %}
             {% if 'success' in message.tags %}
-                <div class="alert alert-success m-1">
+                <div class="alert alert-success mt-2">
                     {{ message }}
                     <button class="position-absolute top-0 end-0 btn-close"
                             onclick="opacityChange('hide', this.parentNode)"></button>

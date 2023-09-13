@@ -50,7 +50,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    # Redirect to the home page
+    messages.success(request, "You are now logged out")
     return redirect('home')
 
 
