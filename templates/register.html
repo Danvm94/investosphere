@@ -46,15 +46,14 @@
                             <div class="col-md-5 text-center justify-content-start">
                                 <a href="{% url 'login' %}">Already have an account? Login here.</a>
                             </div>
+                        </div>
+                    </div>
                 </form>
             </div>
+            <div class="col-md-4">
+                <img src="{% static 'images/register-image.svg' %}"
+                     alt="Investment Chart" class="img-fluid registration-image">
+            </div>
         </div>
-        </form>
-    </div>
-    <div class="col-md-4">
-        <img src="{% static 'images/register-image.svg' %}"
-             alt="Investment Chart" class="img-fluid registration-image">
-    </div>
-    </div>
     </div>
 {% endblock %}

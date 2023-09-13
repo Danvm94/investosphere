@@ -26,6 +26,7 @@ def registration_view(request):
             if field_errors:
                 for field_error in field_errors:
                     messages.warning(request, field_error)
+            return redirect('register')
 
     elif request.method == 'GET':
         form = RegistrationForm()
