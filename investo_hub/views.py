@@ -5,7 +5,7 @@ from decimal import Decimal
 from .models import Wallet, Transactions
 from .forms import TransactionsViewForm, DepositMoneyForm, WithdrawMoneyForm, BuyCryptoForm, SellCryptoForm, \
     CryptoTransactionsViewForm, display_form_errors
-from .transactions import perform_money_transaction, perform_crypto_transaction
+from .transactions import perform_money_transaction, perform_crypto_transaction, deposit_into_wallet
 from .cryptos import get_coin_info, get_user_cryptos, request_coin_chart_cache
 from django.http import JsonResponse
 from .chart import get_timestamps_date, get_clean_values
@@ -34,21 +34,19 @@ def wallet_view(request):
     transactions_view_form = TransactionsViewForm(request.GET or None)
     if request.method == 'POST':
         if 'deposit_form' in request.POST:
+            print('1')
             if deposit_money_form.is_valid():
                 amount = deposit_money_form.cleaned_data['deposit_dollars']
-                try:
-                    perform_money_transaction(user, amount, 'deposit')
-                except ValueError as error:
-                    messages.warning(request, error)
+                deposit_into_wallet(user, wallet, amount)
             else:
                 display_form_errors(request, deposit_money_form)
         elif 'withdraw_form' in request.POST:
+            print('2')
             if withdraw_money_form.is_valid():
                 amount = withdraw_money_form.cleaned_data['withdraw_dollars']
-                try:
-                    perform_money_transaction(user, amount, 'withdraw')
-                except ValueError as error:
-                    messages.warning(request, error)
+                perform_money_transaction(user, amount, 'withdraw')
+            else:
+                display_form_errors(request, deposit_money_form)
         return redirect('wallet')
 
     elif request.method == 'GET':

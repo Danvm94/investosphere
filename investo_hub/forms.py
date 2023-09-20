@@ -75,23 +75,23 @@ class DepositMoneyForm(forms.Form):
 
 
 class WithdrawMoneyForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.max_value = kwargs.pop('max_value')
+        super().__init__(*args, **kwargs)
+        self.fields['withdraw_dollars'] = forms.DecimalField(
+            label='',
+            widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'withdraw_dollars_form_decimal'}),
+            validators=[MaxValueValidator(self.max_value, 'test')],
+            required=False,
+        )
+        print(self.max_value)
+
     text_dollars = forms.CharField(
         label='USD Amount',
         widget=forms.TextInput(attrs={'class': 'form-control balance-modal', 'placeholder': '1.0', 'value': '$.0',
                                       'id': 'withdraw_dollars_form'}),
+        required=False,
     )
-    withdraw_dollars = forms.DecimalField(
-        label='',
-        widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'withdraw_dollars_form_decimal'}),
-    )
-
-    def __init__(self, *args, **kwargs):
-        max_value = kwargs.pop('max_value', 50000.00)  # Default to $50,000.00 if max_value is not provided
-        super().__init__(*args, **kwargs)
-        self.fields['withdraw_dollars'].validators.extend([
-            MinValueValidator(1.00, message='Value must be at least $1.00'),
-            MaxValueValidator(max_value, message=f'Value cannot exceed ${max_value:.2f}')
-        ])
 
 
 class BuyCryptoForm(forms.Form):
@@ -195,7 +195,7 @@ def display_form_errors(request, form):
     field_errors = []
     for field_name, errors in form.errors.items():
         for error in errors:
-            field_errors.append(f'{form.fields[field_name].label}: {error}')
+            field_errors.append(f'{error}')
 
     for field_error in field_errors:
         messages.warning(request, field_error)

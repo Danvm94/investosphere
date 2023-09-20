@@ -58,14 +58,17 @@ def withdraw_from_wallet(user, wallet, amount):
         None
     """
     if amount < 0:
+        print(2)
         raise ValueError(
             "Unable to withdraw. "
             "The withdrawal amount must be greater than or equal to 1.")
     elif wallet.dollars < amount:
+        print(0)
         raise ValueError(
             "Insufficient funds in your wallet. "
             "The withdrawal amount exceeds your available balance.")
     else:
+        print(1)
         wallet.dollars -= amount
         Transactions.objects.create(user=user,  type="withdraw", symbol="dollar", amount=-amount)
 
