@@ -75,21 +75,27 @@ def crypto_view(request):
     sell_crypto_form = SellCryptoForm(request.POST or None, cryptocurrencies=get_user_cryptos(user))
     transactions_view_form = CryptoTransactionsViewForm(request.GET or None)
     if request.method == 'POST':
-        if buy_crypto_form.is_valid():
-            usd_amount = buy_crypto_form.cleaned_data['buy_dollars_decimal']
-            crypto = buy_crypto_form.cleaned_data['crypto_select']
-            crypto_price = Decimal(get_coin_info(crypto)['current_price'])
-            crypto_amount = usd_amount / crypto_price
-            perform_money_transaction(user, usd_amount, 'withdraw')
-            perform_crypto_transaction(user, crypto, crypto_amount, 'buy')
-        if sell_crypto_form.is_valid():
-            crypto_amount = Decimal(sell_crypto_form.cleaned_data['sell_cryptos'])
-            crypto = sell_crypto_form.cleaned_data['crypto_select']
-            crypto_price = Decimal(get_coin_info(crypto)['current_price'])
-            crypto_price_decimal = Decimal(crypto_price)
-            usd_amount = crypto_amount * crypto_price_decimal
-            perform_crypto_transaction(user, crypto, crypto_amount, 'sell')
-            perform_money_transaction(user, usd_amount, 'deposit')
+        if 'buy_form' in request.POST:
+            if buy_crypto_form.is_valid():
+                usd_amount = buy_crypto_form.cleaned_data['buy_dollars_decimal']
+                crypto = buy_crypto_form.cleaned_data['crypto_select']
+                crypto_price = Decimal(get_coin_info(crypto)['current_price'])
+                crypto_amount = usd_amount / crypto_price
+                perform_money_transaction(user, usd_amount, 'withdraw')
+                perform_crypto_transaction(user, crypto, crypto_amount, 'buy')
+            else:
+                display_form_errors(request, buy_crypto_form)
+        elif 'sell_form' in request.POST:
+            if sell_crypto_form.is_valid():
+                crypto_amount = Decimal(sell_crypto_form.cleaned_data['sell_cryptos'])
+                crypto = sell_crypto_form.cleaned_data['crypto_select']
+                crypto_price = Decimal(get_coin_info(crypto)['current_price'])
+                crypto_price_decimal = Decimal(crypto_price)
+                usd_amount = crypto_amount * crypto_price_decimal
+                perform_crypto_transaction(user, crypto, crypto_amount, 'sell')
+                perform_money_transaction(user, usd_amount, 'deposit')
+            else:
+                display_form_errors(request, sell_crypto_form)
         return redirect('crypto')
 
     elif request.method == 'GET':

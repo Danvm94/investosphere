@@ -157,12 +157,6 @@ class SellCryptoForm(forms.Form):
                                       'id': 'sell_cryptos'}),
         required=True
     )
-    sell_cryptos_decimal = forms.DecimalField(
-        label='',
-        max_digits=40,
-        decimal_places=20,
-        widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'sell_cryptos_decimal'}),
-    )
 
     sell_dollars = forms.CharField(
         label='USD Amount',
@@ -181,6 +175,15 @@ class SellCryptoForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.fields['crypto_select'].choices = [(crypto.symbol, crypto.symbol.capitalize()) for crypto in
                                                 cryptocurrencies]
+        self.fields['sell_cryptos_decimal'] = forms.DecimalField(
+            label='',
+            max_digits=40,
+            decimal_places=20,
+            widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'sell_cryptos_decimal'}),
+            validators=[
+                MinValueValidator(1.00, message='Value must be at least $1.00'),
+            ],
+        )
 
 
 class ChartViewForm(forms.Form):
