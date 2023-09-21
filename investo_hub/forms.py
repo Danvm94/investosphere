@@ -81,8 +81,12 @@ class WithdrawMoneyForm(forms.Form):
         self.fields['withdraw_dollars'] = forms.DecimalField(
             label='',
             widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'withdraw_dollars_form_decimal'}),
-            validators=[MaxValueValidator(self.max_value, 'test')],
-            required=False,
+            validators=[
+                MinValueValidator(1.00, message='Value must be at least $1.00'),
+                MaxValueValidator(50000.00, message='Value cannot exceed $50,000.00'),
+                MaxValueValidator(self.max_value, message=f'Value cannot exceed ${self.max_value}'),
+            ],
+            required=True,
         )
         print(self.max_value)
 
