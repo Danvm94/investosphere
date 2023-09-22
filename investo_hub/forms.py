@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django import forms
 from investosphere.settings import CRYPTOCURRENCIES
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -171,19 +172,27 @@ class SellCryptoForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        cryptocurrencies = kwargs.pop('cryptocurrencies', CRYPTOCURRENCIES)
+        self.cryptocurrencies = kwargs.pop('cryptocurrencies', CRYPTOCURRENCIES)
         super().__init__(*args, **kwargs)
         self.fields['crypto_select'].choices = [(crypto.symbol, crypto.symbol.capitalize()) for crypto in
-                                                cryptocurrencies]
+                                                self.cryptocurrencies]
         self.fields['sell_cryptos_decimal'] = forms.DecimalField(
             label='',
             max_digits=40,
             decimal_places=20,
             widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'sell_cryptos_decimal'}),
-            validators=[
-                MinValueValidator(1.00, message='Value must be at least $1.00'),
-            ],
         )
+    def clean(self):
+        cleaned_data = super().clean()
+        sell_amount = Decimal(cleaned_data.get('sell_cryptos'))
+        crypto = cleaned_data.get('crypto_select')
+        for cryptocurrency in self.cryptocurrencies:
+            if cryptocurrency.symbol == crypto:
+                print(f'{sell_amount} > {cryptocurrency.amount} = {sell_amount > cryptocurrency.amount}')
+                if sell_amount > cryptocurrency.amount:
+                    raise forms.ValidationError(f"Maximum amount allowed for {crypto} is {cryptocurrency.amount}")
+                break
+
 
 
 class ChartViewForm(forms.Form):

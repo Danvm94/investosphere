@@ -36,7 +36,7 @@ def wallet_view(request):
         if 'deposit_form' in request.POST:
             if deposit_money_form.is_valid():
                 amount = deposit_money_form.cleaned_data['deposit_dollars']
-                deposit_into_wallet(user, wallet, amount)
+                perform_money_transaction(user, amount, 'deposit')
             else:
                 display_form_errors(request, deposit_money_form)
         elif 'withdraw_form' in request.POST:
