@@ -118,14 +118,6 @@ class BuyCryptoForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control balance-modal', 'placeholder': '1.0', 'value': '$.0',
                                       'id': 'buy_dollars'}),
     )
-    buy_dollars_decimal = forms.DecimalField(
-        label='',
-        widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'buy_dollars_decimal'}),
-        validators=[
-            MinValueValidator(1.00, message='Value must be at least $1.00'),
-            MaxValueValidator(50000.00, message='Value cannot exceed $50,000.00')
-        ]
-    )
     buy_cryptos = forms.CharField(
         label='Crypto Amount',
         widget=forms.TextInput(attrs={'class': 'form-control balance-modal', 'placeholder': '1.0', 'value': '0.0',
@@ -139,6 +131,18 @@ class BuyCryptoForm(forms.Form):
         decimal_places=20,
         widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'buy_cryptos_decimal'}),
     )
+
+    def __init__(self, *args, **kwargs):
+        self.max_value = kwargs.pop('max_value')
+        super().__init__(*args, **kwargs)
+        self.fields['buy_dollars_decimal'] = forms.DecimalField(
+            label='',
+            widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'buy_dollars_decimal'}),
+            validators=[
+                MinValueValidator(1.00, message='Value must be at least $1.00'),
+                MaxValueValidator(self.max_value, message=f'Value cannot exceed ${self.max_value}')
+            ]
+        )
 
 
 class SellCryptoForm(forms.Form):
@@ -182,6 +186,7 @@ class SellCryptoForm(forms.Form):
             decimal_places=20,
             widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'sell_cryptos_decimal'}),
         )
+
     def clean(self):
         cleaned_data = super().clean()
         sell_amount = Decimal(cleaned_data.get('sell_cryptos'))
@@ -190,9 +195,10 @@ class SellCryptoForm(forms.Form):
             if cryptocurrency.symbol == crypto:
                 print(f'{sell_amount} > {cryptocurrency.amount} = {sell_amount > cryptocurrency.amount}')
                 if sell_amount > cryptocurrency.amount:
-                    raise forms.ValidationError(f"Maximum amount allowed for {crypto} is {cryptocurrency.amount}")
+                    raise forms.ValidationError(
+                        f"You are unable to sell this quantity of {crypto} because your current balance is "
+                        f"{cryptocurrency.amount}.")
                 break
-
 
 
 class ChartViewForm(forms.Form):

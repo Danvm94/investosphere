@@ -71,7 +71,8 @@ def wallet_view(request):
 @login_required
 def crypto_view(request):
     user = request.user
-    buy_crypto_form = BuyCryptoForm(request.POST or None)
+    wallet = Wallet.objects.get(user=user)
+    buy_crypto_form = BuyCryptoForm(request.POST or None, max_value=wallet.dollars)
     sell_crypto_form = SellCryptoForm(request.POST or None, cryptocurrencies=get_user_cryptos(user))
     transactions_view_form = CryptoTransactionsViewForm(request.GET or None)
     if request.method == 'POST':
