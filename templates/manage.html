@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block manage_active %}active{% endblock %}
+
+{% block content %}
+    <div class="container brief-container mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Manage Cryptocurrency Availability</h1>
+                <div class="d-none d-md-block">
+                    <p>Welcome to the Investosphere admin panel for managing cryptocurrency availability. As an
+                        administrator, you have the power to shape the investment options available to our users. This
+                        page allows you to effortlessly add or remove cryptocurrencies, ensuring that our users have
+                        access to a diverse range of investment opportunities.</p>
+                </div>
+
+            </div>
+            <div class="col-sm-8 col-md-4 col-lg-4 order-first order-md-last text-center">
+                <img src="{% static 'images/admin.svg' %}"
+                     alt="Image" class="img-fluid">
+            </div>
+        </div>
+    </div>
+{% endblock %}

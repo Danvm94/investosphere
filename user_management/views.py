@@ -5,7 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 from .registration import register_user
 from investo_hub.forms import display_form_errors
 
-
 from investo_hub.cryptos import request_coin_cache
 from .newsapi import get_news_api
 
@@ -53,3 +52,7 @@ def home_view(request):
     articles = get_news_api()
     cryptos_trending = request_coin_cache()
     return render(request, 'home.html', {'articles': articles, 'cryptos_trending': cryptos_trending})
+
+
+def manage_view(request):
+    return render(request, 'manage.html')

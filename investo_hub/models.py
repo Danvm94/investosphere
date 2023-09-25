@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from decimal import Decimal
+from user_management.models import Crypto
 
 
 class Wallet(models.Model):
@@ -15,7 +16,7 @@ class Wallet(models.Model):
 
 class Cryptos(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    symbol = models.CharField(max_length=10)
+    symbol = models.ForeignKey(Crypto, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=40, decimal_places=20, default=Decimal('0.0'))
 
     def formatted_amount(self):

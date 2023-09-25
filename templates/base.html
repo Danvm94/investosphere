@@ -50,6 +50,12 @@
                     <li class="nav-item">
                         <a class="nav-link {% block chart_active %}{% endblock %}" href="{% url 'chart' %}">Chart</a>
                     </li>
+                    {% if user.is_staff %}
+                        <li class="nav-item">
+                            <a class="nav-link {% block manage_active %}{% endblock %}"
+                               href="{% url 'manage' %}">Manage</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link {% block logout_active %}{% endblock %}" href="{% url 'logout' %}">Logout</a>
                     </li>
