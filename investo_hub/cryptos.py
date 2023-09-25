@@ -86,3 +86,7 @@ def get_user_cryptos(user):
         crypto.usd = round(crypto.usd, 2)
         crypto.image = get_coin_info(crypto.symbol)['image']
     return cryptos
+
+def clear_cache():
+    cache.delete('cached_cryptos')
+    cache.delete('cached_cryptos_chart')

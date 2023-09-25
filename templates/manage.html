@@ -23,4 +23,36 @@
             </div>
         </div>
     </div>
+
+    <div class="container portfolio-container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1><i class="fa-solid fa-wallet"></i> Cryptos Available </h1>
+
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Crypto Name</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for crypto in cryptos %}
+                        <tr>
+                            <td>{{ crypto.name }}</td>
+                            <td>
+                                <form method="post" action="{% url 'delete_crypto' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="crypto_name" value="{{ crypto.name }}">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}
