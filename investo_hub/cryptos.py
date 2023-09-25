@@ -1,6 +1,6 @@
-from investosphere.settings import CRYPTOCURRENCIES
-from django.core.cache import cache
 from .models import Cryptos
+from django.core.cache import cache
+from user_management.crypto import get_all_cryptos_names
 from decimal import Decimal
 import requests
 import time
@@ -11,7 +11,7 @@ COIN_API = os.environ.get('COIN_API_URL')
 
 
 def request_coin_api():
-    formatted_ids = ", ".join(CRYPTOCURRENCIES)
+    formatted_ids = ", ".join(get_all_cryptos_names())
     params = {
         "vs_currency": "usd",
         "ids": formatted_ids,

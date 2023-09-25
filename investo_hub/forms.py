@@ -1,6 +1,6 @@
 from decimal import Decimal
 from django import forms
-from investosphere.settings import CRYPTOCURRENCIES
+from user_management.crypto import get_all_cryptos_names
 from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import date, timedelta
 from django.contrib import messages
@@ -48,8 +48,7 @@ class CryptoTransactionsViewForm(TransactionsViewForm):
         widget=forms.Select(attrs={'class': 'form-control w-auto d-inline-flex'}),
         required=False
     )
-    CRYPTOS_CHOICES = [(crypto, crypto.capitalize()) for crypto in CRYPTOCURRENCIES]
-    CRYPTOS_CHOICES.insert(0, ('all', 'All Cryptos'))
+    CRYPTOS_CHOICES = []
     crypto_choice = forms.ChoiceField(
         choices=CRYPTOS_CHOICES,
         label='Crypto',
@@ -100,8 +99,7 @@ class WithdrawMoneyForm(forms.Form):
 
 
 class BuyCryptoForm(forms.Form):
-    CRYPTOS_CHOICES = [(crypto, crypto.capitalize()) for crypto in CRYPTOCURRENCIES]
-
+    CRYPTOS_CHOICES = []
     crypto_select = forms.ChoiceField(
         choices=CRYPTOS_CHOICES,
         label='Type',
@@ -176,7 +174,7 @@ class SellCryptoForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        self.cryptocurrencies = kwargs.pop('cryptocurrencies', CRYPTOCURRENCIES)
+        self.cryptocurrencies = kwargs.pop('cryptocurrencies', get_all_cryptos_names())
         super().__init__(*args, **kwargs)
         self.fields['crypto_select'].choices = [(crypto.symbol, crypto.symbol.capitalize()) for crypto in
                                                 self.cryptocurrencies]
@@ -202,7 +200,7 @@ class SellCryptoForm(forms.Form):
 
 
 class ChartViewForm(forms.Form):
-    CRYPTOS_CHOICES = [(crypto, crypto.capitalize()) for crypto in CRYPTOCURRENCIES]
+    CRYPTOS_CHOICES = [(crypto, crypto.capitalize()) for crypto in get_all_cryptos_names()]
     CRYPTOS_CHOICES.insert(0, ('all', 'All Cryptos'))
     crypto_choice = forms.ChoiceField(
         choices=CRYPTOS_CHOICES,

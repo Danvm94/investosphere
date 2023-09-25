@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages
+from user_management.crypto import get_all_cryptos_names
 from django.contrib.auth.decorators import login_required
 from decimal import Decimal
 from .models import Wallet, Transactions
@@ -9,6 +9,7 @@ from .transactions import perform_money_transaction, perform_crypto_transaction,
 from .cryptos import get_coin_info, get_user_cryptos, request_coin_chart_cache
 from django.http import JsonResponse
 from .chart import get_timestamps_date, get_clean_values
+
 
 def chart_view(request):
     return render(request, 'chart.html')
@@ -75,6 +76,11 @@ def crypto_view(request):
     buy_crypto_form = BuyCryptoForm(request.POST or None, max_value=wallet.dollars)
     sell_crypto_form = SellCryptoForm(request.POST or None, cryptocurrencies=get_user_cryptos(user))
     transactions_view_form = CryptoTransactionsViewForm(request.GET or None)
+    transactions_view_form.fields['crypto_choice'].choices = [(crypto, crypto.capitalize()) for crypto in
+                                                              get_all_cryptos_names()]
+    transactions_view_form.fields['crypto_choice'].choices.insert(0, ('all', 'All Cryptos'))
+    buy_crypto_form.fields['crypto_select'].choices = [(crypto, crypto.capitalize()) for crypto in
+                                                       get_all_cryptos_names()]
     if request.method == 'POST':
         if 'buy_form' in request.POST:
             if buy_crypto_form.is_valid():
@@ -101,7 +107,6 @@ def crypto_view(request):
 
     elif request.method == 'GET':
         user_cryptos = get_user_cryptos(user)
-
         wallet = Wallet.objects.get(user=user)
         balance = wallet.dollars
         if transactions_view_form.is_valid():

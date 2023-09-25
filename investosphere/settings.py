@@ -151,17 +151,3 @@ CACHES = {
         'LOCATION': 'news_api',
     }
 }
-
-# Set the accepted Crypto
-CRYPTOCURRENCIES = [
-    "bitcoin",
-    "ethereum",
-    "tether",
-    "binancecoin",
-    "ripple",
-    "cardano",
-    "dogecoin",
-    "solana",
-    "tron",
-    "polkadot"
-]
