@@ -200,15 +200,16 @@ class SellCryptoForm(forms.Form):
 
 
 class ChartViewForm(forms.Form):
-    CRYPTOS_CHOICES = [(crypto, crypto.capitalize()) for crypto in get_all_cryptos_names()]
-    CRYPTOS_CHOICES.insert(0, ('all', 'All Cryptos'))
-    crypto_choice = forms.ChoiceField(
-        choices=CRYPTOS_CHOICES,
-        label='Crypto',
-        initial='all',
-        widget=forms.Select(attrs={'class': 'form-control w-auto d-inline-flex'}),
-        required=False
-    )
+    if get_all_cryptos_names():
+        CRYPTOS_CHOICES = [(crypto, crypto.capitalize()) for crypto in get_all_cryptos_names()]
+        CRYPTOS_CHOICES.insert(0, ('all', 'All Cryptos'))
+        crypto_choice = forms.ChoiceField(
+            choices=CRYPTOS_CHOICES,
+            label='Crypto',
+            initial='all',
+            widget=forms.Select(attrs={'class': 'form-control w-auto d-inline-flex'}),
+            required=False
+        )
 
 
 def display_form_errors(request, form):
