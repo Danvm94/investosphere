@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import RegistrationForm
+from .forms import RegistrationForm, AddCryptoForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .registration import register_user
@@ -56,8 +56,18 @@ def home_view(request):
 
 
 def manage_view(request):
-    cryptos = Crypto.objects.all()
-    return render(request, 'manage.html', {'cryptos': cryptos})
+    add_crypto_form = AddCryptoForm(request.POST or None)
+    if request.method == 'POST':
+        if add_crypto_form.is_valid():
+            name = add_crypto_form.cleaned_data['crypto']
+            Crypto.objects.create(name=name)
+            clear_cache()
+        else:
+            display_form_errors(request, add_crypto_form)
+        return redirect('manage')
+    elif request.method == 'GET':
+        cryptos = Crypto.objects.all()
+        return render(request, 'manage.html', {'cryptos': cryptos, 'add_crypto_form': add_crypto_form})
 
 
 def delete_crypto(request):

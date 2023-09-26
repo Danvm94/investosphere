@@ -45,14 +45,41 @@
                                 <form method="post" action="{% url 'delete_crypto' %}">
                                     {% csrf_token %}
                                     <input type="hidden" name="crypto_name" value="{{ crypto.name }}">
-                                    <button type="submit">Delete</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
                             </td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
+                <button id="view-more-btn" class="btn btn-success mt-3 table-btn" data-bs-toggle="modal"
+                        data-bs-target="#addCrypto">Add Crypto
+                </button>
             </div>
+        </div>
+    </div>
+
+    <div class="modal fade wallet-modal text-center" id="addCrypto" tabindex="-1"
+         aria-labelledby="depositModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="add-money-form" method="POST">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-4" id="depositModalLabel"><i
+                                class="fa-solid fa-money-bill-transfer"></i> Add Crypto</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center d-flex flex-column">
+                        {% csrf_token %}
+                        {{ add_crypto_form }}
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success" name="sell_form" value="submit_sell">Confirm
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}
