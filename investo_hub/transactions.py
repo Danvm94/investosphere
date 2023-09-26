@@ -1,4 +1,5 @@
 from .models import Wallet, Transactions, Cryptos
+from .models import Crypto
 # from .cryptos import
 
 
@@ -134,7 +135,9 @@ def sell_crypto(user, crypto, amount):
 
 def get_or_create_cryptos(user, symbol):
     try:
-        cryptos = Cryptos.objects.get(user=user, symbol=symbol)
+        crypto = Crypto.objects.get(name=symbol)
+        cryptos = Cryptos.objects.get(user=user, crypto=crypto)
     except Cryptos.DoesNotExist:
-        cryptos = Cryptos.objects.create(user=user, symbol=symbol)
+        crypto = Crypto.objects.get(name=symbol)
+        cryptos = Cryptos.objects.create(user=user, crypto=crypto)
     return cryptos
