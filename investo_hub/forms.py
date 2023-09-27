@@ -4,6 +4,7 @@ from user_management.crypto import get_all_cryptos_names
 from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import date, timedelta
 from django.contrib import messages
+from user_management.models import Crypto
 
 
 class TransactionsViewForm(forms.Form):
@@ -200,7 +201,7 @@ class SellCryptoForm(forms.Form):
 
 
 class ChartViewForm(forms.Form):
-    if get_all_cryptos_names():
+    if Crypto.objects.exists():
         CRYPTOS_CHOICES = [(crypto, crypto.capitalize()) for crypto in get_all_cryptos_names()]
         CRYPTOS_CHOICES.insert(0, ('all', 'All Cryptos'))
         crypto_choice = forms.ChoiceField(
