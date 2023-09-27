@@ -187,6 +187,58 @@ function toggleRow(button) {
     }
 }
 
+// Function to confirm user submit
+function initializeConfirmations() {
+    const deposit = document.getElementById('deposit')
+    const withdraw = document.getElementById('withdraw')
+    const buy = document.getElementById('buy')
+    const sell = document.getElementById('sell')
+    if (deposit) {
+        deposit.addEventListener('submit', function (event) {
+            const amount = document.getElementById('deposit_dollars_form').value;
+            const confirmationMessage = 'Are you sure you want to deposit ' + amount + ' ?';
+            const confirmed = confirm(confirmationMessage);
+            if (!confirmed) {
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+    }
+    if (withdraw) {
+        withdraw.addEventListener('submit', function (event) {
+            const amount = document.getElementById('withdraw_dollars_form').value;
+            const confirmationMessage = 'Are you sure you want to withdraw ' + amount + ' ?';
+            const confirmed = confirm(confirmationMessage);
+            if (!confirmed) {
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+    }
+    if (buy) {
+        buy.addEventListener('submit', function (event) {
+            const crypto = document.getElementById('id_crypto_select_buy').value
+            const usdAmount = document.getElementById('buy_dollars').value
+            const cryptoAmount = document.getElementById('buy_cryptos').value
+            const confirmationMessage = `Are you sure you want to buy ${crypto} ${cryptoAmount} for ${usdAmount}`
+            const confirmed = confirm(confirmationMessage);
+            if (!confirmed) {
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+    }
+    if (sell) {
+        sell.addEventListener('submit', function (event) {
+            const crypto = document.getElementById('id_crypto_select_sell').value
+            const usdAmount = document.getElementById('sell_dollars').value
+            const cryptoAmount = document.getElementById('sell_cryptos').value
+            const confirmationMessage = `Are you sure you want to buy ${crypto} ${cryptoAmount} for ${usdAmount}`
+            const confirmed = confirm(confirmationMessage);
+            if (!confirmed) {
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+    }
+}
+
 // Function to convert numbers to float
 // Event Listener
 document.addEventListener("DOMContentLoaded", function () {
@@ -195,6 +247,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeUsdFormatter();
     initializeCryptoCalculator();
     initializeUsdCalculator();
+    initializeConfirmations();
 
 });
 
