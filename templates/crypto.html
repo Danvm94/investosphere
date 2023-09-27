@@ -47,9 +47,11 @@
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#buyModal">
                     Buy
                 </button>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#sellModal">
-                    Sell
-                </button>
+                {% if user_cryptos %}
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#sellModal">
+                        Sell
+                    </button>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -137,38 +139,42 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success" name="buy_form" value="submit_buy">Confirm</button>
+                        <button type="submit" class="btn btn-success" name="buy_form" value="submit_buy">Confirm
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <div class="modal fade wallet-modal text-center" id="sellModal" tabindex="-1"
-         aria-labelledby="depositModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <form id="sell" class="add-money-form" method="POST">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-4" id="depositModalLabel"><i
-                                class="fa-solid fa-money-bill-transfer"></i> Buy Crypto</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center d-flex flex-column">
-                        {% csrf_token %}
-                        {{ sell_crypto_form }}
-                        <p id="owned-crypto-amount"></p>
-                        <p id="crypto-price-info-sell"></p>
+    {% if user_cryptos %}
+        <div class="modal fade wallet-modal text-center" id="sellModal" tabindex="-1"
+             aria-labelledby="depositModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form id="sell" class="add-money-form" method="POST">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-4" id="depositModalLabel"><i
+                                    class="fa-solid fa-money-bill-transfer"></i> Buy Crypto</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center d-flex flex-column">
+                            {% csrf_token %}
+                            {{ sell_crypto_form }}
+                            <p id="owned-crypto-amount"></p>
+                            <p id="crypto-price-info-sell"></p>
 
 
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success" name="sell_form" value="submit_sell">Confirm
+                            </button>
+                        </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success" name="sell_form" value="submit_sell">Confirm</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
+    {% endif %}
 
     {{ bitcoin }}
 {% endblock %}
