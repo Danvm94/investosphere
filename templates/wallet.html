@@ -13,9 +13,12 @@
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#depositModal">
                     Deposit
                 </button>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#withdrawModal">
-                    Withdraw
-                </button>
+                {% if wallet.dollars > 0 %}
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#withdrawModal">
+                        Withdraw
+                    </button>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -43,16 +46,16 @@
                     </div>
                 </form>
                 {% if transactions|length > 0 %}
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Currency</th>
-                        <th scope="col">Transaction Date</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Currency</th>
+                            <th scope="col">Transaction Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
                         {% for transaction in transactions %}
                             <tr {% if forloop.counter > 5 %}class="d-none hidden-row"{% endif %}>
@@ -65,8 +68,8 @@
                                 <td>{{ transaction.created_at }}</td>
                             </tr>
                         {% endfor %}
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
                 {% else %}
                     <p>There is no transactions to show</p>
                 {% endif %}
@@ -98,7 +101,9 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success" name="deposit_form" value="submit_deposit">Confirm</button>
+                        <button type="submit" class="btn btn-success" name="deposit_form" value="submit_deposit">
+                            Confirm
+                        </button>
                     </div>
                 </div>
             </form>
@@ -123,7 +128,9 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success" name="withdraw_form" value="submit_withdraw">Confirm</button>
+                        <button type="submit" class="btn btn-success" name="withdraw_form" value="submit_withdraw">
+                            Confirm
+                        </button>
                     </div>
                 </div>
             </form>
