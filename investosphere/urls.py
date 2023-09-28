@@ -19,7 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     # Handle root URL with a specific view
-    path('', include('user_management.urls')),
     path('', include('investo_hub.urls')),
+    path('', include('user_management.urls')),
     path('admin/', admin.site.urls),
 ]
