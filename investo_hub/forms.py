@@ -64,6 +64,7 @@ class DepositMoneyForm(forms.Form):
         label='USD Amount',
         widget=forms.TextInput(attrs={'class': 'form-control balance-modal', 'placeholder': '1.0', 'value': '$.0',
                                       'id': 'deposit_dollars_form'}),
+        required=False,
     )
     deposit_dollars = forms.DecimalField(
         label='',
@@ -111,11 +112,13 @@ class BuyCryptoForm(forms.Form):
     crypto_price = forms.DecimalField(
         label='',
         widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'crypto_price'}),
+        required=True
     )
     buy_dollars = forms.CharField(
         label='USD Amount',
         widget=forms.TextInput(attrs={'class': 'form-control balance-modal', 'placeholder': '1.0', 'value': '$.0',
                                       'id': 'buy_dollars'}),
+        required=False
     )
     buy_cryptos = forms.CharField(
         label='Crypto Amount',
@@ -129,6 +132,7 @@ class BuyCryptoForm(forms.Form):
         max_digits=40,
         decimal_places=20,
         widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'buy_cryptos_decimal'}),
+        required=False
     )
 
     def __init__(self, *args, **kwargs):
@@ -140,7 +144,8 @@ class BuyCryptoForm(forms.Form):
             validators=[
                 MinValueValidator(1.00, message='Value must be at least $1.00'),
                 MaxValueValidator(self.max_value, message=f'Value cannot exceed ${self.max_value}')
-            ]
+            ],
+            required=True
         )
 
 
@@ -154,6 +159,7 @@ class SellCryptoForm(forms.Form):
     crypto_price = forms.DecimalField(
         label='',
         widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'sell-price'}),
+        required=False
     )
     sell_cryptos = forms.CharField(
         label='Crypto Amount',
@@ -172,6 +178,7 @@ class SellCryptoForm(forms.Form):
     sell_dollars_decimal = forms.DecimalField(
         label='',
         widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'sell_dollars_decimal'}),
+        required=False
     )
 
     def __init__(self, *args, **kwargs):
@@ -184,6 +191,7 @@ class SellCryptoForm(forms.Form):
             max_digits=40,
             decimal_places=20,
             widget=forms.NumberInput(attrs={'class': 'd-none', 'id': 'sell_cryptos_decimal'}),
+            required=False
         )
 
     def clean(self):
