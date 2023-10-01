@@ -1,6 +1,5 @@
 from .models import Wallet, Transactions, Cryptos
 from .models import Crypto
-# from .cryptos import
 
 
 def perform_money_transaction(user, amount, transaction):
@@ -37,7 +36,8 @@ def deposit_into_wallet(user, wallet, amount):
             "The deposit amount must be greater than or equal to 1.")
     else:
         wallet.dollars += amount
-        Transactions.objects.create(user=user,  type="deposit", symbol="dollar", amount=amount)
+        wallet.save()
+        Transactions.objects.create(user=user, type="deposit", symbol="dollar", amount=amount)
 
 
 def withdraw_from_wallet(user, wallet, amount):
@@ -71,7 +71,8 @@ def withdraw_from_wallet(user, wallet, amount):
     else:
         print(1)
         wallet.dollars -= amount
-        Transactions.objects.create(user=user,  type="withdraw", symbol="dollar", amount=-amount)
+        wallet.save()
+        Transactions.objects.create(user=user, type="withdraw", symbol="dollar", amount=-amount)
 
 
 def get_or_create_wallet(user):
