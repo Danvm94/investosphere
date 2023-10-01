@@ -4,7 +4,6 @@ from user_management.crypto import get_all_cryptos_names
 from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import date, timedelta
 from django.contrib import messages
-from user_management.models import Crypto
 
 
 class TransactionsViewForm(forms.Form):
