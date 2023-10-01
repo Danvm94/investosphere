@@ -120,11 +120,6 @@ def sell_crypto(user, crypto, amount):
             "Unable to sell. "
             "The sell amount must be a positive value."
         )
-    # elif amount > crypto.amount:
-    #     raise ValueError(
-    #         "Unable to sell. "
-    #         "insufficient."
-    #     )
     else:
         crypto.amount -= amount
         crypto.save()
