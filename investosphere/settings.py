@@ -28,14 +28,10 @@ TEMPLATE_DIR = Path(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if os.environ.get('DEBUG') == 'True':
-    DEBUG = True
-else:
-    DEBUG = False
+DEBUG = True if os.environ.get('DEBUG') == 'True' else False
 
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost',
-                 'investosphere-d74500c2a8ca.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'investosphere-d74500c2a8ca.herokuapp.com']
 
 # Application definition
 
