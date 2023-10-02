@@ -193,6 +193,7 @@ function initializeConfirmations() {
     const withdraw = document.getElementById('withdraw')
     const buy = document.getElementById('buy')
     const sell = document.getElementById('sell')
+    const dell = document.querySelectorAll(".btn-delete");
     if (deposit) {
         deposit.addEventListener('submit', function (event) {
             const amount = document.getElementById('deposit_dollars_form').value;
@@ -235,6 +236,19 @@ function initializeConfirmations() {
             if (!confirmed) {
                 event.preventDefault(); // Prevent form submission
             }
+        });
+    }
+    if (dell) {
+        dell.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                const confirmationMessage = `Are you sure you want to delete ${button.value}? 
+                This action will result in the removal of this cryptocurrency from all users' wallets, and it 
+                will disappear from the system permanently. Please confirm your decision.`;
+                const confirmed = confirm(confirmationMessage);
+                if (!confirmed) {
+                    event.preventDefault(); // Prevent form submission
+                }
+            });
         });
     }
 }

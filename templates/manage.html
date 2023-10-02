@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="container portfolio-container">
+    <div class="container portfolio-container mb-5">
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1><i class="fa-solid fa-wallet"></i> Cryptos Available </h1>
@@ -45,7 +45,9 @@
                                 <form method="post" action="{% url 'delete_crypto' %}">
                                     {% csrf_token %}
                                     <input type="hidden" name="crypto_name" value="{{ crypto.name }}">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" name="crypto" value="{{ crypto.name }}"
+                                            class="btn btn-danger btn-delete">Delete
+                                    </button>
                                 </form>
                             </td>
                         </tr>
