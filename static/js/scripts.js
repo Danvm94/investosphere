@@ -1,9 +1,20 @@
-// Function for only letters in the input
+/**
+ * Allows only letters (A-Z, a-z) in the input element's value.
+ * Replaces any non-letter characters with an empty string.
+ *
+ * @param {HTMLInputElement} inputElement - The input element to process.
+ */
 function allowOnlyLetters(inputElement) {
     inputElement.value = inputElement.value.replace(/[^a-zA-Z]/g, "");
 }
 
-// Function to hide elements
+/**
+ * Automatically fades out and hides a list of HTML elements with a delay.
+ *
+ * @param {Array} elements - An array of HTML elements to fade out and hide.
+ * @param {number} fadeDelay - The delay (in milliseconds) before starting the fade-out animation.
+ * @param {number} hideDelay - The delay (in milliseconds) before hiding the elements completely after fading.
+ */
 function fadeOutAndHideElementsAutomatically(elements, fadeDelay, hideDelay) {
     setTimeout(function () {
         for (let i = 0; i < elements.length; i++) {
@@ -18,22 +29,36 @@ function fadeOutAndHideElementsAutomatically(elements, fadeDelay, hideDelay) {
     }, fadeDelay); // Start fading after specified delay
 }
 
-// Function for opacity change
+/**
+ * Change the opacity of an HTML element for show or hide effects.
+ *
+ * @param {string} type - The type of operation, either "hide" or "show".
+ * @param {HTMLElement} element - The HTML element to apply the opacity change to.
+ */
 function opacityChange(type, element) {
     if (type === "hide") {
-
+        // If type is "hide", set a timeout to add the 'd-none' class for hiding.
         setTimeout(() => {
             element.classList.add('d-none');
-        }, 1800);
+        }, 1800); // Delay before hiding: 1800 milliseconds (1.8 seconds)
     } else {
-
+        // If type is "show", set a timeout to remove the 'd-none' class for showing.
         setTimeout(() => {
             element.classList.remove('d-none');
-        }, 50);
+        }, 50); // Delay before showing: 50 milliseconds (0.05 seconds)
     }
 }
 
-// Function for carousel on bootstrap
+/**
+ * Initializes a Bootstrap Carousel component for displaying news items.
+ *
+ * Looks for an HTML element with the ID "newsCarousel" and sets up a carousel
+ * to cycle through news items automatically.
+ *
+ * @remarks
+ * This function uses the Bootstrap Carousel component for the news carousel.
+ *
+ */
 function initializeNewsCarousel() {
     const newsCarouselElement = document.getElementById("newsCarousel");
     if (newsCarouselElement) {
@@ -44,7 +69,12 @@ function initializeNewsCarousel() {
     }
 }
 
-// Function for crypto amount calculation
+/**
+ * Initializes a cryptocurrency calculator by setting up event listeners.
+ *
+ * Looks for an HTML input element with the ID "buy_dollars" and adds an "input" event listener
+ * to trigger the `cryptoCalculator` function when the input value changes.
+ */
 function initializeCryptoCalculator() {
     const CryptoAmountInput = document.getElementById("buy_dollars")
     if (CryptoAmountInput) {
@@ -52,6 +82,14 @@ function initializeCryptoCalculator() {
     }
 }
 
+/**
+ * Calculates cryptocurrency amount based on a provided USD amount and crypto price.
+ *
+ * This function is designed to be triggered by an "input" event on an HTML input element.
+ * It calculates the equivalent cryptocurrency amount and updates related input fields.
+ *
+ * @param {Event} event - The event object representing the "input" event.
+ */
 function cryptoCalculator(event) {
     const usdAmount = document.getElementById(event.target.id + '_decimal').value
     const cryptoAmount = document.getElementById("buy_cryptos")
@@ -61,7 +99,12 @@ function cryptoCalculator(event) {
     cryptoAmountDecimal.value = parseFloat(usdAmount) / parseFloat(cryptoPrice)
 }
 
-// Function for usd amount calculation
+/**
+ * Initializes a USD calculator by setting up event listeners.
+ *
+ * Looks for an HTML input element with the ID "sell_cryptos" and adds an "input" event listener
+ * to trigger the `usdCalculator` function when the input value changes.
+ */
 function initializeUsdCalculator() {
     const CryptoAmountInput = document.getElementById("sell_cryptos")
     if (CryptoAmountInput) {
@@ -69,6 +112,14 @@ function initializeUsdCalculator() {
     }
 }
 
+/**
+ * Calculates the equivalent USD amount based on a provided cryptocurrency amount and price.
+ *
+ * This function is designed to be triggered by an "input" event on an HTML input element.
+ * It calculates the equivalent USD amount and updates related input fields.
+ *
+ * @param {Event} event - The event object representing the "input" event.
+ */
 function usdCalculator(event) {
     const usdAmount = document.getElementById('sell_dollars')
     const usdAmountDecimal = document.getElementById('sell_dollars_decimal')
@@ -83,7 +134,12 @@ function usdCalculator(event) {
     usdAmountDecimal.value = parseFloat(cryptoPrice) * parseFloat(cryptoAmount)
 }
 
-// Function to get crypto price
+/**
+ * Initializes cryptocurrency price request functionality by setting up event listeners.
+ *
+ * This function looks for HTML select elements with IDs "id_crypto_select_buy" and "id_crypto_select_sell,"
+ * adds "change" event listeners to them, and triggers the `cryptoPriceRequest` function when the selection changes.
+ */
 function initializeCryptoPriceRequest() {
     const buyCrypto = document.getElementById('id_crypto_select_buy');
     const sellCrypto = document.getElementById('id_crypto_select_sell');
@@ -97,6 +153,13 @@ function initializeCryptoPriceRequest() {
     }
 }
 
+/**
+ * Sends an asynchronous request to fetch the price of a selected cryptocurrency
+ * and updates the corresponding input fields and price information.
+ *
+ * @param {Event} event - The event object representing the "change" event on a cryptocurrency selection.
+ *                        The target of the event should be a select element with cryptocurrency options.
+ */
 async function cryptoPriceRequest(event) {
     const cryptoSelected = event.target.value;
     let cryptoPriceElement;
@@ -130,7 +193,12 @@ async function cryptoPriceRequest(event) {
     }
 }
 
-// Function to show formatted USD on buy and sell
+/**
+ * Initializes USD input formatters by setting up event listeners.
+ *
+ * Looks for HTML input elements with IDs "deposit_dollars_form," "withdraw_dollars_form," and "buy_dollars,"
+ * and adds "input" event listeners to trigger the `usdFormatter` function when the input values change.
+ */
 function initializeUsdFormatter() {
     const depositDollarForm = document.getElementById('deposit_dollars_form');
     const withdrawDollarForm = document.getElementById('withdraw_dollars_form');
@@ -146,6 +214,15 @@ function initializeUsdFormatter() {
     }
 }
 
+/**
+ * Formats a USD input field by removing non-numeric characters, leading zeros,
+ * adding commas as a thousand separators, and formatting as a currency with a dollar sign.
+ *
+ * This function is designed to be triggered by an "input" event on an HTML input element.
+ * It formats the input value as a currency amount in USD.
+ *
+ * @param {Event} event - The event object representing the "input" event on an HTML input element.
+ */
 function usdFormatter(event) {
     const inputElement = event.target;
     const inputValue = inputElement.value;
@@ -172,7 +249,15 @@ function usdFormatter(event) {
     inputElement.value = formattedInput;
 }
 
-// Function to toggleRow on a table
+/**
+ * Toggles the visibility of hidden rows in a table by removing the "d-none" and "hidden-row" classes.
+ *
+ * This function is designed to be triggered by a button click to reveal hidden rows.
+ * If there are more than 5 hidden rows, it reveals the first 5, and if there are no more hidden rows left,
+ * it removes the triggering button.
+ *
+ * @param {HTMLElement} button - The button element that triggers the row toggling action.
+ */
 function toggleRow(button) {
     const hiddenRows = document.querySelectorAll('.d-none.hidden-row');
     if (hiddenRows) {
@@ -187,7 +272,16 @@ function toggleRow(button) {
     }
 }
 
-// Function to confirm user submit
+/**
+ * Initializes a confirmation dialog for a specified HTML element by setting up a form submission event listener.
+ *
+ * This function looks for an HTML element with the given ID, adds a "submit" event listener to it,
+ * and displays a confirmation dialog with a message generated by the provided message function.
+ * If the user confirms, the form submission proceeds; otherwise, it's prevented.
+ *
+ * @param {string} elementId - The ID of the HTML element that triggers the confirmation dialog.
+ * @param {function(): string} messageFunction - A function that generates the confirmation message.
+ */
 function initializeConfirmation(elementId, messageFunction) {
     const element = document.getElementById(elementId);
     if (element) {
@@ -201,7 +295,16 @@ function initializeConfirmation(elementId, messageFunction) {
     }
 }
 
-
+/**
+ * Initializes confirmation dialogs for actions such as deposit, withdrawal, buying, selling, and crypto deletion.
+ *
+ * This function sets up event listeners for form submissions and displays confirmation dialogs with appropriate messages.
+ * - For deposit and withdrawal, it confirms the action with the provided amount.
+ * - For buying and selling cryptocurrencies, it confirms the action with the selected cryptocurrency, USD amount, and crypto amount.
+ * - For crypto deletion, it confirms the action with the specified cryptocurrency, warning about its removal from all users' wallets.
+ *
+ * Note: The confirmation dialogs allow users to confirm or cancel their actions.
+ */
 function initializeConfirmations() {
     initializeConfirmation('deposit', () => {
         const amount = document.getElementById('deposit_dollars_form').value;
@@ -236,14 +339,13 @@ function initializeConfirmations() {
                 const message = `Are you sure you want to delete ${crypto}? This action will result in the removal of this cryptocurrency from all users' wallets, and it will disappear from the system permanently. Please confirm your decision.`;
                 const confirmed = confirm(message);
                 if (!confirmed) {
-                event.preventDefault(); // Prevent form submission
-            }
+                    event.preventDefault(); // Prevent form submission
+                }
             })
         });
     }
 }
 
-// Function to convert numbers to float
 // Event Listener
 document.addEventListener("DOMContentLoaded", function () {
     initializeNewsCarousel();
