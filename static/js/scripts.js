@@ -188,67 +188,57 @@ function toggleRow(button) {
 }
 
 // Function to confirm user submit
+function initializeConfirmation(elementId, messageFunction) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.addEventListener('submit', function (event) {
+            const confirmationMessage = messageFunction();
+            const confirmed = confirm(confirmationMessage);
+            if (!confirmed) {
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+    }
+}
+
+
 function initializeConfirmations() {
-    const deposit = document.getElementById('deposit')
-    const withdraw = document.getElementById('withdraw')
-    const buy = document.getElementById('buy')
-    const sell = document.getElementById('sell')
-    const dell = document.querySelectorAll(".btn-delete");
-    if (deposit) {
-        deposit.addEventListener('submit', function (event) {
-            const amount = document.getElementById('deposit_dollars_form').value;
-            const confirmationMessage = 'Are you sure you want to deposit ' + amount + ' ?';
-            const confirmed = confirm(confirmationMessage);
-            if (!confirmed) {
-                event.preventDefault(); // Prevent form submission
-            }
-        });
-    }
-    if (withdraw) {
-        withdraw.addEventListener('submit', function (event) {
-            const amount = document.getElementById('withdraw_dollars_form').value;
-            const confirmationMessage = 'Are you sure you want to withdraw ' + amount + ' ?';
-            const confirmed = confirm(confirmationMessage);
-            if (!confirmed) {
-                event.preventDefault(); // Prevent form submission
-            }
-        });
-    }
-    if (buy) {
-        buy.addEventListener('submit', function (event) {
-            const crypto = document.getElementById('id_crypto_select_buy').value
-            const usdAmount = document.getElementById('buy_dollars').value
-            const cryptoAmount = document.getElementById('buy_cryptos').value
-            const confirmationMessage = `Are you sure you want to buy ${crypto} ${cryptoAmount} for ${usdAmount}`
-            const confirmed = confirm(confirmationMessage);
-            if (!confirmed) {
-                event.preventDefault(); // Prevent form submission
-            }
-        });
-    }
-    if (sell) {
-        sell.addEventListener('submit', function (event) {
-            const crypto = document.getElementById('id_crypto_select_sell').value
-            const usdAmount = document.getElementById('sell_dollars').value
-            const cryptoAmount = document.getElementById('sell_cryptos').value
-            const confirmationMessage = `Are you sure you want to buy ${crypto} ${cryptoAmount} for ${usdAmount}`
-            const confirmed = confirm(confirmationMessage);
-            if (!confirmed) {
-                event.preventDefault(); // Prevent form submission
-            }
-        });
-    }
-    if (dell) {
-        dell.forEach(function (button) {
-            button.addEventListener('click', function (event) {
-                const confirmationMessage = `Are you sure you want to delete ${button.value}? 
-                This action will result in the removal of this cryptocurrency from all users' wallets, and it 
-                will disappear from the system permanently. Please confirm your decision.`;
-                const confirmed = confirm(confirmationMessage);
+    initializeConfirmation('deposit', () => {
+        const amount = document.getElementById('deposit_dollars_form').value;
+        return `Are you sure you want to deposit ${amount} ?`;
+    });
+
+    initializeConfirmation('withdraw', () => {
+        const amount = document.getElementById('withdraw_dollars_form').value;
+        return `Are you sure you want to withdraw ${amount} ?`;
+    });
+
+    initializeConfirmation('buy', () => {
+        const crypto = document.getElementById('id_crypto_select_buy').value;
+        const usdAmount = document.getElementById('buy_dollars').value;
+        const cryptoAmount = document.getElementById('buy_cryptos').value;
+        return `Are you sure you want to buy ${crypto} ${cryptoAmount} for ${usdAmount}`;
+    });
+
+    initializeConfirmation('sell', () => {
+        const crypto = document.getElementById('id_crypto_select_sell').value;
+        const usdAmount = document.getElementById('sell_dollars').value;
+        const cryptoAmount = document.getElementById('sell_cryptos').value;
+        return `Are you sure you want to sell ${crypto} ${cryptoAmount} for ${usdAmount}`;
+    });
+
+    const dellButtons = document.querySelectorAll(".btn-delete");
+    if (dellButtons) {
+        dellButtons.forEach(function (button) {
+            const form = button.closest('form');
+            const crypto = button.id
+            form.addEventListener('submit', function (event) {
+                const message = `Are you sure you want to delete ${crypto}? This action will result in the removal of this cryptocurrency from all users' wallets, and it will disappear from the system permanently. Please confirm your decision.`;
+                const confirmed = confirm(message);
                 if (!confirmed) {
-                    event.preventDefault(); // Prevent form submission
-                }
-            });
+                event.preventDefault(); // Prevent form submission
+            }
+            })
         });
     }
 }

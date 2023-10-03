@@ -45,8 +45,8 @@
                                 <form method="post" action="{% url 'delete_crypto' %}">
                                     {% csrf_token %}
                                     <input type="hidden" name="crypto_name" value="{{ crypto.name }}">
-                                    <button type="submit" name="crypto" value="{{ crypto.name }}"
-                                            class="btn btn-danger btn-delete">Delete
+                                    <button type="submit" id="{{ crypto.name }}" class="btn btn-danger btn-delete">
+                                        Delete
                                     </button>
                                 </form>
                             </td>
