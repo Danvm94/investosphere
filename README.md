@@ -42,3 +42,31 @@ The platform's user-friendly design and visually appealing interface ensure an e
 - To create a secure and risk-free environment for cryptocurrency investment planning and education.
 - To facilitate the creation and management of virtual cryptocurrency portfolios.
 - To support users in making informed investment decisions based on data and analysis.
+
+- [Back to top &uarr;](#contents)
+
+## **Agile Planning**
+
+This project was developed using agile methodologies, focusing on delivering small features across the project's duration. User Stories were prioritized under the labels "Must Have," "Should Have," and "Could Have."
+
+This approach ensured that all essential requirements were addressed initially, providing a comprehensive foundation for the project. In certain cases, some "Could Have" features were implemented ahead of schedule, particularly if they were straightforward, such as Trending/Top Rated Movies. Other features were integrated based on available capacity and timing.
+
+The project utilized a Kanban board created on Github projects, which can be accessed [here](https://github.com/users/Danvm94/projects/4). This board provided detailed information about project cards. All User Stories included a set of acceptance criteria to define the functionality required for story completion.
+![home-page](/README/agile-project.png)
+
+## **The Skeleton Plane**
+#### **Wireframes**
+For this project, wireframes were created using Balsamiq. While wireframes were developed primarily for the home page, the design for other pages naturally evolved from the base.html template and certain elements of the home webpage.
+
+The wireframes served as a visual guide to outline the layout and structure of the home page, providing a clear representation of the overall design and user interface. This approach allowed for flexibility in designing additional pages, ensuring consistency in the user experience throughout the project.
+<details><summary>Desktop</summary>
+
+![desktop-home-wireframe](/README/desktop-home-wireframe.png)
+
+</details>
+
+<details><summary>mobile</summary>
+
+![mobile-home-wireframe](/README/mobile-home-wireframe.png)
+
+</details>
