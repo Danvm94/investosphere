@@ -70,3 +70,39 @@ The wireframes served as a visual guide to outline the layout and structure of t
 ![mobile-home-wireframe](/README/mobile-home-wireframe.png)
 
 </details>
+
+#### **Database Schema**
+
+The database schema for this project includes the following models:
+
+- The **Crypto** model stores information about cryptocurrencies.
+  - Fields:
+    - `name`: CharField for storing the name of the cryptocurrency (unique).
+- The **Wallet** model represents user wallets, linked to the built-in User model. Each wallet contains information about the user's available dollars, and a timestamp of creation.
+  - Fields:
+    - `user`: One-to-One relationship with the User model.
+    - `dollars`: Decimal field for storing dollar amounts.
+    - `created_at`: Timestamp for creation.
+
+- The **Cryptos** model represents cryptocurrency holdings of users, linked to the User model and the Crypto model. It stores information about the user's cryptocurrency holdings and the specific cryptocurrency's symbol.
+  - Fields:
+    - `user`: ForeignKey relationship with the User model.
+    - `crypto`: ForeignKey relationship with the Crypto model.
+    - `amount`: Decimal field for storing the cryptocurrency amount.
+  - Additional Methods:
+    - `formatted_amount`: Formats the cryptocurrency amount for display.
+    - `symbol`: Property for retrieving the cryptocurrency's name.
+
+- The **Transactions** model tracks user transactions, including deposits and withdrawals. It contains information about the user, transaction type, symbol, amount, and creation timestamp.
+  - Fields:
+    - `user`: ForeignKey relationship with the User model.
+    - `type`: CharField for the transaction type.
+    - `symbol`: CharField for the symbol (e.g., 'dollar').
+    - `amount`: Decimal field for storing the transaction amount.
+    - `created_at`: Timestamp for creation.
+  - Additional Methods:
+    - `formatted_amount`: Formats the transaction amount for display.
+
+This schema defines the structure of your project's database, facilitating the management of user wallets, cryptocurrency holdings, and transaction records.
+
+<iframe width="560" height="315" src='https://dbdiagram.io/embed/651c1404ffbf5169f0f1af91'> </iframe>
