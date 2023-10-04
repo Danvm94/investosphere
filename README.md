@@ -157,10 +157,34 @@ These navigation items ensure that users have access to the relevant sections ba
 
 **Footer**
 
-#### **Footer**
-
 The footer section is thoughtfully positioned at the bottom of each page, providing a cohesive and user-friendly experience.
 
 - **Social Media Links:** Social media links are elegantly displayed using icons from Font Awesome. These icons offer a seamless way for users to connect with the developer, stay updated with news, and engage with the community.
 
 - **Copyright/Disclaimer:** A concise portion of text serves as a Copyright and Disclaimer notice. It's the place where users can access essential information while interacting with the website.
+
+![footer](./README/footer.png)
+
+**Homepage**
+
+The homepage of InvestoSphere welcomes users with a well-structured layout designed to provide a comprehensive experience. It's divided into three primary sections:
+
+- **Welcome Section:** The "Welcome" section serves as the initial introduction to the website. It offers a brief and inviting overview of InvestoSphere's mission and purpose. This section sets the tone for the user's journey through the world of cryptocurrency investments.
+![welcome-section](./README/welcome-section.png)
+
+- **Market Cap Section:** In the "Market Cap" section, users gain access to market data. Here, the top market capitalization cryptocurrencies are prominently featured. Users can quickly assess the performance and trends of these cryptocurrencies, enabling informed decision-making for their investment strategies.
+![market-cap-section](./README/market-cap-section.png)
+
+- **Crypto News Section:** The "Crypto News" section provides users with up-to-date information and insights into the world of cryptocurrencies. It serves as a valuable resource for staying informed about market developments, trends, and news articles related to the cryptocurrency landscape.
+![crypto-news-section](./README/crypto-news-section.png)
+
+**Wallet**
+
+The Wallet page on InvestoSphere provides users with essential tools to manage their financial transactions seamlessly. This page encompasses the following primary functionalities: deposit, withdraw, transaction history.
+
+- **Deposit Functionality:** The "Deposit" functionality empowers users to add funds to their wallet effortlessly. By inputting the desired amount of dollars and confirming the deposit, users can increase their financial resources. This feature ensures that users can conveniently top up their wallet to initiate cryptocurrency purchases.
+![deposit](./README/deposit.gif)
+
+
+
+
