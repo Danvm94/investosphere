@@ -205,3 +205,27 @@ The Crypto page on Investosphere is the user's gateway to cryptocurrency investm
 ![buy](./README/buy.gif)
 
 - **Sell Cryptos:** The "Sell Cryptos" functionality allows users to sell their cryptocurrencies when they decide to liquidate their assets. Users can choose the cryptocurrency to sell, enter the amount they want to sell, and confirm the transaction. This feature provides flexibility and convenience for managing cryptocurrency holdings.
+![sell](./README/sell.gif)
+
+- **Transaction History:** The Crypto page also provides users with access to their transaction history, ensuring transparency and accountability. Users can review and track their cryptocurrency-related activities, including purchases and sales. This feature enables users to maintain a comprehensive record of their cryptocurrency transactions.
+![crypto-transactions](./README/crypto-transactions.png)
+
+[Back to top &uarr;](#contents)
+
+**Chart Page**
+
+The Chart page on InvestoSphere offers users a dynamic and interactive view of daily cryptocurrency prices. This page provides valuable insights into the performance of various cryptocurrencies, allowing users to make informed investment decisions.
+
+- **Cryptocurrency Price Chart:** The centerpiece of the Chart page is the Cryptocurrency Price Chart. This interactive chart displays daily price data for each cryptocurrency available on the platform. Users can select specific cryptocurrencies to display or hide, tailoring the chart to their preferences.
+![chart](./README/chart.png)
+
+- **Customization Options:** InvestoSphere's Chart page offers customization options to enhance the user experience. Users can choose which cryptocurrencies to include in the chart view, enabling them to focus on specific assets of interest. This feature empowers users to track the performance of their chosen cryptocurrencies with precision.
+![chart-filter](./README/chart-filter.gif)
+
+[Back to top &uarr;](#contents)
+
+**Manage Page**
+
+The 'Manage' page on InvestoSphere is a restricted area accessible only to staff members. This specialized page empowers staff to maintain and manage the cryptocurrency offerings available throughout the website. It offers two essential functions:
+
+- **Add New Cryptocurrency Availability:** Staff members can leverage the 'Add New Cryptocurrency' feature to introduce new cryptocurrencies to the platform. This functionality ensures that the website remains up-to-date with the latest crypto assets. Staff can provide essential information about the new cryptocurrency, making it available for users to explore, invest in, and track.

@@ -62,6 +62,8 @@ def manage_view(request):
             name = add_crypto_form.cleaned_data['crypto']
             Crypto.objects.create(name=name)
             clear_cache()
+            messages.success(request, f"You have now added '{name}'"
+                                      f" to the website.")
         else:
             display_form_errors(request, add_crypto_form)
         return redirect('manage')
@@ -76,6 +78,8 @@ def delete_crypto(request):
         crypto = Crypto.objects.get(name=crypto_name)
         crypto.delete()
         clear_cache()
+        messages.success(request, f"You have now deleted '{crypto_name}'"
+                                  f" from the website.")
     return redirect('manage')
 
 
