@@ -178,13 +178,21 @@ The homepage of InvestoSphere welcomes users with a well-structured layout desig
 - **Crypto News Section:** The "Crypto News" section provides users with up-to-date information and insights into the world of cryptocurrencies. It serves as a valuable resource for staying informed about market developments, trends, and news articles related to the cryptocurrency landscape.
 ![crypto-news-section](./README/crypto-news-section.png)
 
-**Wallet**
+**Wallet Page**
 
-The Wallet page on InvestoSphere provides users with essential tools to manage their financial transactions seamlessly. This page encompasses the following primary functionalities: deposit, withdraw, transaction history.
+The Wallet page on Investosphere provides users with essential tools to manage their financial transactions seamlessly. This page encompasses the following primary functionalities: deposit, withdraw, transaction history.
 
 - **Deposit Functionality:** The "Deposit" functionality empowers users to add funds to their wallet effortlessly. By inputting the desired amount of dollars and confirming the deposit, users can increase their financial resources. This feature ensures that users can conveniently top up their wallet to initiate cryptocurrency purchases.
 ![deposit](./README/deposit.gif)
 
+- **Withdraw Functionality:** The "Withdraw" functionality allows users to make withdrawals from their wallet when needed. Users can specify the withdrawal amount, and upon confirmation, the requested funds are deducted from their wallet balance. This feature ensures flexibility and ease of access to funds for various financial needs.
+![withdraw](./README/withdraw.gif)
 
+- **Transaction History:** Alongside deposit and withdraw functions, the Wallet page also provides users with access to their transaction history. Users can review and track their financial activities, ensuring transparency and accountability in their financial management.
+![wallet-transactions](./README/wallet-transactions.png)
 
+**Crypto Page**
 
+The Crypto page on Investosphere is the user's gateway to cryptocurrency investment and management. This multifaceted page offers essential features, including buying, selling, and transaction history tracking.
+
+- **Buy Cryptos:** The "Buy Cryptos" section empowers users to initiate cryptocurrency purchases. Users can select the cryptocurrency they wish to buy, specify the desired amount, and confirm the purchase. This feature ensures a seamless and secure process for acquiring cryptocurrencies within the platform.

@@ -117,6 +117,9 @@ def crypto_view(request):
                 crypto_amount = usd_amount / crypto_price
                 perform_money_transaction(user, usd_amount, 'withdraw')
                 perform_crypto_transaction(user, crypto, crypto_amount, 'buy')
+                message = (f'Your {crypto}  '
+                           f'purchase order has been successfully processed')
+                messages.success(request, message)
             else:
                 display_form_errors(request, buy_crypto_form)
         elif 'sell_form' in request.POST:
@@ -129,6 +132,9 @@ def crypto_view(request):
                 usd_amount = crypto_amount * crypto_price_decimal
                 perform_crypto_transaction(user, crypto, crypto_amount, 'sell')
                 perform_money_transaction(user, usd_amount, 'deposit')
+                message = (f'Your {crypto}  '
+                           f'sell order has been successfully processed')
+                messages.success(request, message)
             else:
                 display_form_errors(request, sell_crypto_form)
         return redirect('crypto')
