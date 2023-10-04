@@ -1,16 +1,22 @@
+# Django Imports
 from django.shortcuts import render, redirect
-from user_management.crypto import get_all_cryptos_names
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import JsonResponse
+# Decimal Import
 from decimal import Decimal
+# Model and Form Imports
 from .models import Wallet, Transactions
-from .forms import TransactionsViewForm, DepositMoneyForm, WithdrawMoneyForm, \
-    BuyCryptoForm, SellCryptoForm, \
-    CryptoTransactionsViewForm, display_form_errors
+from .forms import (
+    TransactionsViewForm, DepositMoneyForm, WithdrawMoneyForm,
+    BuyCryptoForm, SellCryptoForm, CryptoTransactionsViewForm,
+    display_form_errors
+)
+# Crypto-related Imports
 from .transactions import perform_money_transaction, perform_crypto_transaction
 from .cryptos import get_coin_info, get_user_cryptos, request_coin_chart_cache
-from django.http import JsonResponse
 from .chart import get_timestamps_date, get_clean_values
+from user_management.crypto import get_all_cryptos_names
 
 
 def chart_view(request):
@@ -41,16 +47,18 @@ def wallet_view(request):
             if deposit_money_form.is_valid():
                 amount = deposit_money_form.cleaned_data['deposit_dollars']
                 perform_money_transaction(user, amount, 'deposit')
-                messages.success(request,
-                                 f'Your ${amount} deposit has been successfully processed')
+                message = (f'Your ${amount} '
+                           f'deposit has been successfully processed')
+                messages.success(request, message)
             else:
                 display_form_errors(request, deposit_money_form)
         elif 'withdraw_form' in request.POST:
             if withdraw_money_form.is_valid():
                 amount = withdraw_money_form.cleaned_data['withdraw_dollars']
                 perform_money_transaction(user, amount, 'withdraw')
-                messages.success(request,
-                                 f'Your ${amount} withdraw has been successfully processed')
+                message = (f'Your ${amount} '
+                           f'withdraw has been successfully processed')
+                messages.success(request, message)
             else:
                 display_form_errors(request, withdraw_money_form)
         return redirect('wallet')
@@ -72,8 +80,8 @@ def wallet_view(request):
                 '-created_at')
         else:
             transactions = Transactions.objects.filter(user=user,
-                                                       symbol="dollar").order_by(
-                '-created_at')
+                                                       symbol="dollar")\
+                .order_by('-created_at')
         return render(request, 'wallet.html',
                       {'transactions': transactions,
                        'deposit_money_form': deposit_money_form,
