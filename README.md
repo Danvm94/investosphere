@@ -182,6 +182,16 @@ The homepage of InvestoSphere welcomes users with a well-structured layout desig
 
 [Back to top &uarr;](#contents)
 
+**Register Page**
+
+The 'Register' page on InvestoSphere is where new users can create their accounts to access the platform's features. This user-friendly page simplifies the registration process and gathers essential information from users to get started.
+![register](./README/register.png)
+
+**Login Page**
+
+The 'Login' page is where registered users can securely access their accounts on InvestoSphere. This page ensures that users can log in quickly and securely to explore the platform's features and manage their investments.
+![login](./README/login.png)
+
 **Wallet Page**
 
 The Wallet page on Investosphere provides users with essential tools to manage their financial transactions seamlessly. This page encompasses the following primary functionalities: deposit, withdraw, transaction history.
@@ -229,3 +239,14 @@ The Chart page on InvestoSphere offers users a dynamic and interactive view of d
 The 'Manage' page on InvestoSphere is a restricted area accessible only to staff members. This specialized page empowers staff to maintain and manage the cryptocurrency offerings available throughout the website. It offers two essential functions:
 
 - **Add New Cryptocurrency Availability:** Staff members can leverage the 'Add New Cryptocurrency' feature to introduce new cryptocurrencies to the platform. This functionality ensures that the website remains up-to-date with the latest crypto assets. Staff can provide essential information about the new cryptocurrency, making it available for users to explore, invest in, and track.
+![manage-add](./README/manage-add.gif)
+
+- **Delete Cryptocurrency from the Platform:** The 'Delete' function provides staff members with the capability to remove a cryptocurrency entirely from the platform. This action is irreversible and results in the removal of the crypto from all user wallets and transactions. The deleted cryptocurrency will disappear from the system permanently.
+![manage-delete](./README/manage-delete.gif)
+
+[Back to top &uarr;](#contents)
+
+**Error Page**
+
+The '404 Page' on InvestoSphere is designed to handle situations where users attempt to access a page or resource that doesn't exist or can't be found. It provides a user-friendly and informative experience in case of unexpected errors.
+![404](./README/404.png)
