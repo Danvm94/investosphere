@@ -165,6 +165,8 @@ The footer section is thoughtfully positioned at the bottom of each page, provid
 
 ![footer](./README/footer.png)
 
+[Back to top &uarr;](#contents)
+
 **Homepage**
 
 The homepage of InvestoSphere welcomes users with a well-structured layout designed to provide a comprehensive experience. It's divided into three primary sections:
@@ -177,6 +179,8 @@ The homepage of InvestoSphere welcomes users with a well-structured layout desig
 
 - **Crypto News Section:** The "Crypto News" section provides users with up-to-date information and insights into the world of cryptocurrencies. It serves as a valuable resource for staying informed about market developments, trends, and news articles related to the cryptocurrency landscape.
 ![crypto-news-section](./README/crypto-news-section.png)
+
+[Back to top &uarr;](#contents)
 
 **Wallet Page**
 
@@ -191,8 +195,13 @@ The Wallet page on Investosphere provides users with essential tools to manage t
 - **Transaction History:** Alongside deposit and withdraw functions, the Wallet page also provides users with access to their transaction history. Users can review and track their financial activities, ensuring transparency and accountability in their financial management.
 ![wallet-transactions](./README/wallet-transactions.png)
 
+[Back to top &uarr;](#contents)
+
 **Crypto Page**
 
 The Crypto page on Investosphere is the user's gateway to cryptocurrency investment and management. This multifaceted page offers essential features, including buying, selling, and transaction history tracking.
 
 - **Buy Cryptos:** The "Buy Cryptos" section empowers users to initiate cryptocurrency purchases. Users can select the cryptocurrency they wish to buy, specify the desired amount, and confirm the purchase. This feature ensures a seamless and secure process for acquiring cryptocurrencies within the platform.
+![buy](./README/buy.gif)
+
+- **Sell Cryptos:** The "Sell Cryptos" functionality allows users to sell their cryptocurrencies when they decide to liquidate their assets. Users can choose the cryptocurrency to sell, enter the amount they want to sell, and confirm the transaction. This feature provides flexibility and convenience for managing cryptocurrency holdings.
