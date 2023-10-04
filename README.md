@@ -4,7 +4,7 @@
 
 Investosphere is a virtual investment platform that allows users to simulate and plan their cryptocurrency investments without using real money. It provides a safe and risk-free environment for users to practice and experiment with various investment strategies in the cryptocurrency market.
 
-![home-page](/README/home-page.gif)
+![home-page](./README/home-page.gif)
 [Investosphere Live Website](https://investosphere-d74500c2a8ca.herokuapp.com/) (Right-click to open in a new tab)
 
 ## **Project Goals**
@@ -52,7 +52,7 @@ This project was developed using agile methodologies, focusing on delivering sma
 This approach ensured that all essential requirements were addressed initially, providing a comprehensive foundation for the project. In certain cases, some "Could Have" features were implemented ahead of schedule, particularly if they were straightforward, such as Trending/Top Rated Movies. Other features were integrated based on available capacity and timing.
 
 The project utilized a Kanban board created on Github projects, which can be accessed [here](https://github.com/users/Danvm94/projects/4). This board provided detailed information about project cards. All User Stories included a set of acceptance criteria to define the functionality required for story completion.
-![home-page](/README/agile-project.png)
+![home-page](./README/agile-project.png)
 
 ## **The Skeleton Plane**
 #### **Wireframes**
@@ -61,13 +61,13 @@ For this project, wireframes were created using Balsamiq. While wireframes were 
 The wireframes served as a visual guide to outline the layout and structure of the home page, providing a clear representation of the overall design and user interface. This approach allowed for flexibility in designing additional pages, ensuring consistency in the user experience throughout the project.
 <details><summary>Desktop</summary>
 
-![desktop-home-wireframe](/README/desktop-home-wireframe.png)
+![desktop-home-wireframe](./README/desktop-home-wireframe.png)
 
 </details>
 
 <details><summary>mobile</summary>
 
-![mobile-home-wireframe](/README/mobile-home-wireframe.png)
+![mobile-home-wireframe](./README/mobile-home-wireframe.png)
 
 </details>
 
@@ -105,4 +105,62 @@ The database schema for this project includes the following models:
 
 This schema defines the structure of your project's database, facilitating the management of user wallets, cryptocurrency holdings, and transaction records.
 
-<iframe width="560" height="315" src='https://dbdiagram.io/embed/651c1404ffbf5169f0f1af91'> </iframe>
+![db-investosphere](./README/db-investosphere.png)
+
+#### **Security Measures**
+
+Security is a top priority in the development of this project. Several security measures have been implemented to protect user data and sensitive information.
+
+- **User Authentication**
+
+To ensure that only authorized users access certain views and functionalities, the Django `@login_required` decorator has been applied. This means that specific views can only be accessed by registered and authenticated users. If an unauthenticated user attempts to access such views, they will be automatically redirected to the login page.
+
+- **Protection of Sensitive Data**
+
+To safeguard secret keys, API keys, and other sensitive information, environment variables have been utilized. During local development, these variables are stored in an `env.py` file, ensuring that no confidential data is exposed in the project repository. In the production environment (e.g., on Heroku), these variables are securely managed through Heroku's config vars.
+
+These security measures are in place to provide a safe and reliable user experience while protecting sensitive information from unauthorized access.
+
+[Back to top &uarr;](#contents)
+
+### **The Scope Plane**
+
+- **Responsive Design:** The site should be fully functional on all devices, ranging from 320px width and up.
+- **Hamburger Menu:** Implement a mobile-friendly hamburger menu for improved navigation on mobile devices.
+- **CRUD Functionality:** Users should have the ability to Create, Read, Update, and Delete wallet and cryptos.
+- **Role-Based Access:** Implement role-based access control, allowing specific features like website's crypto manage for authorized users.
+- **Home Page:** Design a home page that provides an overview of the site's purpose, with convenient links to essential features for registered users.
+
+[Back to top &uarr;](#contents)
+
+## **The Structure Plane**
+
+### **Features**
+**Navbar**
+
+The Navbar contains links for various sections of the website, each with specific visibility conditions:
+
+- **Home** (index.html): Visible to all users.
+- **Login** (login.html): Visible to all users.
+- **Wallet** (wallet.html): Visible only to logged-in users.
+- **Cryptos** (crypto.html): Visible only to logged-in users.
+- **Chart** (chart.html): Visible only to logged-in users.
+- **Manage** (manage.html): Visible only to logged-in users with staff privileges.
+
+These navigation items ensure that users have access to the relevant sections based on their authentication status and roles.
+![navbar-desktop-out](./README/navbar-desktop-out.png)
+![navbar-desktop-in](./README/navbar-desktop-in.png)
+![navbar-mobile-out](./README/navbar-mobile-out.png)
+![navbar-mobile-in](./README/navbar-mobile-in.png)
+
+[Back to top &uarr;](#contents)
+
+**Footer**
+
+#### **Footer**
+
+The footer section is thoughtfully positioned at the bottom of each page, providing a cohesive and user-friendly experience.
+
+- **Social Media Links:** Social media links are elegantly displayed using icons from Font Awesome. These icons offer a seamless way for users to connect with the developer, stay updated with news, and engage with the community.
+
+- **Copyright/Disclaimer:** A concise portion of text serves as a Copyright and Disclaimer notice. It's the place where users can access essential information while interacting with the website.
