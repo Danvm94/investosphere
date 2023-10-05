@@ -29,6 +29,8 @@ async function chartBuild(chartElement) {
                     datasets: cryptosData
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                         y: {
                             beginAtZero: true
