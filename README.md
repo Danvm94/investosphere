@@ -250,3 +250,12 @@ The 'Manage' page on InvestoSphere is a restricted area accessible only to staff
 
 The '404 Page' on InvestoSphere is designed to handle situations where users attempt to access a page or resource that doesn't exist or can't be found. It provides a user-friendly and informative experience in case of unexpected errors.
 ![404](./README/404.png)
+
+**Mobile View**
+
+InvestoSphere embraces a mobile-first approach to design, ensuring an exceptional user experience on a wide range of devices, including smartphones and tablets. The site seamlessly adapts to different screen sizes and orientations, providing users with a consistent and user-friendly interface. Bootstrap integration, media queries, and touch-friendly interactions enhance mobile responsiveness.
+
+![home-mobile](./README/home-mobile.gif)
+![wallet-mobile](./README/wallet-mobile.png)
+
+InvestoSphere's commitment to mobile-first design and responsiveness guarantees that users can comfortably access and navigate the platform on their preferred devices, regardless of screen size.

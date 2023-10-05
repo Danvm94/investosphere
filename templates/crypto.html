@@ -11,44 +11,49 @@
             <div class="col-md-12 text-center">
                 <h1><i class="fa-solid fa-wallet"></i> Crypto Balance</h1>
 
-
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Currency</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">USD</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><img class="cryptos-image" src="{% static 'images/dollar.png' %}"
-                                 alt="dollar-symbol"></td>
-                        <td>Dollar</td>
-                        <td>USD</td>
-                        <td>{{ balance }}</td>
-                        <td>${{ balance }}</td>
-                    </tr>
-                    {% for user_crypto in user_cryptos %}
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
                         <tr>
-                            <td><img class="cryptos-image" src="{{ user_crypto.image }}"
-                                     alt="{{ user_crypto.symbol }}-symbol">
-                            </td>
-                            <td>{{ user_crypto.symbol }}</td>
-                            <td>{{ user_crypto.symbol }}</td>
-                            <td>{{ user_crypto.formatted_amount }}</td>
-                            <td>${{ user_crypto.usd }}</td>
+                            <th scope="col"></th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Currency</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">USD</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#buyModal">
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><img class="cryptos-image"
+                                     src="{% static 'images/dollar.png' %}"
+                                     alt="dollar-symbol"></td>
+                            <td>Dollar</td>
+                            <td>USD</td>
+                            <td>{{ balance }}</td>
+                            <td>${{ balance }}</td>
+                        </tr>
+                        {% for user_crypto in user_cryptos %}
+                            <tr>
+                                <td><img class="cryptos-image"
+                                         src="{{ user_crypto.image }}"
+                                         alt="{{ user_crypto.symbol }}-symbol">
+                                </td>
+                                <td>{{ user_crypto.symbol }}</td>
+                                <td>{{ user_crypto.symbol }}</td>
+                                <td>{{ user_crypto.formatted_amount }}</td>
+                                <td>${{ user_crypto.usd }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <button type="button" class="btn btn-success"
+                        data-bs-toggle="modal" data-bs-target="#buyModal">
                     Buy
                 </button>
                 {% if user_cryptos %}
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#sellModal">
+                    <button type="button" class="btn btn-success"
+                            data-bs-toggle="modal" data-bs-target="#sellModal">
                         Sell
                     </button>
                 {% endif %}
@@ -59,7 +64,8 @@
     <div class="container portfolio-container mb-5">
         <div class="row">
             <div class="col-md-12 text-center">
-                <h1><i class="fa-solid fa-clock-rotate-left"></i> Transactions</h1>
+                <h1><i class="fa-solid fa-clock-rotate-left"></i> Transactions
+                </h1>
                 <form class="transaction-filter row g-3" method="GET">
                     {% csrf_token %}
                     <div class="col-md-3">
@@ -79,39 +85,46 @@
                         {{ transactions_view_form.end_date }}
                     </div>
                     <div class="col-md-12">
-                        <button id="view-more-btn" class="btn btn-success mt-3 mb-3 col-md-12 table-btn">Filter</button>
+                        <button id="view-more-btn"
+                                class="btn btn-success mt-3 mb-3 col-md-12 table-btn">
+                            Filter
+                        </button>
                     </div>
                 </form>
                 {% if transactions|length > 0 %}
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Currency</th>
-                            <th scope="col">Transaction Date</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        {% for transaction in transactions %}
-                            <tr {% if forloop.counter > 5 %}class="d-none hidden-row"{% endif %}>
-                                <th scope="row"
-                                    class="{% if transaction.amount > 0 %}text-success{% else %}text-danger{% endif %}">
-                                    {{ transaction.formatted_amount }}
-                                </th>
-                                <td class="text-capitalize">{{ transaction.type }}</td>
-                                <td class="text-capitalize">{{ transaction.symbol }}</td>
-                                <td>{{ transaction.created_at }}</td>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Currency</th>
+                                <th scope="col">Transaction Date</th>
                             </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+
+                            {% for transaction in transactions %}
+                                <tr {% if forloop.counter > 5 %}class="d-none hidden-row"{% endif %}>
+                                    <th scope="row"
+                                        class="{% if transaction.amount > 0 %}text-success{% else %}text-danger{% endif %}">
+                                        {{ transaction.formatted_amount }}
+                                    </th>
+                                    <td class="text-capitalize">{{ transaction.type }}</td>
+                                    <td class="text-capitalize">{{ transaction.symbol }}</td>
+                                    <td>{{ transaction.created_at }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 {% else %}
                     <p>There is no transactions to show</p>
                 {% endif %}
                 {% if transactions|length > 5 %}
-                    <button id="view-more-btn" class="btn btn-success mt-3 table-btn" onclick="toggleRow(this)">View
+                    <button id="view-more-btn"
+                            class="btn btn-success mt-3 table-btn"
+                            onclick="toggleRow(this)">View
                         More
                     </button>
                 {% endif %}
@@ -119,15 +132,19 @@
         </div>
     </div>
     <!-- Buy Modal -->
-    <div class="modal fade wallet-modal text-center" id="buyModal" tabindex="-1"
+    <div class="modal fade wallet-modal text-center" id="buyModal"
+         tabindex="-1"
          aria-labelledby="depositModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form id="buy" class="add-money-form" method="POST">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-4" id="depositModalLabel"><i
-                                class="fa-solid fa-money-bill-transfer"></i> Buy Crypto</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                class="fa-solid fa-money-bill-transfer"></i>
+                            Buy Crypto</h1>
+                        <button type="button" class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                     </div>
                     <div class="modal-body text-center d-flex flex-column">
                         {% csrf_token %}
@@ -138,8 +155,12 @@
 
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" id="buy_btn" class="btn btn-success" name="buy_form" value="submit_buy">Confirm
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Close
+                        </button>
+                        <button type="submit" id="buy_btn"
+                                class="btn btn-success" name="buy_form"
+                                value="submit_buy">Confirm
                         </button>
                     </div>
                 </div>
@@ -148,15 +169,20 @@
     </div>
     {% if user_cryptos %}
         <!-- Sell Modal -->
-        <div class="modal fade wallet-modal text-center" id="sellModal" tabindex="-1"
+        <div class="modal fade wallet-modal text-center" id="sellModal"
+             tabindex="-1"
              aria-labelledby="depositModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <form id="sell" class="add-money-form" method="POST">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-4" id="depositModalLabel"><i
-                                    class="fa-solid fa-money-bill-transfer"></i> Sell Crypto</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h1 class="modal-title fs-4"
+                                id="depositModalLabel"><i
+                                    class="fa-solid fa-money-bill-transfer"></i>
+                                Sell Crypto</h1>
+                            <button type="button" class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-center d-flex flex-column">
                             {% csrf_token %}
@@ -167,8 +193,12 @@
 
                         </div>
                         <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" id="sell_btn" class="btn btn-success" name="sell_form" value="submit_sell">Confirm
+                            <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Close
+                            </button>
+                            <button type="submit" id="sell_btn"
+                                    class="btn btn-success" name="sell_form"
+                                    value="submit_sell">Confirm
                             </button>
                         </div>
                     </div>
