@@ -13,3 +13,4 @@ venv
 *.sqlite3
 .vscode
 .idea
+*.log

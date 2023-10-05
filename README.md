@@ -1,5 +1,3 @@
-# **Investosphere**
-
 ## **Overview**
 
 Investosphere is a virtual investment platform that allows users to simulate and plan their cryptocurrency investments without using real money. It provides a safe and risk-free environment for users to practice and experiment with various investment strategies in the cryptocurrency market.
@@ -255,6 +253,7 @@ The '404 Page' on InvestoSphere is designed to handle situations where users att
 
 InvestoSphere embraces a mobile-first approach to design, ensuring an exceptional user experience on a wide range of devices, including smartphones and tablets. The site seamlessly adapts to different screen sizes and orientations, providing users with a consistent and user-friendly interface. Bootstrap integration, media queries, and touch-friendly interactions enhance mobile responsiveness.
 
+![login-mobile](./README/login-mobile.png)
 ![home-mobile](./README/home-mobile.gif)
 ![wallet-mobile](./README/wallet-mobile.png)
 ![crypto-mobile](./README/crypto-mobile.gif)
@@ -262,3 +261,198 @@ InvestoSphere embraces a mobile-first approach to design, ensuring an exceptiona
 ![manage-mobile](./README/manage-mobile.png)
 
 InvestoSphere's commitment to mobile-first design and responsiveness guarantees that users can comfortably access and navigate the platform on their preferred devices, regardless of screen size.
+
+### **Future Features**
+
+**Additional Future Features**
+
+1. **Crypto News Aggregator:** Implement a feature that aggregates and curates cryptocurrency news from various sources, providing users with a comprehensive overview of the latest developments in the crypto world.
+
+2. **Cryptocurrency Converter:** Introduce a real-time cryptocurrency converter that allows users to quickly convert between different cryptocurrencies and fiat currencies, making it easier to assess the value of their holdings.
+
+3. **Price Alerts:** Enable users to set price alerts for specific cryptocurrencies, notifying them when a cryptocurrency reaches a predefined price threshold, helping users make timely investment decisions.
+
+4. **Enhanced Security Measures:** Continuously improve security measures, such as two-factor authentication (2FA), cold storage options, and security audits, to ensure the safety of users' funds and data.
+
+5. **User Dashboard Customization:** Allow users to customize their dashboard with widgets and tools that align with their investment preferences, providing a personalized experience.
+
+6. **Cryptocurrency Analysis Tools:** Develop advanced cryptocurrency analysis tools, including technical indicators, chart patterns, and historical data analysis, to support users in making data-driven investment choices.
+
+7. **Money Pattern Implementation:** Implementing a "Money Pattern" that enhances the way users interact with their wallets and cryptocurrencies.
+
+These future features can further elevate your website, making it a valuable resource for cryptocurrency enthusiasts and investors.
+
+[Back to top &uarr;](#contents)
+
+## **The Surface Plane**
+
+### **Design**
+
+#### **Colour Scheme**
+
+
+- `#F5F5F5` ![Color](https://via.placeholder.com/15/F5F5F5/000000?text=+)
+  - Background color for the entire website. Provides a clean and neutral backdrop for content.
+
+- `#f0f0f0` ![Color](https://via.placeholder.com/15/f0f0f0/000000?text=+)
+  - Background color for specific containers, such as the registration form. Creates a subtle contrast and separation.
+
+- `#181918` ![Color](https://via.placeholder.com/15/181918/000000?text=+)
+  - Background color used for specific elements, adding depth and contrast to the design.
+
+- `#333` ![Color](https://via.placeholder.com/15/333/000000?text=+)
+  - Text color for labels and elements, ensuring good readability.
+
+- `#FFFFFF` ![Color](https://via.placeholder.com/15/FFFFFF/000000?text=+)
+  - Background color for containers like news sections, providing a clean and well-organized appearance.
+
+- `#50c878` ![Color](https://via.placeholder.com/15/50c878/000000?text=+)
+  - Button and accent color. Represents positive actions like confirmation and success.
+
+- `#222` ![Color](https://via.placeholder.com/15/222/000000?text=+)
+  - Background color for navigation links, creating a clear visual separation for navigation elements.
+
+The color choices are simple yet meaningful, ensuring a cohesive and user-friendly experience on your crypto website.
+
+#### **Typography**
+
+
+The primary font used throughout the website is **Roboto**, a clean and legible sans-serif typeface. This font was chosen for its readability and modern appearance, ensuring a pleasant reading experience for users.
+
+- **Font Family**: "Roboto", sans-serif
+
+The font choice enhances the overall aesthetics of the website, providing a professional and user-friendly interface for visitors.
+
+### **Imagery**
+
+All the images used on this website have been sourced from Freepik (www.freepik.com) and are available for free personal usage. These images have been carefully selected to enhance the visual appeal and user experience of the website. They are used in accordance with Freepik's licensing terms, ensuring compliance with copyright and usage rights.
+
+The images contribute to the overall aesthetics and functionality of the website, providing users with a visually engaging and informative experience.
+
+[Back to top &uarr;](#contents)
+
+## **Technologies Used**
+
+### **Languages Used**
+[![HTML5](https://img.shields.io/badge/HTML-5-orange?style=for-the-badge&logo=html5)](https://en.wikipedia.org/wiki/HTML5)
+[![CSS3](https://img.shields.io/badge/CSS-3-white?style=for-the-badge&logo=css3)](https://en.wikipedia.org/wiki/Cascading_Style_Sheets)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?style=for-the-badge&logo=javascript)](https://en.wikipedia.org/wiki/JavaScript)
+[![Python](https://img.shields.io/badge/Python-3.10-blue?style=for-the-badge&logo=python)](https://en.wikipedia.org/wiki/Python_(programming_language))
+
+### **Frameworks and Tools Used**
+- [![Django](https://img.shields.io/badge/Django-4.2.4-green?style=for-the-badge&logo=django)](https://www.djangoproject.com/)
+  - Django was used as the main python framework in the development of this project
+- [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple?style=for-the-badge&logo=bootstrap)](https://blog.getbootstrap.com/)
+  - Bootstrap played a crucial role in shaping the overall layout and ensuring consistent spacing across the website.
+- [![ElephantSQL](https://img.shields.io/badge/Database-ElephantSQL-339989?style=for-the-badge&logo=postgresql)](https://www.elephantsql.com/)
+  - ElephantSQL served as the Production database for this project.
+- [![Cloudinary](https://img.shields.io/badge/Storage-Cloudinary-4285F4?style=for-the-badge&logo=cloudinary)](https://cloudinary.com/)
+  - Cloudinary was employed to host and manage all static files and images for the project.
+- [![Git](https://img.shields.io/badge/Version%20Control-Git-F05032?style=for-the-badge&logo=git)](https://git-scm.com/)
+  - Git was utilized for version control, allowing easy tracking of project changes for committing and pushing to GitHub.
+- [![GitHub](https://img.shields.io/badge/Code%20Repository-GitHub-181717?style=for-the-badge&logo=github)](https://github.com/)
+  - GitHub is the platform used to store the project's code after it's pushed from Git, facilitating version control and collaboration.
+- [![Heroku](https://img.shields.io/badge/Heroku-Deployed-purple?style=for-the-badge&logo=heroku)](https://www.heroku.com/)
+  - Heroku was utilized for deploying the application.
+- [![Balsamiq](https://img.shields.io/badge/Balsamiq-Wireframing-blue?style=for-the-badge&logo=balsamiq)](https://balsamiq.com/) - Balsamiq was utilized for creating wireframes for the website.
+  - Balsamiq was utilized for creating wireframes for the website.
+- [![CI Python Linter](https://img.shields.io/badge/CI%20Python%20Linter-Validation-success?style=for-the-badge&logo=python)](https://pep8ci.herokuapp.com/) 
+  - CI Python Linter was employed to validate the website's Python code.
+- [![DBDiagram](https://img.shields.io/badge/dbdiagram.io-Database%20Schema-blue?style=for-the-badge&logo=database)](https://dbdiagram.io/home)
+  - DBDiagram was utilized to design and visualize the database schema.
+- [![Chart.js](https://img.shields.io/badge/Chart.js-Interactive%20Charts-yellow?style=for-the-badge&logo=chart-dot-js)](https://www.chartjs.org/)
+  - Chart.js, a powerful JavaScript library, is employed to create interactive charts on the website. These charts visualize cryptocurrency data, providing users with valuable insights into market trends and performance.
+- [![Font Awesome](https://img.shields.io/badge/Font%20Awesome-Icons-lightgrey?style=for-the-badge&logo=font-awesome)](https://fontawesome.com/)
+  - Font Awesome, a comprehensive library of scalable vector icons, adds visual elements to the website. These icons enhance user experience and improve the overall design aesthetics.
+
+### **APIs**
+- [![News API](https://img.shields.io/badge/News%20API-For%20Crypto%20News-blue?style=for-the-badge)](https://newsapi.org/)
+  - The website's Crypto News section is powered by the News API, providing up-to-date news and insights on cryptocurrencies.
+
+- [![CoinGecko](https://img.shields.io/badge/CoinGecko-Crypto%20Data%20Provider-green?style=for-the-badge)](https://www.coingecko.com/)
+  - CoinGecko, a trusted source for cryptocurrency data, is utilized to fetch cryptocurrency prices, market cap, and other essential information on the website.
+
+### **Others**
+- [![PyCharm](https://img.shields.io/badge/PyCharm-IDE-blue?style=for-the-badge&logo=pycharm)](https://www.jetbrains.com/pycharm/)
+  - PyCharm, a powerful integrated development environment (IDE) for Python, was used throughout the project's development process. Its features and tools provided a smooth and efficient coding experience.
+
+### **Libraries Used**
+Libraries used for this project can be checked in the [requirements](requirements.txt) file.
+
+[Back to top &uarr;](#contents)
+
+## **Testing**
+
+For detailed information on testing post-development, please refer to the [TESTING.md](TESTING.md) document.
+
+## **Deployment**
+
+### **Run locally**
+
+- **Making a Local Clone**
+1. Login or Sign Up to GitHub.
+2. Open the project [repository](https://github.com/Danvm94/investosphere).
+3. Click on the code button, select whether you would like to clone with HTTPS, SSH or GitHub CLI and copy the link shown.
+4. Open the terminal in the code editor of your choice and change the current working directory to the location you want to use for the cloned directory.
+5. Type 'git clone' into the terminal and then paste the link you copied in step 
+6. Press enter.
+
+- **Forking the GitHub Repository**
+
+  - To fork this website to either propose changes or to use as an idea for another website, follow these steps:
+1. Login or Sign Up to GitHub.
+2. Open the project [repository](https://github.com/Danvm94/investosphere).
+3. Click the Fork button in the top right corner.
+4. Copy of the repository will be in your own GitHub account.
+
+  - To deploy from GitHub, follow these steps:
+
+1. Log into your GitHub repository, create a GitHub account if necessary.
+2. Click 'Settings' in the main Repository menu.
+3. Click 'Pages' from the left-hand side navigation menu.
+4. Within the Source section, click the "Branch" button and change from 'None' to 'Main'.
+5. The page should automatically refresh with an url displayed.
+6. Test the link by clicking on the url.
+
+### *Heroku Deployment*
+Deployments steps are as follows, after account setup:
+* Select New in the top-right corner of your Heroku Dashboard, and select Create new app from the dropdown menu.
+* Add a unique app name and then choose a region closest to you (EU or USA).
+* Click on Create App.
+
+In order for the project to run on Heroku, Heroku is needed to install the dependencies. 
+* In the terminal write the following commando `pip3 freeze > requirements.txt` to create a list of requirements. The list of dependencies will go into `requirements.txt` file.
+* Further down, to support dependencies, select Add Buildpath.
+* The order of the build-packs is important, select Python first, then click "Save changes". Then add Node.js second and click "Save changes" again. If they are not in this order, you can drag them to rearrange them.
+* Go to "Deploy" and select "GitHub" in "Deployment method".
+* To connect Heroku app to your GitHub repository code enter your repository name, click 'Search' and then 'Connect' when it shows below
+* Choose the branch you want to build your app from.
+* If preferred, click on "Enable Automatic Deploys", which keeps the app up to date with your GitHub repository.
+* Wait for the app to build. Once ready you will see the “App was successfully deployed” message and a 'View' button to take you to your deployed link.
+
+## **Credits**
+
+1. [Code Institute Template](https://github.com/Code-Institute-Org/python-essentials-template)
+    - This repository was created using the template provided by Code Institute. Without the knowledge gained through the coursework, I would not be able to create this site, so thank you Code Institute.
+
+2. [Django Documentation](https://docs.djangoproject.com/en/4.0/)
+    - The Django documentation was an essential resource, providing step-by-step guidance during the project's development to ensure everything was set up correctly.
+
+3. [Bootstrap 5 Documentation](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
+    - Bootstrap 5 documentation was instrumental in implementing layout and styling elements in the project.
+
+4. [Coingecko Documentation](https://coingecko.com/en/api)
+    - The Coingecko documentation played a crucial role in fetching cryptocurrency data, including prices and market capitalization.
+
+5. [ChartJS Documentation](https://www.chartjs.org/docs/latest/)
+    - ChartJS documentation was a valuable resource for implementing interactive charts in the project.
+
+6. [NEWSAPI Documentation](https://newsapi.org/docs/get-started)
+    - The NEWSAPI documentation provided essential information on integrating the latest news feature into the website.
+
+## **Acknowledgements**
+
+- I would like to thank Douglas Melo, my friend who recommended this course.
+- Special thanks to Dario Carrasquel, my mentor for this project.
+
+[Back to top &uarr;](#contents)
