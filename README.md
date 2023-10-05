@@ -258,5 +258,7 @@ InvestoSphere embraces a mobile-first approach to design, ensuring an exceptiona
 ![home-mobile](./README/home-mobile.gif)
 ![wallet-mobile](./README/wallet-mobile.png)
 ![crypto-mobile](./README/crypto-mobile.gif)
+![chart-mobile](./README/chart-mobile.gif)
+![manage-mobile](./README/manage-mobile.png)
 
 InvestoSphere's commitment to mobile-first design and responsiveness guarantees that users can comfortably access and navigate the platform on their preferred devices, regardless of screen size.
