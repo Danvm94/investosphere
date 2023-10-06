@@ -500,7 +500,6 @@ from the "Crypto" page to manage my crypto holdings conveniently.`
       cryptocurrencies.
       ![sell](./README/sell.gif)
 
-
 3. **Security and Validation**:
     - [x] Robust security measures are in place to protect user funds and
       transactions.
@@ -542,7 +541,6 @@ decisions.`
 remove cryptocurrencies supported on the website to maintain an up-to-date
 selection.`
 
-
 1. **Dedicated "Manage" Page**:
     - [x] A dedicated "Manage" page is accessible to administrators.
 
@@ -553,7 +551,7 @@ selection.`
     - [x] Server-side logic is implemented to add new cryptocurrencies to the
       website's database.
     - [x] Validation checks are in place to prevent invalid entries.
-![manage-add](./README/manage-add.gif)
+      ![manage-add](./README/manage-add.gif)
 
 3. **Remove Cryptocurrency Functionality**:
     - [x] Administrators can remove cryptocurrencies from the website.
@@ -563,7 +561,7 @@ selection.`
       website's database.
     - [x] Security measures ensure only authorized administrators can remove
       cryptocurrencies.
-![manage-delete](./README/manage-delete.gif)
+      ![manage-delete](./README/manage-delete.gif)
 
 4. **Design "Manage" Page**:
     - [x] The "Manage" page is designed with an organized and user-friendly
@@ -575,3 +573,111 @@ selection.`
     - [x] Input data for adding and removing cryptocurrencies is validated to
       prevent errors or misuse.
 
+### **Javascript Testing**
+
+#### **allowOnlyLetters**
+
+The registration form includes a username field that employs
+the `allowOnlyLetters` function for input validation. The purpose of this
+validation is to ensure that only letters (alphabetic characters) are allowed
+in the username field, disallowing any non-text characters.
+
+Manual testing has been conducted, and it has been verified that
+the `allowOnlyLetters` function functions correctly, preventing the entry of
+non-text characters in the username field as intended.
+
+This validation enhances the security and user experience of the registration
+process by ensuring that usernames consist only of alphabetic characters.
+
+- [x] Pass
+
+#### **fadeOutAndHideElementsAutomatically**
+
+The `fadeOutAndHideElementsAutomatically` function, responsible for
+automatically hiding success messages after a specified delay with a fade-out
+animation.
+
+![hide-automatic](./README/hide-automatic.gif)
+
+- [x] Pass
+
+#### **initializeNewsCarousel**
+
+The `initializeNewsCarousel` function, integrated as part of the Bootstrap
+framework, serves the purpose of initiating a carousel-style display for the
+news section, optimized for mobile devices. This functionality enhances the
+user experience by providing an interactive and visually appealing way to
+navigate through news content on smaller screens.
+
+![news-mobile](./README/news-mobile.png)
+
+- [x] Pass
+
+#### **cryptoCalculator**
+
+The `cryptoCalculator` feature is seamlessly integrated into the crypto
+purchase modal, offering users a dynamic way to calculate the amount of
+cryptocurrency they can acquire for a specific USD amount. This real-time
+calculator instantly updates the crypto price based on the USD value entered by
+the user, allowing for precise and convenient cryptocurrency purchases.
+
+![crypto-calculator](./README/crypto-calculator.png)
+
+- [x] Pass
+
+#### **usdCalculator**
+
+The `usdCalculator` functionality is analogous to the `cryptoCalculator`
+with the key difference being that it operates inversely. In this feature,
+users have the ability to input a specific cryptocurrency amount, and the
+calculator instantly computes the equivalent value in USD. This provides users
+with a valuable tool for evaluating their cryptocurrency holdings in terms of
+USD currency.
+
+![usd-calculator](./README/usd-calculator.png)
+
+#### **cryptoPriceRequest**
+
+The `cryptoPriceRequest` function is a crucial component of the application's
+functionality. Its primary purpose is to fetch the current price of a selected
+cryptocurrency and make it available for use in different parts of the
+application, particularly within the buy and sell modals.
+
+- [x] Pass
+
+#### **usdFormatter**
+
+The `usdFormatter` function is an essential utility function employed in
+various sections of the application, such as deposit and withdraw
+functionalities. Its primary purpose is to format numerical values into the
+standard USD currency format, enhancing the user experience and ensuring
+clarity in financial transactions.
+
+![deposit](./README/deposit.png)
+
+- [x] Pass
+
+#### **toggleRow**
+
+The `toggleRow` function plays a crucial role in enhancing the user experience
+within the transaction history section of the application. It facilitates the
+expansion and collapse of rows, allowing users to view high transaction volumes
+with ease.
+
+![transactions-history](./README/transactions-history.gif)
+
+- [x] Pass
+
+#### **initializeConfirmation**
+
+The `initializeConfirmation` function is a vital component of our application's
+user experience, ensuring that important actions are carried out with the
+user's explicit consent. This function plays a key role in confirming user
+intent before executing significant tasks, such as buying, selling, depositing,
+and withdrawing assets.
+
+![confirmations](./README/confirmations.png)
+
+- [x] Pass
+
+## **Validators**
