@@ -1,3 +1,6 @@
+/*jshint esversion: 8 */
+
+/* global bootstrap */
 /**
  * Allows only letters (A-Z, a-z) in the input element's value.
  * Replaces any non-letter characters with an empty string.
@@ -62,8 +65,8 @@ function opacityChange(type, element) {
 function initializeNewsCarousel() {
     const newsCarouselElement = document.getElementById("newsCarousel");
     if (newsCarouselElement) {
-        new bootstrap.Carousel(newsCarouselElement, {
-            interval: 3000, // Change slide every 3 seconds (adjust as needed)
+        bootstrap.Carousel(newsCarouselElement, {
+            interval: 3000, // Change slide every 3 seconds
             wrap: true, // Set to false if you don't want to loop
         });
     }
@@ -76,7 +79,7 @@ function initializeNewsCarousel() {
  * to trigger the `cryptoCalculator` function when the input value changes.
  */
 function initializeCryptoCalculator() {
-    const CryptoAmountInput = document.getElementById("buy_dollars")
+    const CryptoAmountInput = document.getElementById("buy_dollars");
     if (CryptoAmountInput) {
         CryptoAmountInput.addEventListener("input", cryptoCalculator);
     }
@@ -91,12 +94,12 @@ function initializeCryptoCalculator() {
  * @param {Event} event - The event object representing the "input" event.
  */
 function cryptoCalculator(event) {
-    const usdAmount = document.getElementById(event.target.id + '_decimal').value
-    const cryptoAmount = document.getElementById("buy_cryptos")
-    const cryptoAmountDecimal = document.getElementById("buy_cryptos_decimal")
-    const cryptoPrice = document.getElementById("crypto_price").value
-    cryptoAmount.value = parseFloat(usdAmount) / parseFloat(cryptoPrice)
-    cryptoAmountDecimal.value = parseFloat(usdAmount) / parseFloat(cryptoPrice)
+    const usdAmount = document.getElementById(event.target.id + '_decimal').value;
+    const cryptoAmount = document.getElementById("buy_cryptos");
+    const cryptoAmountDecimal = document.getElementById("buy_cryptos_decimal");
+    const cryptoPrice = document.getElementById("crypto_price").value;
+    cryptoAmount.value = parseFloat(usdAmount) / parseFloat(cryptoPrice);
+    cryptoAmountDecimal.value = parseFloat(usdAmount) / parseFloat(cryptoPrice);
 }
 
 /**
@@ -106,7 +109,7 @@ function cryptoCalculator(event) {
  * to trigger the `usdCalculator` function when the input value changes.
  */
 function initializeUsdCalculator() {
-    const CryptoAmountInput = document.getElementById("sell_cryptos")
+    const CryptoAmountInput = document.getElementById("sell_cryptos");
     if (CryptoAmountInput) {
         CryptoAmountInput.addEventListener("input", usdCalculator);
     }
@@ -121,17 +124,17 @@ function initializeUsdCalculator() {
  * @param {Event} event - The event object representing the "input" event.
  */
 function usdCalculator(event) {
-    const usdAmount = document.getElementById('sell_dollars')
-    const usdAmountDecimal = document.getElementById('sell_dollars_decimal')
-    const cryptoAmount = document.getElementById('sell_cryptos').value
-    const cryptoAmountDecimal = document.getElementById('sell_cryptos_decimal').value
-    const cryptoPrice = document.getElementById('sell-price').value
+    const usdAmount = document.getElementById('sell_dollars');
+    const usdAmountDecimal = document.getElementById('sell_dollars_decimal');
+    const cryptoAmount = document.getElementById('sell_cryptos').value;
+
+    const cryptoPrice = document.getElementById('sell-price').value;
     usdAmount.value = (parseFloat(cryptoPrice) * parseFloat(cryptoAmount)).toLocaleString('en-US', {
         style: 'currency',
         currency: 'USD',
         minimumFractionDigits: 2
     });
-    usdAmountDecimal.value = parseFloat(cryptoPrice) * parseFloat(cryptoAmount)
+    usdAmountDecimal.value = parseFloat(cryptoPrice) * parseFloat(cryptoAmount);
 }
 
 /**
@@ -167,19 +170,19 @@ async function cryptoPriceRequest(event) {
 
     if (event.target.id === 'id_crypto_select_buy') {
         cryptoPriceElement = document.getElementById('crypto_price');
-        cryptoPriceTextElement = document.getElementById('crypto-price-info-buy')
-        document.getElementById('buy_dollars').value = '$.0'
-        document.getElementById('buy_dollars_decimal').value = '0.00'
-        document.getElementById('buy_cryptos').value = '0.00'
-        document.getElementById('buy_cryptos_decimal').value = '0.00'
+        cryptoPriceTextElement = document.getElementById('crypto-price-info-buy');
+        document.getElementById('buy_dollars').value = '$.0';
+        document.getElementById('buy_dollars_decimal').value = '0.00';
+        document.getElementById('buy_cryptos').value = '0.00';
+        document.getElementById('buy_cryptos_decimal').value = '0.00';
 
     } else if (event.target.id === 'id_crypto_select_sell') {
         cryptoPriceElement = document.getElementById('sell-price');
-        cryptoPriceTextElement = document.getElementById('crypto-price-info-sell')
-        document.getElementById('sell_dollars').value = '$.0'
-        document.getElementById('sell_dollars_decimal').value = '0.00'
-        document.getElementById('sell_cryptos').value = '0.00'
-        document.getElementById('sell_cryptos_decimal').value = '0.00'
+        cryptoPriceTextElement = document.getElementById('crypto-price-info-sell');
+        document.getElementById('sell_dollars').value = '$.0';
+        document.getElementById('sell_dollars_decimal').value = '0.00';
+        document.getElementById('sell_cryptos').value = '0.00';
+        document.getElementById('sell_cryptos_decimal').value = '0.00';
     }
     try {
         const response = await fetch(`/get_price/?crypto=${cryptoSelected}`);
@@ -187,7 +190,7 @@ async function cryptoPriceRequest(event) {
         const symbol = data.symbol.toUpperCase();
         const price = data.current_price;
         cryptoPriceElement.value = price;
-        cryptoPriceTextElement.textContent = `Where ${symbol} 1 = USD $${price}`
+        cryptoPriceTextElement.textContent = `Where ${symbol} 1 = USD $${price}`;
     } catch (error) {
         console.error("Error fetching crypto price:", error);
     }
@@ -202,7 +205,7 @@ async function cryptoPriceRequest(event) {
 function initializeUsdFormatter() {
     const depositDollarForm = document.getElementById('deposit_dollars_form');
     const withdrawDollarForm = document.getElementById('withdraw_dollars_form');
-    const buyCryptoForm = document.getElementById('buy_dollars')
+    const buyCryptoForm = document.getElementById('buy_dollars');
     if (depositDollarForm) {
         depositDollarForm.addEventListener('input', usdFormatter);
     }
@@ -210,7 +213,7 @@ function initializeUsdFormatter() {
         withdrawDollarForm.addEventListener('input', usdFormatter);
     }
     if (buyCryptoForm) {
-        buyCryptoForm.addEventListener('input', usdFormatter)
+        buyCryptoForm.addEventListener('input', usdFormatter);
     }
 }
 
@@ -241,9 +244,9 @@ function usdFormatter(event) {
 
     // Combine the formatted integer and decimal parts with a decimal point
     const formattedInput = '$' + formattedIntegerPart + '.' + decimalPart;
-    const unformattedInput = integerPart + '.' + decimalPart
+    const unformattedInput = integerPart + '.' + decimalPart;
     const decimalDollars = document.getElementById(inputElement.id + '_decimal');
-    decimalDollars.value = unformattedInput
+    decimalDollars.value = unformattedInput;
 
     // Update the input field with the formatted value
     inputElement.value = formattedInput;
@@ -267,7 +270,7 @@ function toggleRow(button) {
         }
         const leftHiddenRows = document.querySelectorAll('.d-none.hidden-row');
         if (leftHiddenRows.length <= 0) {
-            button.remove()
+            button.remove();
         }
     }
 }
@@ -334,14 +337,14 @@ function initializeConfirmations() {
     if (dellButtons) {
         dellButtons.forEach(function (button) {
             const form = button.closest('form');
-            const crypto = button.id
+            const crypto = button.id;
             form.addEventListener('submit', function (event) {
                 const message = `Are you sure you want to delete ${crypto}? This action will result in the removal of this cryptocurrency from all users' wallets, and it will disappear from the system permanently. Please confirm your decision.`;
                 const confirmed = confirm(message);
                 if (!confirmed) {
                     event.preventDefault(); // Prevent form submission
                 }
-            })
+            });
         });
     }
 }
