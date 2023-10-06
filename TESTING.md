@@ -681,3 +681,17 @@ and withdrawing assets.
 - [x] Pass
 
 ## **Validators**
+
+### **CI Python Linter**
+
+
+### **JSHint**
+[JSHint](https://jshint.com/) was used to validate the Javascript code used in the project.
+
+#### **scripts.js**
+![jshint-scripts](./README/jshint-scripts.png)
+
+#### **chart_view.js**
+![jshint-chart](./README/jshint-chart.png)
+
+[Back to top &uarr;](#contents)

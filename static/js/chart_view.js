@@ -1,3 +1,4 @@
+/*jshint esversion: 8 */
 async function chartLoadData() {
     try {
         const response = await fetch('/chart_load/');
@@ -12,14 +13,16 @@ async function chartLoadData() {
 async function chartBuild(chartElement) {
     try {
         const data = await chartLoadData();
-        console.log(data.prices)
-        const dates = data.dates
-        let cryptosData = []
+        console.log(data.prices);
+        const dates = data.dates;
+        let cryptosData = [];
         for (const crypto in data.prices) {
-            cryptosData.push({
-                label: crypto,
-                data: data.prices[crypto]
-            })
+            if (data.prices.hasOwnProperty(crypto)) {
+                cryptosData.push({
+                    label: crypto,
+                    data: data.prices[crypto]
+                });
+            }
         }
         new Chart(chartElement,
             {
