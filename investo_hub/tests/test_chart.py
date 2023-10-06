@@ -1,5 +1,6 @@
 from django.test import TestCase
-from investo_hub.chart import get_timestamps_date, convert_timestamps_date, get_clean_values
+from investo_hub.chart import (get_timestamps_date, convert_timestamps_date,
+                               get_clean_values)
 
 
 class TestCryptoDataFunctions(TestCase):

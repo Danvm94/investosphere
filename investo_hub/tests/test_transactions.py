@@ -1,6 +1,7 @@
 from django.test import TestCase
 from investo_hub.models import Wallet, Transactions
-from investo_hub.transactions import perform_money_transaction, deposit_into_wallet, withdraw_from_wallet, \
+from investo_hub.transactions import perform_money_transaction, \
+    deposit_into_wallet, withdraw_from_wallet, \
     get_or_create_wallet, buy_crypto, get_or_create_cryptos, sell_crypto
 from django.contrib.auth.models import User
 from decimal import Decimal
@@ -15,7 +16,8 @@ class TestPerformMoneyTransaction(TestCase):
         user = User.objects.create(username='testuser')
         wallet = Wallet.objects.create(user=user, dollars=0)
 
-        # Call the perform_money_transaction function with a deposit transaction
+        # Call the perform_money_transaction function with a
+        # deposit transaction
         perform_money_transaction(user, 100, "deposit")
 
         # Check if the wallet balance has been updated correctly
@@ -27,7 +29,8 @@ class TestPerformMoneyTransaction(TestCase):
         user = User.objects.create(username='testuser')
         wallet = Wallet.objects.create(user=user, dollars=200)
 
-        # Call the perform_money_transaction function with a withdraw transaction
+        # Call the perform_money_transaction function
+        # with a withdraw transaction
         perform_money_transaction(user, 50, "withdraw")
 
         # Check if the wallet balance has been updated correctly
@@ -37,15 +40,17 @@ class TestPerformMoneyTransaction(TestCase):
     def test_invalid_transaction_type(self):
         # Create a user and a wallet for testing
         user = User.objects.create(username='testuser')
-        wallet = Wallet.objects.create(user=user, dollars=0)
 
-        # Call the perform_money_transaction function with an invalid transaction type
+        # Call the perform_money_transaction function
+        # with an invalid transaction type
         with self.assertRaises(ValueError) as context:
             perform_money_transaction(user, 100, "invalid")
 
         # Check if the function raises a ValueError with the expected message
         self.assertEqual(str(context.exception),
-                         "Invalid transaction type. The transaction type must be 'deposit' or 'withdraw'.")
+                         "Invalid transaction type. "
+                         "The transaction type must be 'deposit' "
+                         "or 'withdraw'.")
 
 
 class TestDepositIntoWallet(TestCase):
@@ -64,7 +69,9 @@ class TestDepositIntoWallet(TestCase):
 
         # Check if a deposit transaction record has been created
         self.assertEqual(
-            Transactions.objects.filter(user=user, type="deposit", symbol="dollar", amount=Decimal('100')).count(), 1)
+            Transactions.objects.filter(user=user, type="deposit",
+                                        symbol="dollar",
+                                        amount=Decimal('100')).count(), 1)
 
     def test_invalid_deposit(self):
         # Create a user and a wallet for testing
@@ -77,7 +84,9 @@ class TestDepositIntoWallet(TestCase):
 
         # Check if the function raises a ValueError with the expected message
         self.assertEqual(str(context.exception),
-                         "Unable to deposit. The deposit amount must be greater than or equal to 1.")
+                         "Unable to deposit. "
+                         "The deposit amount must be greater than or "
+                         "equal to 1.")
 
         # Check if the wallet balance remains unchanged
         wallet.refresh_from_db()
@@ -100,20 +109,24 @@ class TestWithdrawFromWallet(TestCase):
 
         # Check if a withdrawal transaction record has been created
         self.assertEqual(
-            Transactions.objects.filter(user=user, type="withdraw", symbol="dollar", amount=Decimal('-50')).count(), 1)
+            Transactions.objects.filter(user=user, type="withdraw",
+                                        symbol="dollar",
+                                        amount=Decimal('-50')).count(), 1)
 
     def test_invalid_withdrawal_amount(self):
         # Create a user and a wallet for testing
         user = User.objects.create(username='testuser')
         wallet = Wallet.objects.create(user=user, dollars=Decimal('100'))
 
-        # Call the withdraw_from_wallet function with an invalid withdrawal amount
+        # Call the withdraw_from_wallet function
+        # with an invalid withdrawal amount
         with self.assertRaises(ValueError) as context:
             withdraw_from_wallet(user, wallet, Decimal('-1'))
 
         # Check if the function raises a ValueError with the expected message
         self.assertEqual(str(context.exception),
-                         "Unable to withdraw. The withdrawal amount must be greater than or equal to 1.")
+                         "Unable to withdraw. The withdrawal amount "
+                         "must be greater than or equal to 1.")
 
         # Check if the wallet balance remains unchanged
         wallet.refresh_from_db()
@@ -124,13 +137,15 @@ class TestWithdrawFromWallet(TestCase):
         user = User.objects.create(username='testuser')
         wallet = Wallet.objects.create(user=user, dollars=Decimal('50'))
 
-        # Call the withdraw_from_wallet function with an amount exceeding the wallet balance
+        # Call the withdraw_from_wallet function with an
+        # amount exceeding the wallet balance
         with self.assertRaises(ValueError) as context:
             withdraw_from_wallet(user, wallet, Decimal('100'))
 
         # Check if the function raises a ValueError with the expected message
         self.assertEqual(str(context.exception),
-                         "Insufficient funds in your wallet. The withdrawal amount exceeds your available balance.")
+                         "Insufficient funds in your wallet. The withdrawal "
+                         "amount exceeds your available balance.")
 
         # Check if the wallet balance remains unchanged
         wallet.refresh_from_db()
@@ -183,7 +198,9 @@ class TestBuyCrypto(TestCase):
 
         # Check if a buy transaction record has been created
         self.assertEqual(
-            Transactions.objects.filter(user=user, type="buy", symbol=cryptos.symbol, amount=Decimal('1')).count(), 1)
+            Transactions.objects.filter(user=user, type="buy",
+                                        symbol=cryptos.symbol,
+                                        amount=Decimal('1')).count(), 1)
 
     def test_invalid_purchase_amount(self):
         # Create a user and a crypto for testing
@@ -196,7 +213,9 @@ class TestBuyCrypto(TestCase):
             buy_crypto(user, cryptos, Decimal('-1'))
 
         # Check if the function raises a ValueError with the expected message
-        self.assertEqual(str(context.exception), "Unable to buy. The purchase amount must be a positive value.")
+        self.assertEqual(str(context.exception),
+                         "Unable to buy. The purchase amount "
+                         "must be a positive value.")
 
         # Check if the crypto amount remains unchanged
         crypto.refresh_from_db()
@@ -222,7 +241,8 @@ class TestSellCrypto(TestCase):
 
         # Check if a sell transaction record has been created
         self.assertEqual(
-            Transactions.objects.filter(user=self.user, type="buy", symbol=self.cryptos.symbol,
+            Transactions.objects.filter(user=self.user, type="buy",
+                                        symbol=self.cryptos.symbol,
                                         amount=Decimal('1')).count(), 1)
 
     def test_invalid_sell(self):
@@ -231,7 +251,9 @@ class TestSellCrypto(TestCase):
             sell_crypto(self.user, self.cryptos, Decimal('-1'))
 
         # Check if the function raises a ValueError with the expected message
-        self.assertEqual(str(context.exception), "Unable to sell. The sell amount must be a positive value.")
+        self.assertEqual(str(context.exception),
+                         "Unable to sell. The sell amount must be "
+                         "a positive value.")
 
         # Check if the crypto amount has not been updated
         self.crypto.refresh_from_db()
@@ -260,9 +282,11 @@ class TestGetOrCreateCryptos(TestCase):
         # Call the get_or_create_cryptos function
         result = get_or_create_cryptos(user, 'bitcoin')
 
-        # Check if a new Cryptos record has been created for the user and crypto
+        # Check if a new Cryptos record has been
+        # created for the user and crypto
         self.assertIsInstance(result, Cryptos)
 
-        # Check if the created Cryptos record is associated with the correct user and crypto
+        # Check if the created Cryptos record is
+        # associated with the correct user and crypto
         self.assertEqual(result.user, user)
         self.assertEqual(result.crypto, crypto)

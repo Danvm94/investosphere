@@ -8,7 +8,8 @@ from user_management.models import Crypto
 class RegistrationViewTestCase(TestCase):
     def setUp(self):
         self.client = Client()
-        self.registration_url = reverse('register')  # Replace 'register' with your actual URL name
+        self.registration_url = reverse(
+            'register')  # Replace 'register' with your actual URL name
 
     def test_get_request(self):
         response = self.client.get(self.registration_url)
@@ -56,10 +57,14 @@ class LoginViewTestCase(TestCase):
     def setUp(self):
         self.client = Client()
         self.login_url = reverse('login')
-        self.user = User.objects.create_user(username='testuser', password='testpassword', email='test@email.com')
+        self.user = User.objects.create_user(username='testuser',
+                                             password='testpassword',
+                                             email='test@email.com')
 
     def test_post_valid_credentials(self):
-        response = self.client.post(self.login_url, {'username': 'testuser', 'password': 'testpassword'})
+        response = self.client.post(self.login_url,
+                                    {'username': 'testuser',
+                                     'password': 'testpassword'})
         # Check for a redirect
         self.assertEqual(response.status_code, 302)
         # Verify redirection to the 'home' URL
@@ -68,7 +73,9 @@ class LoginViewTestCase(TestCase):
         self.assertEqual(response.wsgi_request.user, self.user)
 
     def test_post_invalid_credentials(self):
-        response = self.client.post(self.login_url, {'username': 'testuser', 'password': 'invalidpassword'})
+        response = self.client.post(self.login_url,
+                                    {'username': 'testuser',
+                                     'password': 'invalidpassword'})
         # Check for rendering of login page
         self.assertEqual(response.status_code, 200)
         # Verify template used
@@ -86,7 +93,8 @@ class LoginViewTestCase(TestCase):
         self.assertTemplateUsed(response, 'login.html')
 
     def test_empty_credentials(self):
-        response = self.client.post(self.login_url, {'username': '', 'password': ''})
+        response = self.client.post(self.login_url,
+                                    {'username': '', 'password': ''})
         # Check for rendering of login page
         self.assertEqual(response.status_code, 200)
         # Verify template used
@@ -101,7 +109,8 @@ class LogoutViewTestCase(TestCase):
     def setUp(self):
         self.client = Client()
         self.logout_url = reverse('logout')
-        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.user = User.objects.create_user(username='testuser',
+                                             password='testpassword')
         # Log in the user
         self.client.login(username='testuser', password='testpassword')
 
@@ -123,7 +132,8 @@ class HomeViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         # Verify that the correct template is used
         self.assertTemplateUsed(response, 'home.html')
-        # Check that the context data includes 'articles' and 'cryptos_trending'
+        # Check that the context data includes
+        # 'articles' and 'cryptos_trending'
         self.assertIn('articles', response.context)
         self.assertIn('cryptos_trending', response.context)
         # Verify that the data in the context matches the mock data
@@ -158,7 +168,8 @@ class ManageViewTestCase(TestCase):
         # Verify redirection to the 'manage' URL
         self.assertRedirects(response, reverse('manage'))
         # Check that no new Crypto object was created
-        self.assertEqual(Crypto.objects.count(), initial_crypto_count)  # Check that no new Crypto object was created
+        self.assertEqual(Crypto.objects.count(),
+                         initial_crypto_count)
 
     def test_get_request(self):
         response = self.client.get(self.manage_url)
@@ -178,9 +189,9 @@ class DeleteCryptoViewTestCase(TestCase):
         self.manage_url = reverse('manage')
 
     def test_post_delete_crypto(self):
-        response = self.client.post(self.manage_url, {'crypto_name': 'bitcoin'})
+        response = self.client.post(self.manage_url,
+                                    {'crypto_name': 'bitcoin'})
         # Check for a redirect
         self.assertEqual(response.status_code, 302)
         # Verify redirection to the 'manage' URL
         self.assertRedirects(response, reverse('manage'))
-

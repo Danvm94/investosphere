@@ -32,7 +32,9 @@ def request_coin_api_chart():
     cryptos_cache = request_coin_cache()
     cryptos_market_chart = []
     current_time = datetime.datetime.now()
-    target_time = current_time.replace(hour=1, minute=0, second=0, microsecond=0) + datetime.timedelta(days=1)
+    target_time = current_time.replace(hour=1, minute=0, second=0,
+                                       microsecond=0) + datetime.timedelta(
+        days=1)
     time_difference_seconds = (target_time - current_time).total_seconds()
 
     for crypto in cryptos_cache:
@@ -43,7 +45,8 @@ def request_coin_api_chart():
         }
         crypto_id = crypto['id']
         for num in range(5):
-            response = requests.get(COIN_API + f'/coins/{crypto_id}/market_chart', params=params)
+            response = requests.get(
+                COIN_API + f'/coins/{crypto_id}/market_chart', params=params)
             if response.status_code == 200:
                 prices = response.json()['prices']
                 cryptos_market_chart.append({crypto['id']: prices})
@@ -52,8 +55,10 @@ def request_coin_api_chart():
                 time.sleep(5)
 
     cryptos_market_chart = {entry[0]: entry[1] for entry in
-                            [(list(item.keys())[0], item[list(item.keys())[0]]) for item in cryptos_market_chart]}
-    cache.set('cached_cryptos_chart', cryptos_market_chart, time_difference_seconds)
+                            [(list(item.keys())[0], item[list(item.keys())[0]])
+                             for item in cryptos_market_chart]}
+    cache.set('cached_cryptos_chart', cryptos_market_chart,
+              time_difference_seconds)
     return cryptos_market_chart
 
 
@@ -82,10 +87,13 @@ def get_coin_info(coin):
 def get_user_cryptos(user):
     cryptos = Cryptos.objects.filter(user=user)
     for crypto in cryptos:
-        crypto.usd = Decimal(get_coin_info(crypto.symbol)['current_price']) * Decimal(crypto.amount)
+        crypto.usd = Decimal(
+            get_coin_info(crypto.symbol)['current_price']) * Decimal(
+            crypto.amount)
         crypto.usd = round(crypto.usd, 2)
         crypto.image = get_coin_info(crypto.symbol)['image']
     return cryptos
+
 
 def clear_cache():
     cache.delete('cached_cryptos')

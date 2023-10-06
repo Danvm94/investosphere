@@ -18,7 +18,8 @@ class TestGetAllCryptosNames(TestCase):
         self.assertListEqual(result, ['bitcoin', 'ethereum', 'litecoin'])
 
     def test_no_cryptos(self):
-        # Call the get_all_cryptos_names function when there are no cryptocurrencies
+        # Call the get_all_cryptos_names function when there
+        # are no cryptocurrencies
         result = get_all_cryptos_names()
 
         # Check if the function returns False

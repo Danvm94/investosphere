@@ -9,7 +9,9 @@ def perform_money_transaction(user, amount, transaction):
     elif transaction == "withdraw":
         withdraw_from_wallet(user, wallet, amount)
     else:
-        raise ValueError("Invalid transaction type. The transaction type must be 'deposit' or 'withdraw'.")
+        raise ValueError(
+            "Invalid transaction type. "
+            "The transaction type must be 'deposit' or 'withdraw'.")
     wallet.save()
 
 
@@ -17,7 +19,8 @@ def deposit_into_wallet(user, wallet, amount):
     """
     Deposit an amount into the user's wallet.
 
-    This function adds the specified amount to the user's wallet balance through a deposit.
+    This function adds the specified amount to the user's wallet balance
+    through a deposit.
 
     Args:
         user (User): The user for whom the deposit is made.
@@ -37,14 +40,16 @@ def deposit_into_wallet(user, wallet, amount):
     else:
         wallet.dollars += amount
         wallet.save()
-        Transactions.objects.create(user=user, type="deposit", symbol="dollar", amount=amount)
+        Transactions.objects.create(user=user, type="deposit", symbol="dollar",
+                                    amount=amount)
 
 
 def withdraw_from_wallet(user, wallet, amount):
     """
     Withdraw an amount from the user's wallet.
 
-    This function deducts the specified amount from the user's wallet balance through a withdrawal.
+    This function deducts the specified amount from the user's wallet balance
+    through a withdrawal.
 
     Args:
         user (User): The user for whom the withdrawal is made.
@@ -72,14 +77,16 @@ def withdraw_from_wallet(user, wallet, amount):
         print(1)
         wallet.dollars -= amount
         wallet.save()
-        Transactions.objects.create(user=user, type="withdraw", symbol="dollar", amount=-amount)
+        Transactions.objects.create(user=user, type="withdraw",
+                                    symbol="dollar", amount=-amount)
 
 
 def get_or_create_wallet(user):
     """
    Get or create a wallet for the specified user.
 
-   This function retrieves an existing wallet associated with the user or creates a new one
+   This function retrieves an existing wallet associated with the user or
+   creates a new one
    if a wallet does not already exist.
 
    Args:
@@ -112,7 +119,8 @@ def buy_crypto(user, crypto, amount):
     else:
         crypto.amount += amount
         crypto.save()
-        Transactions.objects.create(user=user, type="buy", symbol=crypto.symbol, amount=amount)
+        Transactions.objects.create(user=user, type="buy",
+                                    symbol=crypto.symbol, amount=amount)
 
 
 def sell_crypto(user, crypto, amount):
@@ -126,7 +134,8 @@ def sell_crypto(user, crypto, amount):
         crypto.save()
         if crypto.amount == 0:
             crypto.delete()
-        Transactions.objects.create(user=user, type="sell", symbol=crypto.symbol, amount=-amount)
+        Transactions.objects.create(user=user, type="sell",
+                                    symbol=crypto.symbol, amount=-amount)
 
 
 def get_or_create_cryptos(user, symbol):

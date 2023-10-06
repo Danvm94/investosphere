@@ -33,13 +33,15 @@ class CryptosModelTestCase(TestCase):
         self.crypto = Crypto.objects.create(name="bitcoin")
 
     def test_model_creation(self):
-        cryptos = Cryptos.objects.create(user=self.user, crypto=self.crypto, amount=0)
+        cryptos = Cryptos.objects.create(user=self.user, crypto=self.crypto,
+                                         amount=0)
         self.assertEqual(cryptos.user, self.user)
         self.assertEqual(cryptos.crypto, self.crypto)
         self.assertEqual(cryptos.amount, 0)
 
     def test_formatted_amount(self):
-        cryptos = Cryptos.objects.create(user=self.user, crypto=self.crypto, amount=0.500000)
+        cryptos = Cryptos.objects.create(user=self.user, crypto=self.crypto,
+                                         amount=0.500000)
         self.assertEqual(cryptos.formatted_amount(), '0.5')
 
     def test_default_value(self):
@@ -59,17 +61,23 @@ class TransactionsModelTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create(username='testuser')
         self.crypto = Crypto.objects.create(name="bitcoin")
-        self.cryptos = Cryptos.objects.create(user=self.user, crypto=self.crypto, amount=0.500000)
+        self.cryptos = Cryptos.objects.create(user=self.user,
+                                              crypto=self.crypto,
+                                              amount=0.500000)
 
     def test_model_creation_usd(self):
-        transactions = Transactions.objects.create(user=self.user, type='deposit', symbol='dollar', amount=50)
+        transactions = Transactions.objects.create(user=self.user,
+                                                   type='deposit',
+                                                   symbol='dollar', amount=50)
         self.assertEqual(transactions.user, self.user)
         self.assertEqual(transactions.type, 'deposit')
         self.assertEqual(transactions.symbol, 'dollar')
         self.assertEqual(transactions.amount, 50)
 
     def test_model_creation_crypto(self):
-        transactions = Transactions.objects.create(user=self.user, type='deposit', symbol=self.cryptos.symbol,
+        transactions = Transactions.objects.create(user=self.user,
+                                                   type='deposit',
+                                                   symbol=self.cryptos.symbol,
                                                    amount=0.60)
         self.assertEqual(transactions.user, self.user)
         self.assertEqual(transactions.type, 'deposit')

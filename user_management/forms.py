@@ -13,7 +13,8 @@ def validate_crypto(value):
     if response.status_code != 200:
         raise ValidationError("The crypto {} does not exist.".format(value))
     if Crypto.objects.filter(name=value).exists():
-        raise ValidationError("The crypto {} is already added to the system.".format(value))
+        raise ValidationError("The crypto {} is already added "
+                              "to the system.".format(value))
 
 
 class RegistrationForm(UserCreationForm):

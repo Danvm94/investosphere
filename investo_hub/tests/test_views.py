@@ -22,15 +22,19 @@ class ChartViewTestCase(TestCase):
 class WalletViewTestCase(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.user = User.objects.create_user(username='testuser',
+                                             password='testpassword')
         self.wallet = Wallet.objects.create(user=self.user, dollars=1000.0)
-        self.login_status = self.client.login(username='testuser', password='testpassword')
+        self.login_status = self.client.login(username='testuser',
+                                              password='testpassword')
         self.wallet_url = reverse('wallet')
 
     def test_get_request_transaction_history_display(self):
         # Create some transaction history for the user
-        Transactions.objects.create(user=self.user, symbol="dollar", amount=500.0, type="deposit")
-        Transactions.objects.create(user=self.user, symbol="dollar", amount=300.0, type="withdraw")
+        Transactions.objects.create(user=self.user, symbol="dollar",
+                                    amount=500.0, type="deposit")
+        Transactions.objects.create(user=self.user, symbol="dollar",
+                                    amount=300.0, type="withdraw")
         response = self.client.get(self.wallet_url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'wallet.html')
@@ -46,13 +50,16 @@ class WalletViewTestCase(TestCase):
         initial_balance = self.wallet.dollars
 
         response = self.client.post(self.wallet_url,
-                                    {'deposit_form': True, 'deposit_dollars': 200.0})
+                                    {'deposit_form': True,
+                                     'deposit_dollars': 200.0})
 
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, self.wallet_url)
 
         # Check that a deposit transaction is created
-        self.assertEqual(Transactions.objects.filter(user=self.user, type="deposit").count(), 1)
+        self.assertEqual(Transactions.objects.filter(user=self.user,
+                                                     type="deposit").count(),
+                         1)
 
         # Verify that the wallet balance is updated
         updated_wallet = Wallet.objects.get(user=self.user)
@@ -61,13 +68,17 @@ class WalletViewTestCase(TestCase):
     def test_post_request_withdraw_money(self):
         initial_balance = self.wallet.dollars
 
-        response = self.client.post(self.wallet_url, {'withdraw_form': True, 'withdraw_dollars': 200.0})
+        response = self.client.post(self.wallet_url,
+                                    {'withdraw_form': True,
+                                     'withdraw_dollars': 200.0})
 
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, self.wallet_url)
 
         # Check that a withdraw transaction is created
-        self.assertEqual(Transactions.objects.filter(user=self.user, type="withdraw").count(), 1)
+        self.assertEqual(Transactions.objects.filter(user=self.user,
+                                                     type="withdraw").count(),
+                         1)
 
         # Verify that the wallet balance is updated
         updated_wallet = Wallet.objects.get(user=self.user)
@@ -77,11 +88,14 @@ class WalletViewTestCase(TestCase):
 class CryptoViewTestCase(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.user = User.objects.create_user(username='testuser',
+                                             password='testpassword')
         self.wallet = Wallet.objects.create(user=self.user, dollars=1000.0)
-        self.login_status = self.client.login(username='testuser', password='testpassword')
+        self.login_status = self.client.login(username='testuser',
+                                              password='testpassword')
         self.crypto = Crypto.objects.create(name='bitcoin')
-        self.cryptos = Cryptos.objects.create(user=self.user, crypto=self.crypto, amount=200)
+        self.cryptos = Cryptos.objects.create(user=self.user,
+                                              crypto=self.crypto, amount=200)
         self.crypto_url = reverse('crypto')
 
     def test_get_request_display(self):
@@ -94,15 +108,20 @@ class CryptoViewTestCase(TestCase):
         initial_balance = self.wallet.dollars
 
         response = self.client.post(self.crypto_url,
-                                    {'buy_form': True, 'buy_dollars_decimal': 200.0, 'crypto_select': 'bitcoin',
+                                    {'buy_form': True,
+                                     'buy_dollars_decimal': 200.0,
+                                     'crypto_select': 'bitcoin',
                                      'crypto_price': 1, })
 
         self.assertEqual(response.status_code, 302)  # Check for redirect
         self.assertRedirects(response, self.crypto_url)
 
         # Check that a buy transaction and money withdrawal are created
-        self.assertEqual(Transactions.objects.filter(user=self.user, type="buy").count(), 1)
-        self.assertEqual(Transactions.objects.filter(user=self.user, type="withdraw").count(), 1)
+        self.assertEqual(
+            Transactions.objects.filter(user=self.user, type="buy").count(), 1)
+        self.assertEqual(Transactions.objects.filter(user=self.user,
+                                                     type="withdraw").count(),
+                         1)
 
         # Verify that the wallet balance is updated
         updated_wallet = Wallet.objects.get(user=self.user)
@@ -112,15 +131,20 @@ class CryptoViewTestCase(TestCase):
         initial_balance = self.wallet.dollars
 
         response = self.client.post(self.crypto_url,
-                                    {'sell_form': True, 'sell_cryptos': '1.00', 'crypto_select': 'bitcoin',
+                                    {'sell_form': True, 'sell_cryptos': '1.00',
+                                     'crypto_select': 'bitcoin',
                                      'crypto_price': 1, })
 
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, self.crypto_url)
 
         # Check that a sell transaction and money deposit are created
-        self.assertEqual(Transactions.objects.filter(user=self.user, type="sell").count(), 1)
-        self.assertEqual(Transactions.objects.filter(user=self.user, type="deposit").count(), 1)
+        self.assertEqual(
+            Transactions.objects.filter(user=self.user, type="sell").count(),
+            1)
+        self.assertEqual(Transactions.objects.filter(user=self.user,
+                                                     type="deposit").count(),
+                         1)
 
         # Verify that the wallet balance is updated
         updated_wallet = Wallet.objects.get(user=self.user)
@@ -136,7 +160,8 @@ class GetPriceViewTestCase(TestCase):
     def test_get_price_valid_crypto(self):
         # Simulate a GET request with a valid crypto parameter
         valid_crypto = 'bitcoin'
-        response = self.client.get(self.get_price_url, {'crypto': valid_crypto})
+        response = self.client.get(self.get_price_url,
+                                   {'crypto': valid_crypto})
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'id')
@@ -146,7 +171,8 @@ class GetPriceViewTestCase(TestCase):
         # Simulate a GET request with an invalid crypto parameter
         invalid_crypto = 'nonexistent_crypto'
         try:
-            response = self.client.get(self.get_price_url, {'crypto': invalid_crypto})
+            response = self.client.get(self.get_price_url,
+                                       {'crypto': invalid_crypto})
 
             # Check if the response status code is 200 (OK)
             self.assertEqual(response.status_code, 200)

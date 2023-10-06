@@ -688,6 +688,8 @@ and withdrawing assets.
 ### **JSHint**
 [JSHint](https://jshint.com/) was used to validate the Javascript code used in the project.
 
+The [CI Python Linter](https://pep8ci.herokuapp.com/) was used to validate the python code used throughout the project. The results are outlined in below:
+
 #### **scripts.js**
 ![jshint-scripts](./README/jshint-scripts.png)
 

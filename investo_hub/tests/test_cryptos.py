@@ -23,13 +23,16 @@ class TestRequestCoinAPI(TestCase):
     def test_request_coin_api_success(self, mock_cache_set, mock_requests_get):
         # Mock the requests.get() method to return a successful response
         mock_requests_get.return_value.status_code = 200
-        mock_requests_get.return_value.json.return_value = [{'crypto_data': 'example'}]
+        mock_requests_get.return_value.json.return_value = [
+            {'crypto_data': 'example'}]
 
         # Call your function
         result = request_coin_api()
 
         # Check if cache.set is called with the expected arguments
-        mock_cache_set.assert_called_once_with('cached_cryptos', [{'crypto_data': 'example'}], 1 * 60 * 60)
+        mock_cache_set.assert_called_once_with('cached_cryptos',
+                                               [{'crypto_data': 'example'}],
+                                               1 * 60 * 60)
 
         # Check if the result is as expected
         self.assertEqual(result, [{'crypto_data': 'example'}])
@@ -51,13 +54,16 @@ class TestRequestCoinAPIChart(TestCase):
     @patch('investo_hub.cryptos.request_coin_cache')
     @patch('investo_hub.cryptos.requests.get')
     @patch('investo_hub.cryptos.cache.set')
-    def test_request_coin_api_chart(self, mock_cache_set, mock_requests_get, mock_request_coin_cache):
+    def test_request_coin_api_chart(self, mock_cache_set, mock_requests_get,
+                                    mock_request_coin_cache):
         # Mock the request_coin_cache function to return a sample cache data
-        mock_request_coin_cache.return_value = [{'id': 'crypto1'}, {'id': 'crypto2'}]
+        mock_request_coin_cache.return_value = [{'id': 'crypto1'},
+                                                {'id': 'crypto2'}]
 
         # Mock the requests.get() method to return a successful response
         mock_requests_get.return_value.status_code = 200
-        mock_requests_get.return_value.json.return_value = {'prices': [100, 200, 300]}
+        mock_requests_get.return_value.json.return_value = {
+            'prices': [100, 200, 300]}
 
         # Call your function
         result = request_coin_api_chart()
@@ -66,7 +72,8 @@ class TestRequestCoinAPIChart(TestCase):
         mock_cache_set.assert_called_once()
 
         # Check if the result is as expected
-        expected_result = {'crypto1': [100, 200, 300], 'crypto2': [100, 200, 300]}
+        expected_result = {'crypto1': [100, 200, 300],
+                           'crypto2': [100, 200, 300]}
         self.assertEqual(result, expected_result)
 
 
@@ -74,7 +81,9 @@ class TestRequestCoinChartCache(TestCase):
 
     @patch('investo_hub.cryptos.cache.get')
     @patch('investo_hub.cryptos.request_coin_api_chart')
-    def test_request_coin_chart_cache_with_cached_data(self, mock_request_coin_api_chart, mock_cache_get):
+    def test_cached_coin_chart_request(self,
+                                       mock_request_coin_api_chart,
+                                       mock_cache_get):
         # Mock cache.get() to return some cached data
         mock_cache_get.return_value = {'cached_data': [100, 200, 300]}
 
@@ -89,12 +98,15 @@ class TestRequestCoinChartCache(TestCase):
 
     @patch('investo_hub.cryptos.cache.get')
     @patch('investo_hub.cryptos.request_coin_api_chart')
-    def test_request_coin_chart_cache_without_cached_data(self, mock_request_coin_api_chart, mock_cache_get):
+    def test_uncached_coin_chart_request(self,
+                                         mock_request_coin_api_chart,
+                                         mock_cache_get):
         # Mock cache.get() to return None (no cached data)
         mock_cache_get.return_value = None
 
         # Mock request_coin_api_chart to return some data
-        mock_request_coin_api_chart.return_value = {'crypto_data': [100, 200, 300]}
+        mock_request_coin_api_chart.return_value = {
+            'crypto_data': [100, 200, 300]}
 
         # Call your function
         result = request_coin_chart_cache()
@@ -110,7 +122,8 @@ class TestRequestCoinCache(TestCase):
 
     @patch('investo_hub.cryptos.cache.get')
     @patch('investo_hub.cryptos.request_coin_api')
-    def test_request_coin_cache_with_cached_data(self, mock_request_coin_api, mock_cache_get):
+    def test_request_coin_cache_with_cached_data(self, mock_request_coin_api,
+                                                 mock_cache_get):
         # Mock cache.get() to return some cached data
         mock_cache_get.return_value = {'cached_data': [100, 200, 300]}
 
@@ -125,7 +138,9 @@ class TestRequestCoinCache(TestCase):
 
     @patch('investo_hub.cryptos.cache.get')
     @patch('investo_hub.cryptos.request_coin_api')
-    def test_request_coin_cache_without_cached_data(self, mock_request_coin_api, mock_cache_get):
+    def test_request_coin_cache_without_cached_data(self,
+                                                    mock_request_coin_api,
+                                                    mock_cache_get):
         # Mock cache.get() to return None (no cached data)
         mock_cache_get.return_value = None
 
@@ -147,7 +162,9 @@ class TestGetCoinInfo(TestCase):
     @patch('investo_hub.cryptos.request_coin_cache')
     def test_get_coin_info_found(self, mock_request_coin_cache):
         # Mock the request_coin_cache function to return some sample data
-        mock_request_coin_cache.return_value = [{'id': 'btc', 'name': 'Bitcoin'}, {'id': 'eth', 'name': 'Ethereum'}]
+        mock_request_coin_cache.return_value = [
+            {'id': 'btc', 'name': 'Bitcoin'},
+            {'id': 'eth', 'name': 'Ethereum'}]
 
         # Call your function with a coin that exists in the cache
         result = get_coin_info('btc')
@@ -159,14 +176,17 @@ class TestGetCoinInfo(TestCase):
     @patch('investo_hub.cryptos.request_coin_cache')
     def test_get_coin_info_not_found(self, mock_request_coin_cache):
         # Mock the request_coin_cache function to return some sample data
-        mock_request_coin_cache.return_value = [{'id': 'btc', 'name': 'Bitcoin'}, {'id': 'eth', 'name': 'Ethereum'}]
+        mock_request_coin_cache.return_value = [
+            {'id': 'btc', 'name': 'Bitcoin'},
+            {'id': 'eth', 'name': 'Ethereum'}]
 
         # Call your function with a coin that doesn't exist in the cache
         with self.assertRaises(Exception) as context:
             get_coin_info('doge')
 
         # Check if the exception message is as expected
-        self.assertEqual(str(context.exception), 'Cryptocurrency "doge" not found in the cache.')
+        self.assertEqual(str(context.exception),
+                         'Cryptocurrency "doge" not found in the cache.')
 
 
 class TestGetUserCryptos(TestCase):

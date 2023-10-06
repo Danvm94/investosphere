@@ -52,7 +52,8 @@ def logout_view(request):
 def home_view(request):
     articles = get_news_api()
     cryptos_trending = request_coin_cache()
-    return render(request, 'home.html', {'articles': articles, 'cryptos_trending': cryptos_trending})
+    return render(request, 'home.html',
+                  {'articles': articles, 'cryptos_trending': cryptos_trending})
 
 
 def manage_view(request):
@@ -69,7 +70,8 @@ def manage_view(request):
         return redirect('manage')
     elif request.method == 'GET':
         cryptos = Crypto.objects.all()
-        return render(request, 'manage.html', {'cryptos': cryptos, 'add_crypto_form': add_crypto_form})
+        return render(request, 'manage.html',
+                      {'cryptos': cryptos, 'add_crypto_form': add_crypto_form})
 
 
 def delete_crypto(request):
@@ -83,7 +85,5 @@ def delete_crypto(request):
     return redirect('manage')
 
 
-def error_404_view(request, exception):
-    # we add the path to the 404.html file
-    # here. The name of our HTML file is 404.html
+def error_404_view(request):
     return render(request, '404.html')
