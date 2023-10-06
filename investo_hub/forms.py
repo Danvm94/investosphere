@@ -125,7 +125,7 @@ class BuyCryptoForm(forms.Form):
         choices=CRYPTOS_CHOICES,
         label='Type',
         initial='bitcoin',
-        widget=forms.Select(attrs={'class': 'form-control w-auto text-center',
+        widget=forms.Select(attrs={'class': 'form-control w-100 mx-auto text-center',
                                    'id': 'id_crypto_select_buy'}),
         required=True
     )
@@ -183,7 +183,7 @@ class SellCryptoForm(forms.Form):
     crypto_select = forms.ChoiceField(
         label='Type',
         initial='bitcoin',
-        widget=forms.Select(attrs={'class': 'form-control w-auto text-center',
+        widget=forms.Select(attrs={'class': 'form-control w-100 mx-auto text-center',
                                    'id': 'id_crypto_select_sell'}),
         required=True
     )

@@ -684,16 +684,57 @@ and withdrawing assets.
 
 ### **CI Python Linter**
 
+The [CI Python Linter](https://pep8ci.herokuapp.com/) was employed to validate
+the Python code throughout this project. Necessary adjustments have been
+implemented to ensure compliance with PEP8 formatting and validations. You can
+refer to the following git commit to review the files where these fixes were
+applied.
+
+[Commit 5ccee3e](https://github.com/Danvm94/investosphere/commit/5ccee3e25a82cee5313c8b58d6581d0a67a99502?diff=split)
+
+[Back to top &uarr;](#contents)
+
+### **W3C CSS Validator**
+
+[W3C CSS Validator](https://jigsaw.w3.org/css-validator/) was used to validate
+the site's CSS code.
+
+![css-validator](./README/css-validator.png)
+
+[Back to top &uarr;](#contents)
+
+### **W3C Markup Validator**
+
+All pages were run through
+the [W3C Markup Validator](https://validator.w3.org/nu/). Initially, there were
+some errors due to missing closing tags, image height values, and Richtextfield
+inputs. All of these issues were corrected and all pages passed validation.
+
+Due to the Django templating language code used in the HTML files, these could
+not be copied and pasted into the validator and due to the secured views, pages
+with login required or a secured view cannot be validated by direct URI. To
+test the validation on the files, open the page to validate, right click and
+view page source. Paste the raw HTML code into the validator as this will be
+only the HTML-rendered code.
+
+![W3C Markup Validator](./README/markup-home.png)
+
+[Back to top &uarr;](#contents)
 
 ### **JSHint**
-[JSHint](https://jshint.com/) was used to validate the Javascript code used in the project.
 
-The [CI Python Linter](https://pep8ci.herokuapp.com/) was used to validate the python code used throughout the project. The results are outlined in below:
+[JSHint](https://jshint.com/) was used to validate the Javascript code used in
+the project.
+
+The [CI Python Linter](https://pep8ci.herokuapp.com/) was used to validate the
+python code used throughout the project. The results are outlined in below:
 
 #### **scripts.js**
+
 ![jshint-scripts](./README/jshint-scripts.png)
 
 #### **chart_view.js**
+
 ![jshint-chart](./README/jshint-chart.png)
 
 [Back to top &uarr;](#contents)

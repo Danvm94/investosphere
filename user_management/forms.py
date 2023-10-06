@@ -28,5 +28,5 @@ class RegistrationForm(UserCreationForm):
 class AddCryptoForm(forms.Form):
     crypto = forms.CharField(
         label='Crypto',
-        widget=forms.TextInput(attrs={'class': ''}),
+        widget=forms.TextInput(attrs={'class': 'form-control w-auto d-inline-flex'}),
         validators=[validate_crypto])

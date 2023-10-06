@@ -42,7 +42,7 @@
                         {{ transactions_view_form.end_date }}
                     </div>
                     <div class="col-md-12">
-                        <button id="view-more-btn" class="btn btn-success mt-3 mb-3 col-md-12 table-btn">Filter</button>
+                        <button id="filter-transaction" class="btn btn-success mt-3 mb-3 col-md-12 table-btn">Filter</button>
                     </div>
                 </form>
                 {% if transactions|length > 0 %}
@@ -56,7 +56,6 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         {% for transaction in transactions %}
                             <tr {% if forloop.counter > 5 %}class="d-none hidden-row"{% endif %}>
                                 <th scope="row"
@@ -94,7 +93,7 @@
                     </div>
                     <div class="modal-body">
                         {% csrf_token %}
-                        {{ deposit_money_form }}
+                        {{ deposit_money_form.as_p }}
                         <p>Values from $1.00 to $50,000.00</p>
                         <p>Please be aware that the maximum allowable USD amount on the website is $100,000.00</p>
 
@@ -123,7 +122,7 @@
                     </div>
                     <div class="modal-body">
                         {% csrf_token %}
-                        {{ withdraw_money_form }}
+                        {{ withdraw_money_form.as_p }}
                         <p>Values from $1.00 to ${{ wallet.dollars }}</p>
                     </div>
                     <div class="modal-footer justify-content-between">

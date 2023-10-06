@@ -85,10 +85,7 @@
                         {{ transactions_view_form.end_date }}
                     </div>
                     <div class="col-md-12">
-                        <button id="view-more-btn"
-                                class="btn btn-success mt-3 mb-3 col-md-12 table-btn">
-                            Filter
-                        </button>
+                        <button id="filter" class="btn btn-success mt-3 mb-3 col-md-12 table-btn">Filter</button>
                     </div>
                 </form>
                 {% if transactions|length > 0 %}
@@ -103,7 +100,6 @@
                             </tr>
                             </thead>
                             <tbody>
-
                             {% for transaction in transactions %}
                                 <tr {% if forloop.counter > 5 %}class="d-none hidden-row"{% endif %}>
                                     <th scope="row"
@@ -132,14 +128,13 @@
         </div>
     </div>
     <!-- Buy Modal -->
-    <div class="modal fade wallet-modal text-center" id="buyModal"
-         tabindex="-1"
-         aria-labelledby="depositModalLabel" aria-hidden="true">
+    <div class="modal fade wallet-modal text-center" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <form id="buy" class="add-money-form" method="POST">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-4" id="depositModalLabel"><i
+                        <h1 class="modal-title fs-4" id="buyModalLabel"><i
                                 class="fa-solid fa-money-bill-transfer"></i>
                             Buy Crypto</h1>
                         <button type="button" class="btn-close"
@@ -148,7 +143,7 @@
                     </div>
                     <div class="modal-body text-center d-flex flex-column">
                         {% csrf_token %}
-                        {{ buy_crypto_form }}
+                        {{ buy_crypto_form.as_p }}
                         <p>Values from $1.00 to $50,000.00</p>
                         <p id="crypto-price-info-buy"></p>
 
@@ -171,13 +166,13 @@
         <!-- Sell Modal -->
         <div class="modal fade wallet-modal text-center" id="sellModal"
              tabindex="-1"
-             aria-labelledby="depositModalLabel" aria-hidden="true">
+             aria-labelledby="sellModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <form id="sell" class="add-money-form" method="POST">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-4"
-                                id="depositModalLabel"><i
+                                id="sellModalLabel"><i
                                     class="fa-solid fa-money-bill-transfer"></i>
                                 Sell Crypto</h1>
                             <button type="button" class="btn-close"
@@ -186,7 +181,7 @@
                         </div>
                         <div class="modal-body text-center d-flex flex-column">
                             {% csrf_token %}
-                            {{ sell_crypto_form }}
+                            {{ sell_crypto_form.as_p }}
                             <p id="owned-crypto-amount"></p>
                             <p id="crypto-price-info-sell"></p>
 

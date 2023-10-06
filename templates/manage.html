@@ -28,8 +28,6 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1><i class="fa-solid fa-wallet"></i> Cryptos Available </h1>
-
-
                 <table class="table">
                     <thead>
                     <tr>
@@ -54,7 +52,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                <button id="view-more-btn" class="btn btn-success mt-3 table-btn" data-bs-toggle="modal"
+                <button id="add" class="btn btn-success mt-3 table-btn" data-bs-toggle="modal"
                         data-bs-target="#addCrypto">Add Crypto
                 </button>
             </div>
@@ -62,18 +60,18 @@
     </div>
 
     <div class="modal fade wallet-modal text-center" id="addCrypto" tabindex="-1"
-         aria-labelledby="depositModalLabel" aria-hidden="true">
+         aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form class="add-money-form" method="POST">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-4" id="depositModalLabel"><i
+                        <h1 class="modal-title fs-4" id="addModalLabel"><i
                                 class="fa-solid fa-money-bill-transfer"></i> Add Crypto</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body text-center d-flex flex-column">
                         {% csrf_token %}
-                        {{ add_crypto_form }}
+                        {{ add_crypto_form.as_p }}
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

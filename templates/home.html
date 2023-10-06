@@ -88,7 +88,7 @@
                 {% for article in articles %}
                     <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="{{ forloop.counter0 }}"
                             {% if forloop.first %}class="active"{% endif %}
-                            aria-current="{% if forloop.first %}true{% endif %}"
+                            aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
                             aria-label="Slide {{ forloop.counter0|add:1 }}"></button>
                 {% endfor %}
             </div>
@@ -96,7 +96,7 @@
                 {% for article in articles %}
                     <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="10000">
                         <div class="card">
-                            <img src="{{ article.urlToImage }}" class="card-img-top">
+                            <img src="{{ article.urlToImage }}" class="card-img-top" alt="article image">
                             <div class="card-body text-center"> <!-- Add text-center class here -->
                                 <h5 class="card-title">
                                     {{ article.title }}</h5>
