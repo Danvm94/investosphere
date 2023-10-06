@@ -419,10 +419,8 @@ within the production environment.`
 
 #### **Wallet Feature**
 
-As a user, I want to have a digital wallet where I can manage my balance, add
-funds, and withdraw funds as needed.
-
-The Wallet feature meets the following criteria:
+`As a user, I want to have a digital wallet where I can manage my balance, add
+funds, and withdraw funds as needed.`
 
 1. **Dedicated Wallet Section**: A dedicated section for managing the user's
    wallet is available on the website.
@@ -431,20 +429,149 @@ The Wallet feature meets the following criteria:
 2. **Display Balance**: The wallet section displays the current balance of the
    user's account.
     - [x] The current wallet balance is visible.
-![wallet](./README/wallet.png)
+      ![wallet](./README/wallet.png)
 
 3. **Add Funds**: Users can add funds to their wallet using a specified amount.
     - [x] Users can input an amount and successfully add funds to their wallet.
-![deposit](./README/deposit.gif)
+      ![deposit](./README/deposit.gif)
 
 4. **Withdraw Funds**: Users can withdraw funds from their wallet, subject to
    available balance.
     - [x] Users can request withdrawals, and the amount is deducted correctly
       from their wallet.
-![withdraw](./README/withdraw.gif)
+      ![withdraw](./README/withdraw.gif)
 
 5. **Transaction Logging**: Wallet transactions are logged and displayed for
    user reference.
     - [x] Wallet transactions, including deposits and withdrawals, are logged
       and accessible.
-![wallet-transactions](./README/wallet-transactions.png)
+      ![wallet-transactions](./README/wallet-transactions.png)
+
+#### **Crypto Page**
+
+`As a user, I want to view my crypto holdings and transaction history for each
+owned cryptocurrency on the "Crypto" page. Additionally, I want the ability to
+filter transactions by various criteria.`
+
+1. **Dedicated "Crypto" Page**: A dedicated "Crypto" page is accessible to the
+   user.
+    - [x] The "Crypto" page is accessible.
+
+2. **Display Crypto Balances**: The page displays the user's crypto balances
+   for each owned cryptocurrency.
+    - [x] Crypto balances for owned cryptocurrencies are visible.
+      ![crypto-balance](./README/crypto-balance.png)
+
+3. **List Crypto Transactions**: Users can view a list of their recent crypto
+   transactions, including details like date, type, amount, and transaction
+   status.
+    - [x] A list of recent crypto transactions is available.
+      ![crypto-transactions](./README/crypto-transactions.png)
+
+4. **Transaction Filtering**: Users can filter crypto transactions by criteria
+   such as transaction type (e.g., buys, sells), cryptocurrency type, start
+   date, and end date.
+    - [x] Transaction filtering is functional for the specified criteria.
+
+5. **Real-time Updates**: The transactions list is updated in real-time to
+   reflect the latest transactions.
+    - [x] The transaction list updates in real-time.
+
+#### **Crypto Page - Buy and Sell Cryptocurrencies**
+
+`As a user, I want to have the ability to buy and sell cryptocurrencies directly
+from the "Crypto" page to manage my crypto holdings conveniently.`
+
+1. **Buy Functionality**:
+    - [x] Users can initiate a buy order by specifying the cryptocurrency,
+      amount, and purchase price.
+    - [x] Buy orders are executed in real-time, updating the user's crypto
+      holdings accordingly.
+    - [x] Adequate validation checks are in place to prevent invalid buy
+      orders.
+      ![buy](./README/buy.gif)
+
+2. **Sell Functionality**:
+    - [x] Users can initiate a sell order by specifying the cryptocurrency,
+      amount, and selling price.
+    - [x] Sell orders are executed in real-time, updating the user's crypto
+      holdings accordingly.
+    - [x] Security measures are applied to ensure authorized users can sell
+      cryptocurrencies.
+      ![sell](./README/sell.gif)
+
+
+3. **Security and Validation**:
+    - [x] Robust security measures are in place to protect user funds and
+      transactions.
+    - [x] Buy and sell orders are validated to ensure they meet criteria (e.g.,
+      sufficient balance, valid amount, reasonable price).
+
+#### **Chart Page**
+
+`As a user, I want to access a "Chart" page where I can visualize and analyze
+the historical prices of available cryptocurrencies to make informed investment
+decisions.`
+
+1. **Dedicated "Chart" Page**:
+    - [x] A dedicated "Chart" page is accessible to the user.
+      ![chart](./README/chart.png)
+
+2. **Cryptocurrency Selection**:
+    - [x] Users can select specific cryptocurrencies to view their historical
+      price charts.
+
+3. **Interactive Price Charts**:
+    - [x] The page displays interactive and user-friendly price charts for
+      selected cryptocurrencies.
+
+4. **Design "Chart" Page**:
+    - [x] The "Chart" page is designed with an organized and visually appealing
+      layout.
+    - [x] The location and style for displaying price charts are determined.
+
+5. **Fetch Historical Price Data**:
+    - [x] A data fetching mechanism is implemented to retrieve historical price
+      data for available cryptocurrencies.
+
+![chart-filter](./README/chart-filter.gif)
+
+#### **Manage Page**
+
+`As an administrator, I want access to a "Manage" page where I can add and
+remove cryptocurrencies supported on the website to maintain an up-to-date
+selection.`
+
+
+1. **Dedicated "Manage" Page**:
+    - [x] A dedicated "Manage" page is accessible to administrators.
+
+2. **Add Cryptocurrency Functionality**:
+    - [x] Administrators can add new cryptocurrencies to the website.
+    - [x] The user interface allows administrators to input essential
+      information such as name.
+    - [x] Server-side logic is implemented to add new cryptocurrencies to the
+      website's database.
+    - [x] Validation checks are in place to prevent invalid entries.
+![manage-add](./README/manage-add.gif)
+
+3. **Remove Cryptocurrency Functionality**:
+    - [x] Administrators can remove cryptocurrencies from the website.
+    - [x] The user interface enables administrators to select cryptocurrencies
+      from the existing list to remove.
+    - [x] Server-side logic is implemented to remove cryptocurrencies from the
+      website's database.
+    - [x] Security measures ensure only authorized administrators can remove
+      cryptocurrencies.
+![manage-delete](./README/manage-delete.gif)
+
+4. **Design "Manage" Page**:
+    - [x] The "Manage" page is designed with an organized and user-friendly
+      layout, accessible only to administrators.
+    - [x] The location and style for adding and removing cryptocurrencies are
+      determined.
+
+5. **Security and Validation**:
+    - [x] Input data for adding and removing cryptocurrencies is validated to
+      prevent errors or misuse.
+
