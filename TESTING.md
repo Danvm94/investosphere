@@ -805,3 +805,37 @@ browsers and devices as outlined below.
 
 ## **Bugs & Fixes**
 
+### JSHint
+
+During the testing phase with JSHint, several issues were identified in the code and have been addressed to ensure the
+code functions correctly. One notable issue was related to the use of Bootstrap in conjunction with a custom JavaScript
+script.
+
+One particular issue identified by JSHint was the recognition of the "new" keyword as a warning. While JSHint may
+consider it a warning, it is essential to clarify that, in this context, the use of the "new" keyword is a required part
+of the code for it to function correctly. The "new" keyword is often used to create instances of objects or classes, and
+its absence would lead to erroneous behavior.
+
+To address this issue, a fix has been implemented. You can review the details of this fix by visiting the following Git
+commits:
+
+[e3c5dafa3e8b135485723b07275993225310055e](https://github.com/Danvm94/investosphere/commit/e3c5dafa3e8b135485723b07275993225310055e)
+[b317f794ff32f0d8c0cf6f8d7adbef171d530a82](https://github.com/Danvm94/investosphere/commit/b317f794ff32f0d8c0cf6f8d7adbef171d530a82)
+
+### PEP8
+
+During the PEP 8 testing, warnings about lines exceeding recommended width were identified. To address these warnings
+and maintain code readability, the following Git commit was applied:
+
+[5ccee3e25a82cee5313c8b58d6581d0a67a99502](https://github.com/Danvm94/investosphere/commit/5ccee3e25a82cee5313c8b58d6581d0a67a99502)
+
+### Lighthouse
+
+During Lighthouse testing, several adjustments were made to improve performance. You can review these fixes in this Git
+commit:
+
+[ed4df189964488e2a5d146e516770925656a2b01](https://github.com/Danvm94/investosphere/commit/ed4df189964488e2a5d146e516770925656a2b01).
+
+While many Lighthouse test results now show improved performance, it's important to note that some tests may not have
+reached a green status yet. This is primarily due to issues such as API loading JPEG images instead of WebP and potential
+delays caused by CDNs when fetching files.
