@@ -741,4 +741,67 @@ python code used throughout the project. The results are outlined in below:
 
 ### **Lighthouse**
 
+#### Home
+
 ![lighthouse-desktop-home](./README/lighthouse-desktop-home.png)
+![lighthouse-desktop-mobile](./README/lighthouse-mobile-home.png)
+
+#### Wallet
+
+![lighthouse-desktop-wallet](./README/lighthouse-desktop-wallet.png)
+![lighthouse-mobile-wallet](./README/lighthouse-mobile-wallet.png)
+
+#### Crypto
+
+![lighthouse-desktop-crypto](./README/lighthouse-desktop-crypto.png)
+![lighthouse-mobile-crypto](./README/lighthouse-mobile-crypto.png)
+
+#### Chart
+
+![lighthouse-desktop-chart](./README/lighthouse-desktop-chart.png)
+![lighthouse-mobile-chart](./README/lighthouse-mobile-chart.png)
+
+#### Manage
+
+![lighthouse-desktop-manage](./README/lighthouse-desktop-manage.png)
+![lighthouse-mobile-manage](./README/lighthouse-mobile-manage.png)
+
+#### Register
+
+![lighthouse-desktop-register](./README/lighthouse-desktop-register.png)
+![lighthouse-mobile-register](./README/lighthouse-mobile-register.png)
+
+#### Login
+
+![lighthouse-desktop-login](./README/lighthouse-desktop-login.png)
+![lighthouse-mobile-login](./README/lighthouse-mobile-login.png)
+
+## **Responsiveness**
+
+All pages were tested to ensure responsiveness on screen sizes from 320px and upwards. The site was tested on multiple
+browsers and devices as outlined below.
+
+| **Browser Tested** | **Actual Result** | **Pass/Fail** |
+|--------------------|-------------------|---------------|
+| Chrome             | As Expected       | Pass          |
+| Firefox            | As Expected       | Pass          |
+| Edge               | As Expected       | Pass          |
+| Mac OS Safari      | As Expected       | Pass          |
+
+| **Device Tested**    | **Actual Result** | **Pass/Fail** |
+|----------------------|-------------------|---------------|
+| Mac Air M2           | As Expected       | Pass          |
+| HP Elite Laptop      | As Expected       | Pass          |
+| HP 23 Monitor        | As Expected       | Pass          |
+| Samsung Note 10+     | As Expected       | Pass          |
+| Samsung Note 20      | As Expected       | Pass          |
+| Samsung S21+         | As Expected       | Pass          |
+| Samsung Tab S7+      | As Expected       | Pass          |
+| iPhone 13 Pro Max    | As Expected       | Pass          |
+| iPhone 11            | As Expected       | Pass          |
+| iPad Pro 12 inch     | As Expected       | Pass          |
+| One Plus 8T          | As Expected       | Pass          |
+| Xiaomi Redmi Note 11 | As Expected       | Pass          |
+
+## **Bugs & Fixes**
+
