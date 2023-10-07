@@ -8,6 +8,55 @@ the reliability and functionality of the Investosphere platform.
 
 ## **Contents**
 
+- [**Testing Overview**](#testing-overview)
+- [**Contents**](#contents)
+    - [**Automated Testing**](#automated-testing)
+        - [**Unit Testing**](#unit-testing)
+            - [**investo_hub/tests/test_chart**](#investohubteststestchart)
+            - [**investo_hub/tests/test_cryptos**](#investohubteststestcryptos)
+            - [**investo_hub/tests/test_forms**](#investohubteststestforms)
+            - [**investo_hub/tests/test_models**](#investohubteststestmodels)
+            - [**investo_hub/tests/test_transactions**](#investohubteststesttransactions)
+            - [**investo_hub/tests/test_views**](#investohubteststestviews)
+            - [**user_management/tests/test_crypto**](#usermanagementteststestcrypto)
+            - [**user_management/tests/test_forms**](#usermanagementteststestforms)
+            - [**user_management/tests/test_models**](#usermanagementteststestmodels)
+            - [**user_management/tests/test_newsapi**](#usermanagementteststestnewsapi)
+            - [**user_management/tests/test_views**](#usermanagementteststestviews)
+        - [**Site Coverage Report**](#site-coverage-report)
+    - [**Manual Testing**](#manual-testing)
+        - [**User Story Testing**](#user-story-testing)
+            - [**Homepage**](#homepage)
+            - [**Navbar**](#navbar)
+            - [**User Registration**](#user-registration)
+            - [**User Login**](#user-login)
+            - [**Website Footer**](#website-footer)
+            - [**Heroku Deployment**](#heroku-deployment)
+            - [**Wallet Feature**](#wallet-feature)
+            - [**Crypto Page**](#crypto-page)
+            - [**Crypto Page - Buy and Sell Cryptocurrencies**](#crypto-page---buy-and-sell-cryptocurrencies)
+            - [**Chart Page**](#chart-page)
+            - [**Manage Page**](#manage-page)
+        - [**Javascript Testing**](#javascript-testing)
+            - [**allowOnlyLetters**](#allowonlyletters)
+            - [**fadeOutAndHideElementsAutomatically**](#fadeoutandhideelementsautomatically)
+            - [**initializeNewsCarousel**](#initializenewscarousel)
+            - [**cryptoCalculator**](#cryptocalculator)
+            - [**usdCalculator**](#usdcalculator)
+            - [**cryptoPriceRequest**](#cryptopricerequest)
+            - [**usdFormatter**](#usdformatter)
+            - [**toggleRow**](#togglerow)
+            - [**initializeConfirmation**](#initializeconfirmation)
+        - [**Validators**](#validators)
+            - [**CI Python Linter**](#ci-python-linter)
+            - [**W3C CSS Validator**](#w3c-css-validator)
+            - [**W3C Markup Validator**](#w3c-markup-validator)
+    - [**Responsiveness**](#responsiveness)
+    - [**Bugs & Fixes**](#bugs--fixes)
+        - [**JSHint**](#jshint)
+        - [**PEP8**](#pep8)
+        - [**Lighthouse**](#lighthouse)
+
 ## **Automated Testing**
 
 ### **Unit Testing**
@@ -690,7 +739,7 @@ implemented to ensure compliance with PEP8 formatting and validations. You can
 refer to the following git commit to review the files where these fixes were
 applied.
 
-[Commit 5ccee3e](https://github.com/Danvm94/investosphere/commit/5ccee3e25a82cee5313c8b58d6581d0a67a99502?diff=split)
+[287f7f04742ae28c12743c82fdddef52528c2d4d](https://github.com/Danvm94/investosphere/commit/287f7f04742ae28c12743c82fdddef52528c2d4d?diff=split)
 
 [Back to top &uarr;](#contents)
 
@@ -819,23 +868,24 @@ its absence would lead to erroneous behavior.
 To address this issue, a fix has been implemented. You can review the details of this fix by visiting the following Git
 commits:
 
-[e3c5dafa3e8b135485723b07275993225310055e](https://github.com/Danvm94/investosphere/commit/e3c5dafa3e8b135485723b07275993225310055e)
-[b317f794ff32f0d8c0cf6f8d7adbef171d530a82](https://github.com/Danvm94/investosphere/commit/b317f794ff32f0d8c0cf6f8d7adbef171d530a82)
+[41e019ab821b259123724f3275836cbbcaea6bed](https://github.com/Danvm94/investosphere/commit/41e019ab821b259123724f3275836cbbcaea6bed)
+[48837dc91f0a8e4b3f5d14aaa98ab2511fb036d5](https://github.com/Danvm94/investosphere/commit/48837dc91f0a8e4b3f5d14aaa98ab2511fb036d5)
 
 ### PEP8
 
 During the PEP 8 testing, warnings about lines exceeding recommended width were identified. To address these warnings
 and maintain code readability, the following Git commit was applied:
 
-[5ccee3e25a82cee5313c8b58d6581d0a67a99502](https://github.com/Danvm94/investosphere/commit/5ccee3e25a82cee5313c8b58d6581d0a67a99502)
+[287f7f04742ae28c12743c82fdddef52528c2d4d](https://github.com/Danvm94/investosphere/commit/287f7f04742ae28c12743c82fdddef52528c2d4d)
 
 ### Lighthouse
 
 During Lighthouse testing, several adjustments were made to improve performance. You can review these fixes in this Git
 commit:
 
-[ed4df189964488e2a5d146e516770925656a2b01](https://github.com/Danvm94/investosphere/commit/ed4df189964488e2a5d146e516770925656a2b01).
+[c22128a37cfedc03fbcb55823d3fc8f3037f36de](https://github.com/Danvm94/investosphere/commit/c22128a37cfedc03fbcb55823d3fc8f3037f36de)
 
 While many Lighthouse test results now show improved performance, it's important to note that some tests may not have
-reached a green status yet. This is primarily due to issues such as API loading JPEG images instead of WebP and potential
+reached a green status yet. This is primarily due to issues such as API loading JPEG images instead of WebP and
+potential
 delays caused by CDNs when fetching files.
