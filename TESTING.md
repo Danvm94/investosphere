@@ -738,3 +738,7 @@ python code used throughout the project. The results are outlined in below:
 ![jshint-chart](./README/jshint-chart.png)
 
 [Back to top &uarr;](#contents)
+
+### **Lighthouse**
+
+![lighthouse-desktop-home](./README/lighthouse-desktop-home.png)

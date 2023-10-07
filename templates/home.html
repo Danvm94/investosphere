@@ -42,7 +42,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th></th>
+                <th><span class="sr-only">Image</span></th>
                 <th>Symbol</th>
                 <th>Market Cap</th>
                 <th>Price</th>
@@ -69,11 +69,14 @@
             {% for article in articles %}
                 <div class="col-md-3 d-sm-none d-md-block">
                     <div class="card">
-                        <img src="{{ article.urlToImage }}" class="card-img-top" alt="{{ article.description }}">
+                        <img src="{{ article.urlToImage }}" class="card-img-top" alt="{{ article.description }}"
+                             loading="lazy">
                         <div class="card-body">
                             <h5 class="card-title">
                                 {{ article.title }}</h5>
-                            <a href="{{ article.url }}" class="btn btn-primary" target="_blank">Read More</a>
+                            <a href="{{ article.url }}" class="btn btn-primary" target="_blank">
+                                Read More <span class="sr-only"> about {{ article.title }}</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -96,13 +99,14 @@
                 {% for article in articles %}
                     <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="10000">
                         <div class="card">
-                            <img src="{{ article.urlToImage }}" class="card-img-top" alt="article image">
+                            <img src="{{ article.urlToImage }}" class="card-img-top" alt="article image" loading="lazy">
                             <div class="card-body text-center"> <!-- Add text-center class here -->
                                 <h5 class="card-title">
                                     {{ article.title }}</h5>
                                 <p class="card-text">
                                     {{ article.description }}</p>
-                                <a href="{{ article.url }}" class="btn btn-primary mb-5" target="_blank">Read More</a>
+                                <a href="{{ article.url }}" class="btn btn-primary mb-5" target="_blank">Read More
+                                    <span class="sr-only"> about {{ article.title }}</span></a>
                             </div>
                         </div>
                     </div>

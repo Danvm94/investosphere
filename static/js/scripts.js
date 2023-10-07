@@ -65,7 +65,7 @@ function opacityChange(type, element) {
 function initializeNewsCarousel() {
     const newsCarouselElement = document.getElementById("newsCarousel");
     if (newsCarouselElement) {
-        bootstrap.Carousel(newsCarouselElement, {
+        new bootstrap.Carousel(newsCarouselElement, {
             interval: 3000, // Change slide every 3 seconds
             wrap: true, // Set to false if you don't want to loop
         });
